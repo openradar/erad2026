@@ -1,0 +1,56 @@
+name: build-images
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  DOCKER_TAG: base
+
+jobs:
+  build-container:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout files in repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #v6.0.2
+        with:
+          fetch-depth: 2
+      - name: Free Disk Space for Docker
+        uses: endersonmenezes/free-disk-space@7901478139cff6e9d44df5972fd8ab8fcade4db1  #v3.3.2
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          rm_cmd: "rmz"  # Faster cleanup
+      - name: update jupyter dependencies with repo2docker
+        uses: jupyterhub/repo2docker-action@master
+        with:
+          DOCKER_USERNAME: "openradar"
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_REGISTRY: "ghcr.io"
+          ADDITIONAL_TAG: ${{ env.DOCKER_TAG }}
+          PUBLIC_REGISTRY_CHECK: true
+          APPENDIX_FILE: "binder/appendix.txt"
+          REPO2DOCKER_EXTRA_ARGS: --Repo2Docker.base_image=docker.io/library/buildpack-deps:noble
+          FORCE_REPO2DOCKER_VERSION: jupyter-repo2docker==2026.04.0
+
+  build-image:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/openradar/erad2026:latest
+      options: --user root
+      env:
+        BASE_URL: /${{ github.event.repository.name }}
+    needs: [build-container]
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses:  actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #v6.0.2
+      - name: Build
+        run: |
+          ls -lart
+          which conda
+          which python
