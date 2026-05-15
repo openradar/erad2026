@@ -1,6 +1,6 @@
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Norman_Doppler_Radar_-_NOAA.jpg/640px-Norman_Doppler_Radar_-_NOAA.jpg" alt="thumbnail" width="300"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Norman_Doppler_Radar_-_NOAA.jpg/960px-Norman_Doppler_Radar_-_NOAA.jpg" alt="thumbnail" width="300"/>
 
-# ERAD2026 Open Radar Science Short Courses
+# ERAD2026 Open Radar Science Short Course
 
 This tutorial covers how to get started with the Open Radar Science stack!
 

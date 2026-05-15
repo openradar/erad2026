@@ -1,0 +1,27 @@
+version: 1
+
+project:
+  title: ERAD 2026
+  github: https://github.com/openradar/erad2026
+  authors:
+    - name: Kai Mühlbauer
+      orcid: 0000-0001-6599-1034
+      github: kmuehlbauer
+  copyright: "2026"
+  settings:
+    output_matplotlib_strings: remove
+  toc:
+    - file: README.md
+    - file: schedule.md
+
+site:
+  options:
+     folders: true
+     url: https://github.com/openradar/erad2026
+  nav:
+    - title: Conference Home
+      url: https://www.erad2026.rs
+    - title: Community
+      url: https://openradarscience.org
+    - title: Discourse
+      url: https://openradar.discourse.group/

@@ -2,8 +2,9 @@ name: erad2026-dev
 channels:
   - conda-forge
 dependencies:
-  - jupyter-book
+  - python=3.13
   - jupyterlab
+  - jupyterlab-myst
   - jupyter_server
   - sphinx-pythia-theme
   - arm_pyart
@@ -11,17 +12,16 @@ dependencies:
   - matplotlib
   - numpy
   - wradlib
-  - pydda
+  # - pydda
   - zarr
   - xarray
   - xradar>=0.12.0
   - numpy
-  - python<=3.13
   # this is needed for gpm-api
-  #- gpm-api>=0.3.1
-  #- pycolorbar>=0.1.0
-  #- ximage>=0.0.5
-  #- shapely>=2.0.0
+  - gpm-api>=0.3.1
+  - pycolorbar>=0.1.0
+  - ximage>=0.0.5
+  - shapely>=2.0.0
   - geopandas
   - xoak
   - scikit-learn
@@ -46,15 +46,14 @@ dependencies:
   # debugging
   - sphinx>=7.4.7
   - sqlite>=3.46.0
-  # mystmd
   - mystmd
   - ipykernel
   - pytest
   - pytest-xdist
   # this is needed for PyDDA performance
-  #- jaxopt
-  #- tensorflow>=2.6
-  #- tensorflow-probability>=0.24
+  # - jaxopt
+  # - tensorflow>=2.6
+  # - tensorflow-probability>=0.24
   # interactive plotting
   - hvplot
   - datashader
@@ -62,6 +61,6 @@ dependencies:
   - bottleneck
   - rioxarray
   # needed for LROSE / pyrad
-  #- metpy
-  #- jupyterlab_rise
+  - metpy
+  - jupyterlab_rise
   - pip
