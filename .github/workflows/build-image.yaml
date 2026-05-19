@@ -53,7 +53,6 @@ jobs:
         if: github.event_name == 'push'
         uses: jupyterhub/repo2docker-action@master
         with:
-          IMAGE_NAME: erad2026
           DOCKER_USERNAME: "openradar"
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_REGISTRY: "ghcr.io"
