@@ -31,14 +31,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #v6.0.2
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  #v6.0.0
-
       - name: Build Jupyter Book
         run: |
           myst build --execute --ci --html
 
-      - name: Upload HTML artifact
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  #v5.0.0
+      - name: Zip the book
+        run: |
+          set -x
+          set -e
+          if [ -f book.zip ]; then
+              rm -rf book.zip
+          fi
+          zip -r book.zip _build/html
+
+      - name: Upload zipped book artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  #v7.0.1
         with:
-          path: _build/html
+          name: book-zip-${{github.event.number}}
+          path: ./book.zip
