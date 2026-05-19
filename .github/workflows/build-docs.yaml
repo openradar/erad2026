@@ -1,0 +1,42 @@
+name: Build Book
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "binder/**"
+      - "install/**"
+      - ".github/workflows/build-image.yaml"
+  pull_request:
+    paths-ignore:
+      - "binder/**"
+      - "install/**"
+      - ".github/workflows/build-image.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-book:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/openradar/erad2026:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #v6.0.2
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  #v6.0.0
+
+      - name: Build Jupyter Book
+        run: |
+          myst build --execute --ci --html
+
+      - name: Upload HTML artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  #v5.0.0
+        with:
+          path: _build/html
