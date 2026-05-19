@@ -26,6 +26,7 @@ jobs:
       image: ghcr.io/openradar/erad2026:latest
       options: --user root
       env:
+        NODE_OPTIONS: "--dns-result-order=ipv4first"
         BASE_URL: /${{ github.event.repository.name }}
     steps:
       - name: Checkout repository
