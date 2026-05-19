@@ -7,12 +7,12 @@ on:
     paths:
       - "binder/**"
       - "install/**"
-      - ".github/workflows/build-image.yml"
+      - ".github/workflows/build-image.yaml"
   pull_request:
     paths:
       - "binder/**"
       - "install/**"
-      - ".github/workflows/build-image.yml"
+      - ".github/workflows/build-image.yaml"
   workflow_dispatch:
 
 env:
