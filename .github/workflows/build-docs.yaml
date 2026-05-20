@@ -28,6 +28,9 @@ jobs:
       env:
         NODE_OPTIONS: "--dns-result-order=ipv4first"
         BASE_URL: /${{ github.event.repository.name }}
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #v6.0.2
@@ -41,6 +44,13 @@ jobs:
           else
             echo "BASE_URL=/$REPO/" >> $GITHUB_ENV
           fi
+
+      - name: Debug environment
+        run: |
+          which python
+          which jupyter
+          python --version
+          jupyter kernelspec list
 
       - name: Build Jupyter Book
         run: |
