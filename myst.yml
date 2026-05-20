@@ -12,7 +12,12 @@ project:
     output_matplotlib_strings: remove
   toc:
     - file: README.md
+    - file: notebooks/how-to-cite.md
     - file: schedule.md
+    - title: Getting started
+      children:
+        - file: getting_started.md
+        - file: notebooks/environment.md
 
 site:
   options:
