@@ -32,6 +32,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #v6.0.2
 
+      - name: Set BASE_URL
+        run: |
+          REPO="${{ github.event.repository.name }}"
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "BASE_URL=/$REPO/_preview/${{ github.event.pull_request.number }}/" >> $GITHUB_ENV
+          else
+            echo "BASE_URL=/$REPO/" >> $GITHUB_ENV
+          fi
+
       - name: Build Jupyter Book
         run: |
           myst build --execute --ci --html
@@ -48,5 +58,5 @@ jobs:
       - name: Upload zipped book artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  #v7.0.1
         with:
-          name: book-zip-${{github.event.number}}
+          name: book-zip
           path: ./book.zip
