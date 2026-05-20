@@ -5,6 +5,15 @@
     <loc>http://localhost:3000</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/notebooks/how-to-cite</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/schedule</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/getting-started</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/environment</loc>
   </url>
 </urlset>
