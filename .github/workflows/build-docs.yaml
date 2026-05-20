@@ -28,6 +28,10 @@ jobs:
       env:
         NODE_OPTIONS: "--dns-result-order=ipv4first"
         BASE_URL: /${{ github.event.repository.name }}
+        HOME: /tmp
+        JUPYTER_RUNTIME_DIR: /tmp/jupyter-runtime
+        JUPYTER_DATA_DIR: /tmp/jupyter-data
+        XDG_CACHE_HOME: /tmp/.cache
     defaults:
       run:
         shell: bash -l {0}
@@ -45,12 +49,25 @@ jobs:
             echo "BASE_URL=/$REPO/" >> $GITHUB_ENV
           fi
 
+      - name: Setup runtime dirs
+        run: |
+          mkdir -p /tmp/jupyter-runtime
+          mkdir -p /tmp/jupyter-data
+          mkdir -p /tmp/.cache
+
       - name: Debug environment
         run: |
           which python
           which jupyter
           python --version
           jupyter kernelspec list
+
+      - name: Debug paths
+        run: |
+          echo $HOME
+          pwd
+          ls -la
+          echo $JUPYTER_RUNTIME_DIR
 
       - name: Build Jupyter Book
         run: |
