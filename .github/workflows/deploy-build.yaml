@@ -2,10 +2,9 @@ name: Deploy Book Preview
 
 on:
   workflow_run:
-    workflows:
-      - "Build Book"
-    types:
-      - completed
+    workflows: ["Build Book"]
+    types: [completed]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -13,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: read
 
     steps:
       - name: Download book artifact
