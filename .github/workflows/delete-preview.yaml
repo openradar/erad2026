@@ -1,7 +1,7 @@
 name: Cleanup PR Preview
 
 on:
-  pull_request:
+  pull_request_target:
     types: [closed]
 
 permissions:
@@ -28,10 +28,8 @@ jobs:
             echo "No preview found"
           fi
 
-      - name: Deploy cleaned gh-pages
-        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453  #v4.1.0
+      - name: Commit the changes
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9  #v7.1.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: .
-          keep_files: false
+          branch: gh-pages
+          commit_message: Delete preview for pull request \#${{ github.event.pull_request.number }}
