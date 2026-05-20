@@ -55,8 +55,18 @@ jobs:
           fi
           zip -r book.zip _build/html
 
+      - name: Write deployment metadata
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "${{ github.event.pull_request.number }}" > pr.txt
+          else
+            echo "main" > pr.txt
+          fi
+
       - name: Upload zipped book artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  #v7.0.1
         with:
           name: book-zip
-          path: ./book.zip
+          path: |
+            ./book.zip
+            ./pr.txt

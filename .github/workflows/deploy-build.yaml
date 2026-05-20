@@ -27,23 +27,23 @@ jobs:
         run: |
           unzip site/book.zip -d site
 
-      - name: Get PR number
-        id: pr
+      - name: Read PR metadata
+        id: meta
         run: |
-          if [ "${{ github.event.workflow_run.event }}" = "pull_request" ]; then
-            echo "NUMBER=${{ github.event.workflow_run.pull_requests[0].number }}" >> $GITHUB_OUTPUT
-          fi
+          PR=$(cat site/pr.txt)
+          echo "pr=$PR" >> $GITHUB_OUTPUT
 
       - name: Deploy PR preview
-        if: steps.pr.outputs.NUMBER != ''
+        if: steps.meta.outputs.pr != 'main'
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453  #v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: site/_build/html
-          destination_dir: _preview/${{ steps.pr.outputs.NUMBER }}
+          destination_dir: _preview/${{ steps.meta.outputs.pr }}
           keep_files: true
 
       - name: Deploy to gh-pages
+        if: steps.meta.outputs.pr == 'main'
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453  #v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
