@@ -28,16 +28,18 @@ jobs:
       env:
         NODE_OPTIONS: "--dns-result-order=ipv4first"
         BASE_URL: /${{ github.event.repository.name }}
-        HOME: /tmp
-        JUPYTER_RUNTIME_DIR: /tmp/jupyter-runtime
-        JUPYTER_DATA_DIR: /tmp/jupyter-data
-        XDG_CACHE_HOME: /tmp/.cache
     defaults:
       run:
         shell: bash -l {0}
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #v6.0.2
+
+      - name: Enable Jupyter root mode workaround
+        run: |
+          mkdir -p .jupyter
+          echo "c.ServerApp.allow_root = True" > .jupyter/jupyter_server_config.py
+          echo "JUPYTER_CONFIG_DIR=$PWD/.jupyter" >> "$GITHUB_ENV"
 
       - name: Set BASE_URL
         run: |
@@ -49,25 +51,12 @@ jobs:
             echo "BASE_URL=/$REPO/" >> $GITHUB_ENV
           fi
 
-      - name: Setup runtime dirs
-        run: |
-          mkdir -p /tmp/jupyter-runtime
-          mkdir -p /tmp/jupyter-data
-          mkdir -p /tmp/.cache
-
       - name: Debug environment
         run: |
           which python
           which jupyter
           python --version
           jupyter kernelspec list
-
-      - name: Debug paths
-        run: |
-          echo $HOME
-          pwd
-          ls -la
-          echo $JUPYTER_RUNTIME_DIR
 
       - name: Build Jupyter Book
         run: |
