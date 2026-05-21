@@ -4,8 +4,18 @@ channels:
 dependencies:
   - python=3.13
   - jupyterlab
-  - jupyterlab-myst
   - jupyter_server
+  - notebook
+  - ipykernel
+  - ipywidgets
+  - jupyterlab_widgets
+  - jupyterlab-myst
+  - mystmd
+  - jupytext
+  - jupyterlab_rise
+  - jupyter-lsp
+  - python-lsp-server
+  - jupyterlab-git
   - sphinx-pythia-theme
   - arm_pyart
   - cartopy
@@ -46,8 +56,6 @@ dependencies:
   # debugging
   - sphinx>=7.4.7
   - sqlite>=3.46.0
-  - mystmd
-  - ipykernel
   - pytest
   - pytest-xdist
   # this is needed for PyDDA performance
@@ -62,5 +70,4 @@ dependencies:
   - rioxarray
   # needed for LROSE / pyrad
   - metpy
-  - jupyterlab_rise
   - pip
