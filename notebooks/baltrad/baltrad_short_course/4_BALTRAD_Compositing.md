@@ -41,6 +41,7 @@ generator.filenames = glob.glob("data/se*.h5")
 # First two arguments are product date and time. These are taken from the last input file if not specified.
 before = time.time()
 comp = generator.generate(None, None, area="swegmaps_2000")
+print(type(comp))
 after = time.time()
 
 rio = _raveio.new()
