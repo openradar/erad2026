@@ -16,4 +16,7 @@
   <url>
     <loc>http://localhost:3000/notebooks/environment</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/presentations/intro-to-open-radar-science</loc>
+  </url>
 </urlset>
