@@ -48,6 +48,11 @@ project:
     - title: Radar Software Foundations
       children:
         - file: presentations/intro-to-open-radar-science.md
+        - title: BALTRAD
+          children:
+            - pattern: notebooks/baltrad/baltrad_short_course/*.md
+            - pattern: notebooks/baltrad/pyart2baltrad/*.md
+            - file: notebooks/baltrad/baltrad2wradlib/baltrad2wradlib.md
 
 site:
   options:
