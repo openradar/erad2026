@@ -33,7 +33,10 @@ import warnings
 warnings.filterwarnings("ignore")  # Suppress SyntaxWarning from Python2 code
 
 generator = compositing.compositing()
-generator.filenames = glob.glob("data/se*.h5")
+files = glob.glob("data/se*.h5")
+print(files)
+generator.filenames = files
+print(type(generator))
 ```
 
 ```{code-cell} ipython3
