@@ -4,9 +4,36 @@ project:
   title: ERAD 2026
   github: https://github.com/openradar/erad2026
   authors:
+    - name: Alfonso Ladino
+      orcid: 0000-0001-8081-7827
+      github: aladinor
+    - name: Brenda Javornik
+      orcid: 0009-0004-9266-9293
+      github: leavesntwigs
+    - name: Daniel Michelson
+      orcid: 0000-0003-3222-9881
+      github: DanielMichelson
     - name: Kai Mühlbauer
       orcid: 0000-0001-6599-1034
       github: kmuehlbauer
+    - name: Maxwell Grover
+      orcid: 0000-0002-0370-8974
+      github: mgrover1
+    - name: Mike Dixon
+      orcid: 0000-0002-9597-9113
+      github: mike-dixon
+    - name: Robert Jackson
+      orcid: 0000-0003-2518-1234
+      github: rcjackson
+    - name: Scott Collis
+      orcid: 0000-0002-2303-687X
+      github: scollis
+    - name: Ting-Yu Cha
+      orcid: 0000-0002-6292-8483
+      github: tingyucha
+    - name: Zachary Sherman
+      orcid: https://orcid.org/0000-0002-6455-8324
+      github: zssherman
   copyright: "2026"
   settings:
     output_matplotlib_strings: remove
