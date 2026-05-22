@@ -31,7 +31,41 @@ import _pycomposite, compositing
 import warnings
 
 warnings.filterwarnings("ignore")  # Suppress SyntaxWarning from Python2 code
+```
 
+```{code-cell} ipython3
+import os
+import urllib.request
+from pathlib import Path
+
+# Set the URL for the cloud
+URL = "https://js2.jetstream-cloud.org:8001/"
+path = "pythia/radar/erad2024/baltrad/baltrad_short_course/"
+!mkdir -p data
+files = [
+    "seang.h5",
+    "searl.h5",
+    "sease.h5",
+    "sehud.h5",
+    "sekir.h5",
+    "sekkr.h5",
+    "selek.h5",
+    "selul.h5",
+    "seosu.h5",
+    "sevar.h5",
+    "sevil.h5",
+]
+for file in files:
+    file0 = os.path.join(path, file)
+    name = os.path.join("data", Path(file).name)
+    if not os.path.exists(name):
+        print(f"downloading, {name}")
+        urllib.request.urlretrieve(
+            f"{URL}{file0}", os.path.join("data", Path(file).name)
+        )
+```
+
+```{code-cell} ipython3
 generator = compositing.compositing()
 files = glob.glob("data/se*.h5")
 print(files)
