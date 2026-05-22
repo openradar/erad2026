@@ -60,7 +60,7 @@ jobs:
 
       - name: Build Jupyter Book
         run: |
-          myst build --execute --ci --html
+          myst build --execute --ci --html --execute-parallel 1
 
       - name: Zip the book
         run: |
