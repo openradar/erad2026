@@ -47,7 +47,7 @@ project:
         - file: notebooks/environment.md
     - title: Radar Software Foundations
       children:
-        - file: presentations/intro-to-open-radar-science.ipynb
+        - file: presentations/intro-to-open-radar-science.md
 
 site:
   options:
