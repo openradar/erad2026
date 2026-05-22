@@ -76,7 +76,7 @@ def radar2raveio(radar):
     obj.height = radar.altitude["data"][0]
     obj.longitude = radar.longitude["data"][0] * dr
     obj.latitude = radar.latitude["data"][0] * dr
-    obj.beamwidth = radar.instrument_parameters["radar_beam_width_h"]["data"][0] * dr
+    obj.beamwidth = float(radar.instrument_parameters["radar_beam_width_h"]["data"][0] * dr)
 
     # record data in each scan
     if radar.nsweeps == 1:
