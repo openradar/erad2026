@@ -106,7 +106,7 @@ def _fillscan(scan, radar, index=0):
     sweep_times = radar.time["data"][startray : stopray + 1]
 
     # Dataset-specific 'where'
-    scan.elangle = radar.elevation["data"][startray] * dr
+    scan.elangle = float(radar.elevation["data"][startray] * dr)
     scan.rstart = float(radar.range["meters_to_center_of_first_gate"])
     scan.rscale = float(radar.range["meters_between_gates"])
     scan.a1gate = int(np.argmin(sweep_times) + startray)
