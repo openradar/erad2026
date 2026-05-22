@@ -19,4 +19,28 @@
   <url>
     <loc>http://localhost:3000/presentations/intro-to-open-radar-science</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-io</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-qc</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-drqc</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-parallel-processing</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-compositing</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/pyart2baltrad/baltrad-pyart-rain-rate-example</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/pyart2baltrad/pyart-baltrad-dealias-example</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/baltrad/baltrad2wradlib/baltrad2wradlib</loc>
+  </url>
 </urlset>
