@@ -45,6 +45,9 @@ project:
       children:
         - file: getting_started.md
         - file: notebooks/environment.md
+    - title: Data Access
+      children:
+        - file: notebooks/data-access/intro-data-access.md
     - title: Radar Software Foundations
       children:
         - file: presentations/intro-to-open-radar-science.md
