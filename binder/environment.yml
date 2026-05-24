@@ -19,6 +19,7 @@ dependencies:
   - sphinx-pythia-theme
   - arm_pyart
   - cartopy
+  - icechunk
   - matplotlib
   - numpy
   - wradlib
