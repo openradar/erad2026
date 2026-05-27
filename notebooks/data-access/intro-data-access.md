@@ -42,8 +42,7 @@ OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
 BUCKET = "nexrad-arco"
 ```
 
-
-+++
+***
 
 ## Part 1: Raw `.vol` file access
 
@@ -89,7 +88,7 @@ sweep0_raw = dtree_raw["/sweep_0"].to_dataset(inherit="all_coords")
 
 If you prefer working with local files, you can download a single timestamp's worth of per-moment files:
 
-```python
+```{code-cell} ipython3
 from pathlib import Path
 
 download_dir = Path("data/fgora_sample")
@@ -103,7 +102,7 @@ for remote in [f for f in fgora_raw if sample_ts in f]:
     print(f"  {local.name}")
 ```
 
-+++
+***
 
 ## Part 2: ARCO Zarr access
 
@@ -163,7 +162,7 @@ print(
 print(f"Moments : {moms}")
 ```
 
-+++
+***
 
 ## Summary
 

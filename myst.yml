@@ -48,6 +48,7 @@ project:
     - title: Data Access
       children:
         - file: notebooks/data-access/intro-data-access.md
+        - file: notebooks/xradar/xradar-basics.md
     - title: Radar Software Foundations
       children:
         - file: presentations/intro-to-open-radar-science.md
@@ -56,6 +57,9 @@ project:
             - pattern: notebooks/baltrad/baltrad_short_course/*.md
             - pattern: notebooks/baltrad/pyart2baltrad/*.md
             - file: notebooks/baltrad/baltrad2wradlib/baltrad2wradlib.md
+        - title: ARM Py-ART
+          children:
+            -file: notebooks/pyart/pyart-basics.md
 
 site:
   options:
