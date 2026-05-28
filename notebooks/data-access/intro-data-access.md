@@ -107,63 +107,60 @@ for remote in [f for f in fgora_raw if sample_ts in f]:
 
 ## Part 2: ARCO Zarr access
 
-The same data as **Analysis-Ready Cloud-Optimized (ARCO) Zarr stores** — pre-merged, pre-aligned, and indexed along a `vcp_time` dimension spanning all three dates (2014, 2017, 2026). Built with [`raw2zarr`](https://github.com/aladinor/raw2zarr) following the [radar-datatree](https://atmoscale.github.io/radar-datatree/index.html) data model by [Atmoscale](https://atmoscale.ai/).
+The same data as **Analysis-Ready Cloud-Optimized (ARCO) Zarr stores** — pre-merged, pre-aligned, and indexed along a `vcp_time` dimension. Each store is an [icechunk](https://icechunk.io/)-versioned Zarr v3 archive following the [radar-datatree](https://atmoscale.github.io/radar-datatree/index.html) data model by [Atmoscale](https://atmoscale.ai/). The top-level group is the task name, with 12 sweep children containing CF-compliant moment arrays indexed by `(vcp_time, azimuth, range)`.
 
-Each store is an [icechunk](https://icechunk.io/)-versioned Zarr v3 archive. The top-level group is the task name, with 12 sweep children containing CF-compliant moment arrays indexed by `(vcp_time, azimuth, range)`.
+**Three stores** are published to keep `range` axes physically consistent — Jastrebac splits across two stores because the 2014 dataset uses 250 m bins (1000 bins → 250 km range) while the 2017 and 2026 datasets use 500 m bins (~500 bins → 250 km range). Merging them into a single `range` axis would mis-label the 500 m data in physical space.
 
-### Open the FGora ARCO store
+| Store prefix | Coverage | Bin width × count |
+|---|---|---|
+| `Fgora/` | FGora, 2014 + 2017 + 2026 | 1000 m × 250 |
+| `jastrebac_250m/` | Jastrebac, 2014 | 250 m × 1000 |
+| `jastrebac_500m/` | Jastrebac, 2017 + 2026 | 500 m × 500 |
+
+### Open one store
+
+Below opens **FGora** (single-pol, spans all three dates). To open one of the Jastrebac stores instead, swap the commented-out `prefix=` line in.
 
 ```{code-cell} ipython3
-fgora_storage = icechunk.s3_storage(
+prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
+# prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
+# prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
+
+storage = icechunk.s3_storage(
     bucket=BUCKET,
-    prefix="fgora",
+    prefix=prefix,
     endpoint_url=OSN_ENDPOINT,
     region="us-east-1",
     anonymous=True,
     force_path_style=True,
 )
-fgora_repo = icechunk.Repository.open(fgora_storage)
-fgora_dt = xr.open_datatree(
-    fgora_repo.readonly_session("main").store,
+repo = icechunk.Repository.open(storage)
+dt = xr.open_datatree(
+    repo.readonly_session("main").store,
     engine="zarr",
     consolidated=False,
     chunks={},
 )
-fgora_dt
+dt
 ```
 
-### Open the Jastrebac ARCO store
+### Inspect dimensions, range axis, and moments
 
 ```{code-cell} ipython3
-jastrebac_storage = icechunk.s3_storage(
-    bucket=BUCKET,
-    prefix="jastrebac",
-    endpoint_url=OSN_ENDPOINT,
-    region="us-east-1",
-    anonymous=True,
-    force_path_style=True,
+task = next(iter(dt.children))  # "DEJSTVO" or "JSTB_250_Dp_leto"
+ds = dt[f"/{task}/sweep_0"].to_dataset()
+rng = ds["range"]
+moms = sorted(
+    v for v in ds.data_vars
+    if v not in {"sweep_fixed_angle", "ray_elevation_angle", "sweep_number"}
 )
-jastrebac_repo = icechunk.Repository.open(jastrebac_storage)
-jastrebac_dt = xr.open_datatree(
-    jastrebac_repo.readonly_session("main").store,
-    engine="zarr",
-    consolidated=False,
-    chunks={},
+print(f"Task    : /{task}")
+print(f"Dims    : {dict(ds.sizes)}")
+print(
+    f"Range   : {int(rng.size)} bins @ {float(rng[1] - rng[0]):.0f} m"
+    f"  (first gate {float(rng[0]):.0f} m, last {float(rng[-1]):.0f} m)"
 )
-jastrebac_dt
-```
-
-### Inspect sweep dimensions and moments
-
-```{code-cell} ipython3
-for name, dt, task in [
-    ("FGora", fgora_dt, "DEJSTVO"),
-    ("Jastrebac", jastrebac_dt, "JSTB_250_Dp_leto"),
-]:
-    ds = dt[f"/{task}/sweep_0"].to_dataset()
-    moms = sorted(v for v in ds.data_vars
-                  if v not in {"sweep_fixed_angle", "ray_elevation_angle", "sweep_number"})
-    print(f"{name:<12s} /{task}  dims={dict(ds.sizes)}  moments={moms}")
+print(f"Moments : {moms}")
 ```
 
 +++
@@ -172,17 +169,16 @@ for name, dt, task in [
 
 | | Raw `.vol` files | ARCO Zarr (icechunk) |
 |---|---|---|
-| **Location** | `s3://nexrad-arco/{site}_vol/{date}/*.vol` | `s3://nexrad-arco/{site}/` |
+| **Location** | `s3://nexrad-arco/{site}_vol/{date}/*.vol` | `s3://nexrad-arco/{Fgora, jastrebac_250m, jastrebac_500m}/` |
 | **Format** | Rainbow binary (one moment per file) | Zarr v3, chunked, CF-compliant |
 | **Access** | `fsspec.open_local` + `xradar` | `icechunk` + `xr.open_datatree` |
 | **Time indexing** | Manual (parse filenames) | Built-in `vcp_time` dimension |
 | **Best for** | Re-processing, format-specific QC | Analysis, visualization, ML |
-| **Coverage** | 3 dates × 2 sites (1188 files) | 3 dates × 2 sites (196 volumes) |
+| **Coverage** | 3 dates × 2 sites (1188 files) | FGora 3 dates + Jastrebac 2014 (250 m grid) + Jastrebac 2017/2026 (500 m grid) — 3 stores, 196 volumes total |
 
 ### References
 
 - [radar-datatree](https://atmoscale.github.io/radar-datatree/index.html) — hierarchical data model for ARCO radar archives
 - [Atmoscale](https://atmoscale.ai/) — cloud-native weather radar infrastructure
-- [raw2zarr](https://github.com/aladinor/raw2zarr) — the conversion pipeline that produced these stores
 - [icechunk](https://icechunk.io/) — version-controlled Zarr storage
 - [xradar](https://docs.openradarscience.org/projects/xradar/) — xarray-based radar I/O library
