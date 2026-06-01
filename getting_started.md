@@ -25,3 +25,20 @@ If you need a connection to the outside world, you can mount local folders and e
 $ docker run -ti --name erad2026 -p 8888:8888 -v /host/path/to/your/folder:/home/your/folder -e LOCAL_USER_ID=$UID -e YOUR_ENV_VAR=your_env_var ghcr.io/openradar/erad2026:latest /srv/conda/envs/notebook/bin/jupyter lab --ip='*' --port=8888
 
 ```
+
+## Known issues
+
+### Slideshows not working
+
+Slideshows do not work when @pyviz/jupyterlab_pyviz is enabled. A temporary fix is to disable it in the running jupyterlab instance (eg in a terminal):
+
+```bash
+$ jupyter labextension disable @pyviz/jupyterlab_pyviz
+```
+
+Then, the rise reveal.js slideshow can be run. Afterwards, you might enable it again:
+
+```bash
+$ jupyter labextension enable @pyviz/jupyterlab_pyviz
+```
+
