@@ -7,12 +7,18 @@ project:
     - name: Alfonso Ladino
       orcid: 0000-0001-8081-7827
       github: aladinor
+    - name: Anna del Moral Méndez
+      orcid: 0000-0002-5015-840X
+      github: adelmoral2
     - name: Brenda Javornik
       orcid: 0009-0004-9266-9293
       github: leavesntwigs
     - name: Daniel Michelson
       orcid: 0000-0003-3222-9881
       github: DanielMichelson
+    - name: Jen DeHart
+      orcid: 0000-0001-8536-4927
+      github: jcdehart
     - name: Kai Mühlbauer
       orcid: 0000-0001-6599-1034
       github: kmuehlbauer
@@ -32,7 +38,7 @@ project:
       orcid: 0000-0002-6292-8483
       github: tingyucha
     - name: Zachary Sherman
-      orcid: https://orcid.org/0000-0002-6455-8324
+      orcid: 0000-0002-6455-8324
       github: zssherman
   copyright: "2026"
   settings:
