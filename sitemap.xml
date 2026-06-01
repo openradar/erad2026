@@ -20,6 +20,9 @@
     <loc>http://localhost:3000/notebooks/data-access/intro-data-access</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/notebooks/xradar/xradar-basics</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/presentations/intro-to-open-radar-science</loc>
   </url>
   <url>
@@ -45,5 +48,8 @@
   </url>
   <url>
     <loc>http://localhost:3000/notebooks/baltrad/baltrad2wradlib/baltrad2wradlib</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/pyart/pyart-basics</loc>
   </url>
 </urlset>
