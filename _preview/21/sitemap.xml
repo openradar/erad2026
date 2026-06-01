@@ -49,4 +49,7 @@
   <url>
     <loc>http://localhost:3000/notebooks/baltrad/baltrad2wradlib/baltrad2wradlib</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/pyart/pyart-basics</loc>
+  </url>
 </urlset>
