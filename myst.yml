@@ -43,6 +43,8 @@ project:
   copyright: "2026"
   settings:
     output_matplotlib_strings: remove
+  references:
+    wradlib: https://docs.wradlib.org/en/latest/
   toc:
     - file: README.md
     - file: notebooks/how_to_cite.md
@@ -69,6 +71,9 @@ project:
             - file: notebooks/pyart/pyart-basics.md
             - file: notebooks/pyart/pyart-corrections.md
             - file: notebooks/pyart/pyart-gridding.md
+    - title: Radar Processing Workflow
+      children:
+        - file: notebooks/workflow/inspect_source_data_fgora.md
 
 site:
   options:
