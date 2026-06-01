@@ -59,7 +59,7 @@ project:
             - file: notebooks/baltrad/baltrad2wradlib/baltrad2wradlib.md
         - title: ARM Py-ART
           children:
-            -file: notebooks/pyart/pyart-basics.md
+            - file: notebooks/pyart/pyart-basics.md
 
 site:
   options:
