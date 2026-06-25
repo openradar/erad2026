@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-<img src="../images/logos/arm_logo.png" width=500 alt="ARM Logo"></img>
+<img src="../../images/logos/arm_logo.png" width=500 alt="ARM Logo"></img>
 
 +++
 
@@ -339,7 +339,7 @@ display.plot_ppi_map('velocity',
                      vmax=30,
                      projection=ccrs.PlateCarree(),
                      colorbar_label='Radial Velocity (m/s)',
-                     cmap='pyart_balance')
+                     cmap='balance')
 
 ax2 = plt.subplot(2,1,2,projection=ccrs.PlateCarree())
 
@@ -355,7 +355,7 @@ display.plot_ppi_map('corrected_velocity',
                      projection=ccrs.PlateCarree(),
                      gatefilter=gatefilter,
                      colorbar_label='Radial Velocity (m/s)',
-                     cmap='pyart_balance')
+                     cmap='balance')
 plt.show()
 ```
 

@@ -6,9 +6,9 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.19.3
 kernelspec:
-  display_name: Python 3
-  language: python
   name: python3
+  display_name: Python 3 (ipykernel)
+  language: python
 ---
 
 <img src="../images/logos/arm_logo.png" width=500 alt="ARM Logo"></img>
@@ -83,7 +83,6 @@ Gridding is essential to combining multiple data sources (ex. multiple radars), 
 - How smooth should my interpolated data be?
 
 While there is not always a right or wrong answer, it is important to understand the options available, and document which routine you used with your data! Also - experiment with different options and choose the best for your use case!
-
 
 +++
 
