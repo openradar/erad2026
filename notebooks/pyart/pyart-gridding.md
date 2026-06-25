@@ -54,12 +54,15 @@ import warnings
 
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
-
-
+import fsspec
+import re
 import pyart
 from pyart.testing import get_test_data
+from datetime import datetime
 import xarray as xr
 
+OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
+BUCKET = "nexrad-arco"
 warnings.filterwarnings('ignore')
 ```
 
@@ -91,21 +94,41 @@ Let's dig into the regridding process with PyART!
 
 +++
 
-### Read in and Visualize a Test Dataset
-Let's start with the same file used in the previous notebook (`PyART Basics`), which is a radar file from Northern Oklahoma.
+## Read in the Data and Plot the Data
+
++++
+
+### Read in a sample file from the Fruska Gora (FGora) radar
+Our data is formatted as a Rainbow file used by Leonardo radars. We will download the data locally so that Py-ART's Rainbow reader can read the files.
 
 ```{code-cell} ipython3
-file = "../../data/uah-armor/RAW_NA_000_125_20080411182229"
-radar = pyart.io.read(file)
+from pathlib import Path
+fs = fsspec.filesystem(
+    "s3", anon=True, client_kwargs={"endpoint_url": OSN_ENDPOINT},
+)
+fgora_raw = sorted(fs.glob(f"{BUCKET}/fgora_vol/**/*.vol"))
+download_dir = Path("data/fgora_sample")
+download_dir.mkdir(parents=True, exist_ok=True)
+
+sample_ts = "2014051500012000"
+for remote in [f for f in fgora_raw if sample_ts in f]:
+    local = download_dir / Path(remote).name
+    if not local.exists():
+        fs.get(remote, str(local))
+    print(f"  {local.name}")
+```
+
+```{code-cell} ipython3
+radar = pyart.aux_io.read_rainbow_wrl('data/fgora_sample/2014051500012000dBZ.vol')
 ```
 
 Let's plot up quick look of reflectivity, at the lowest elevation scan (closest to the ground)
 
 ```{code-cell} ipython3
-fig = plt.figure(figsize=[12, 12])
+fig = plt.figure(figsize=[6, 6])
 display = pyart.graph.RadarDisplay(radar)
-display.plot_ppi('reflectivity',
-                 cmap='pyart_HomeyerRainbow')
+display.plot_ppi('reflectivity', 
+                 cmap='HomeyerRainbow')
 ```
 
 As mentioned before, the dataset is currently in the **antenna coordinate system** measured as distance from the radar
@@ -182,11 +205,7 @@ grid = pyart.map.grid_from_radars(radar,
                                                y_grid_limits,
                                                x_grid_limits),
                                   fields=['reflectivity'],
-                                  gridding_algo='map_gates_to_grid',
-                                  h_factor=0.,
-                                  nb=0.6,
-                                  bsp=1.,
-                                  min_radius=200.
+                                  min_radius=500.
                                  )
 grid
 ```
@@ -203,10 +222,10 @@ We can use the `GridMapDisplay` from `pyart.graph` to visualize our regridded da
 ```{code-cell} ipython3
 display = pyart.graph.GridMapDisplay(grid)
 display.plot_grid('reflectivity',
-                  level=2,
+                  level=3,
                   vmin=-20,
                   vmax=60,
-                  cmap='pyart_HomeyerRainbow')
+                  cmap='HomeyerRainbow')
 ```
 
 #### Plot a Latitudinal Slice
@@ -217,10 +236,10 @@ We can also slice through a single latitude or longitude!
 
 ```{code-cell} ipython3
 display.plot_latitude_slice('reflectivity',
-                            lat=35.1,
+                            lat=45.15,
                             vmin=-20,
                             vmax=60,
-                            cmap='pyart_HomeyerRainbow')
+                            cmap='HomeyerRainbow')
 plt.xlim([-20, 20]);
 ```
 
@@ -238,7 +257,7 @@ ds
 Now, our plotting routine is a **one-liner**, starting with the horizontal slice:
 
 ```{code-cell} ipython3
-ds.isel(z=2).reflectivity.plot(cmap='pyart_HomeyerRainbow',
+ds.isel(z=2).reflectivity.plot(cmap='HomeyerRainbow',
                                vmin=-20,
                                vmax=60);
 ```
@@ -247,12 +266,14 @@ And a vertical slice at a given y dimension (latitude)
 
 ```{code-cell} ipython3
 ds.sel(y=-3000,
-       method='nearest').reflectivity.plot(cmap='pyart_HomeyerRainbow',
+       method='nearest').reflectivity.plot(cmap='HomeyerRainbow',
                                            vmin=-20,
                                            vmax=60);
 ```
 
 ### Try a Different Gridding Technique
+
+In the previous section, we used the Barnes interpolation technique for interpolating the radar data to Cartesian coordinates. Such an interpolation, while producing smoother grids, can blur out mesoscale phenomena that occur on the scale of the grid resolution such as gust fronts and hail cores. Therefore, to capture these more extreme events, a nearest neighbor interpolation is desired to capture these events at the expense of a noisier grid.
 
 ```{code-cell} ipython3
 nearest_grid = pyart.map.grid_from_radars(radar,
@@ -264,28 +285,16 @@ nearest_grid = pyart.map.grid_from_radars(radar,
                                                x_grid_limits),
                                   fields=['reflectivity'],
                                   weighting_function='Nearest',
-                                  nb=0.6,
-                                  bsp=1.,
-                                  min_radius=200.
+                                  min_radius=500.
                                  )
 ```
 
 ```{code-cell} ipython3
 display.plot_latitude_slice('reflectivity',
-                            lat=35.1,
+                            lat=45.1,
                             vmin=-20,
                             vmax=60,
-                            cmap='pyart_HomeyerRainbow')
-plt.xlim([-20, 20]);
-```
-
-```{code-cell} ipython3
-display = pyart.graph.GridMapDisplay(nearest_grid)
-display.plot_latitude_slice('reflectivity',
-                            lat=35.1,
-                            vmin=-20,
-                            vmax=60,
-                            cmap='pyart_HomeyerRainbow')
+                            cmap='HomeyerRainbow')
 plt.xlim([-20, 20]);
 ```
 
@@ -308,9 +317,9 @@ def grid_radar_data(infile, outdir, grid_resolution=500):
     =======
     print statement with saved file
     """
-    
+
     # Read the data
-    radar = pyart.io.read(infile)
+    radar = pyart.aux_io.read_rainbow_wrl(infile)
     
     # Configure the bounds + compute points
     z_grid_limits = (0.,15_000.)
@@ -331,13 +340,11 @@ def grid_radar_data(infile, outdir, grid_resolution=500):
                                                x_grid_limits),
                                   fields=['reflectivity'],
                                   weighting_function='Nearest',
-                                  nb=0.6,
-                                  bsp=1.,
-                                  min_radius=200.
+                                  min_radius=grid_resolution
                                  )
     
     infile_path = Path(infile)
-    
+    os.makedirs(outdir, exist_ok=True)
     outfile = f"{outdir}/{infile_path.stem}.nc"
     
     # Save to disk
@@ -347,59 +354,36 @@ def grid_radar_data(infile, outdir, grid_resolution=500):
 ```
 
 ```{code-cell} ipython3
-import fsspec
+fs = fsspec.filesystem(
+    "s3", anon=True, client_kwargs={"endpoint_url": OSN_ENDPOINT},
+)
 
-fs = fsspec.filesystem("https")
+# Can replace this prefix to jastrebac_vol get the Jastrebac radar
+prefix = "fgora_vol"
+files = sorted(fs.glob(f"{BUCKET}/{prefix}/**/*.vol"))
+pat = re.compile(r'/(\d{14})\d{2}[A-Za-z]+\.vol$')
+times = sorted({m.group(1) for f in files if (m := pat.search(f))})
+dBz_files = [x for x in files if "dBZ" in x]
 ```
 
 ```{code-cell} ipython3
-files = ["RAW_NA_000_125_20080411181219",
-         "RAW_NA_000_125_20080411181722",
-         "RAW_NA_000_125_20080411182229",
-         "RAW_NA_000_125_20080411182732",
-         "RAW_NA_000_125_20080411183259",
-         "RAW_NA_000_125_20080411183827",
-         "RAW_NA_000_125_20080411184409",
-         "RAW_NA_000_125_20080411184937",
-         "RAW_NA_000_125_20080411185504",
-         "RAW_NA_000_125_20080411190016",
-         "RAW_NA_000_125_20080411190525",
-         "RAW_NA_000_125_20080411191031",
-         "RAW_NA_000_125_20080411191548",
-         "RAW_NA_000_125_20080411192104",
-         "RAW_NA_000_125_20080411192613",
-         "RAW_NA_000_125_20080411193127",
-         "RAW_NA_000_125_20080411193638",
-         "RAW_NA_000_125_20080411194151",
-         "RAW_NA_000_125_20080411194703",
-         "RAW_NA_000_125_20080411195218",
-         "RAW_NA_000_125_20080411195728",
-         "RAW_NA_000_125_20080411200416",
-         "RAW_NA_000_125_20080411200945",
-         "RAW_NA_000_125_20080411201520",
-         "RAW_NA_000_125_20080411202047"
-        ]
+def download_file(remote, download_dir=Path("data/fgora_sample")):
+    local = download_dir / Path(remote).name
+    if not local.exists():
+        fs.get(remote, str(local))
+    return str(local)
 ```
 
 ```{code-cell} ipython3
-import urllib.request
-import glob
-```
-
-```{code-cell} ipython3
-def download_file(file, outdir='../../data/uah-armor/'):
-    urllib.request.urlretrieve(f"https://github.com/openradar/open-radar-data/raw/main/data/{file}", f"{outdir}{file}")
-    return f"{outdir}{file}"
-```
-
-```{code-cell} ipython3
-downloaded_files = [download_file(file) for file in files]
+downloaded_files = [download_file(file) for file in dBz_files]
+# Let's just target a single date. We have 2014-05-15, 2017-08-12, and 2026-05-12
+data_date = "20140515"
+downloaded_files = [x for x in downloaded_files if data_date in x]
 ```
 
 ```{code-cell} ipython3
 gridded_data = [grid_radar_data(file,
-                                "../../data/uah-armor/gridded") for file in downloaded_files]
-    
+                                "../../data/fgora/gridded_dBZ/") for file in downloaded_files]
 ```
 
 ### Read in the Gridded Data and Plot It

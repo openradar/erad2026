@@ -3,11 +3,12 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: '1.3'
-    jupytext_version: 1.19.1
+    format_version: 0.13
+    jupytext_version: 1.19.3
 kernelspec:
-  name: python3  
-  display_name: Python 3
+  name: python3
+  display_name: Python 3 (ipykernel)
+  language: python
 ---
 
 ```{image} ../../images/logos/arm_logo.png
@@ -227,7 +228,7 @@ We add the following arguements:
 - `vmin=-20` - Minimum value for our plotted field/colorbar
 - `vmax=60` - Maximum value for our plotted field/colorbar
 - `projection=ccrs.PlateCarree()` - Cartopy latitude/longitude coordinate system
-- `cmap='pyart_HomeyerRainbow'` - Colormap to use, selecting one provided by PyART 
+- `cmap='pyart_HomeyerRainbow'` - Colormap to use, selecting one provided by PyART
 
 ```{code-cell} ipython3
 fig = plt.figure(figsize=[12, 12])
