@@ -16,11 +16,12 @@ kernelspec:
 :alt: wradlib Logo
 ```
 
-# Inspect Source Data - Fruŝka Gora
+# Inspect Source Data - Jastrebac
 
-Fruŝka Gora radar is located in a small low mountain range of the same name [Fruška_Gora](wiki:Fruška_Gora) on the right bank of the Danube, south of Novi Sad.
+Jastrebac radar is located on top of the mountain range of the same name [](wiki:Jastrebac) west of Niŝ.
 
 ```{code-cell} ipython3
+import cmweather
 import numpy as np
 import wradlib as wrl
 import matplotlib.pyplot as plt
@@ -56,7 +57,8 @@ for site, prefix in [("FGora", "fgora_vol"), ("Jastrebac", "jastrebac_vol")]:
 ```
 
 ```{code-cell} ipython3
-prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
+prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
+# prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
 
 storage = icechunk.s3_storage(
     bucket=BUCKET,
@@ -84,9 +86,9 @@ First we get the lowest sweep and do some georeferencing using [](xref:wradlib#g
 
 ```{code-cell} ipython3
 swp = (
-    dtree["DEJSTVO/sweep_0"]
+    dtree["JSTB_250_Dp_leto/sweep_0"]
     .to_dataset()
-    .assign_coords(dtree["DEJSTVO"].coords)
+    .assign_coords(dtree["JSTB_250_Dp_leto"].coords)
     .assign_coords(sweep_mode="azimuth_surveillance")
     .wrl.georef.georeference(crs=wrl.georef.get_earth_projection())
 )
@@ -151,7 +153,7 @@ domain = ring.hvplot(
 To visualize the scan pattern, we use select a single volume and use [](xref:wradlib#generated/wradlib.vis.plot_scan_strategy).
 
 ```{code-cell} ipython3
-svol = dtree.DEJSTVO.isel(vcp_time=0)
+svol = dtree.JSTB_250_Dp_leto.isel(vcp_time=0)
 display(svol)
 for c, v in svol.coords.items():
     print(c, v.values)
@@ -162,7 +164,6 @@ for c in sorted(svol.children, key=lambda x: int(x.split("_")[-1])):
 ```{code-cell} ipython3
 ax = svol.wrl.vis.plot_scan_strategy()
 ```
-
 
 ## Overview Plot
 
@@ -233,6 +234,84 @@ layout = (dbth + dbzh + vradh + wradh).cols(2)
 layout
 ```
 
-```{code-cell} ipython3
+## Overview Polarimetric Data
 
+### Matplotlib
+
+Select a time slot and plot four polarimetric radar moments!
+
+```{code-cell} ipython3
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex=True, sharey=True, figsize=(12, 10))
+dbz_min, dbz_max = (0, 50)
+
+swp_sel = swp.sel(vcp_time="2014-05-15T00:01:50", method="nearest")
+
+swp_sel.ZDR.wrl.vis.plot(ax=ax1, vmin=-0.5, vmax=5)
+ax1.set_title("ZDR")
+swp_sel.RHOHV.wrl.vis.plot(ax=ax2, cmap="plasmidis")
+ax2.set_title("RHOHV")
+swp_sel.PHIDP.wrl.vis.plot(ax=ax3, vmin=0, vmax=60, cmap="ChaseSpectral")
+ax3.set_title("PHIDP")
+swp_sel.KDP.wrl.vis.plot(ax=ax4, vmin=-0.5, vmax=2)
+ax4.set_title("KDP")
+#
+fig.tight_layout()
+```
+
+### Bokeh
+
+```{note} Time slider only working in running notebook
+```
+
+```{code-cell} ipython3
+hv.extension('bokeh')
+hv.output(widget_location="bottom")
+
+swpx = swp.chunk()
+
+zdr_opts = dict(
+    cmap="HomeyerRainbow", 
+    clim=(-0.5, 5), 
+    aspect=1
+)
+
+rho_opts = dict(
+    cmap="plasmidis", 
+    clim=(0.0, 1.0), 
+    aspect=1
+)
+
+phi_opts = dict(
+    cmap="Seismic", 
+    clim=(0, 60), 
+    aspect=1
+)
+
+kdp_opts = dict(
+    cmap="Seismic", 
+    clim=(-0.5, 2), 
+    aspect=1
+)
+
+
+zdr = (
+    swpx.hvplot.quadmesh(groupby="vcp_time", x="x", y="y", z="ZDR", frame_width=250, rasterize=True)   
+).opts(axiswise=False, xaxis=None, **zdr_opts)
+
+rhohv = (
+    swpx.hvplot.quadmesh(groupby="vcp_time", x="x", y="y", z="RHOHV", frame_width=250, rasterize=True)   
+).opts(axiswise=False, xaxis=None, yaxis=None, **rho_opts)
+
+phidp = (
+    swpx.hvplot.quadmesh(groupby="vcp_time", x="x", y="y", z="PHIDP", frame_width=250, rasterize=True)   
+).opts(axiswise=False, **phi_opts)
+
+kdp = (
+    swpx.hvplot.quadmesh(groupby="vcp_time", x="x", y="y", z="KDP", frame_width=250, rasterize=True)   
+).opts(axiswise=False, yaxis=None, **kdp_opts)
+
+
+
+layout = (zdr + rhohv + phidp + kdp).cols(2)
+layout
 ```

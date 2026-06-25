@@ -61,11 +61,11 @@ project:
     - title: Radar Software Foundations
       children:
         - file: presentations/intro-to-open-radar-science.md
-        - title: BALTRAD
-          children:
-            - pattern: notebooks/baltrad/baltrad_short_course/*.md
-            - pattern: notebooks/baltrad/pyart2baltrad/*.md
-            - file: notebooks/baltrad/baltrad2wradlib/baltrad2wradlib.md
+#        - title: BALTRAD
+#          children:
+#            - pattern: notebooks/baltrad/baltrad_short_course/*.md
+#            - pattern: notebooks/baltrad/pyart2baltrad/*.md
+#            - file: notebooks/baltrad/baltrad2wradlib/baltrad2wradlib.md
         - title: ARM Py-ART
           children:
             - file: notebooks/pyart/pyart-basics.md
@@ -74,6 +74,8 @@ project:
     - title: Radar Processing Workflow
       children:
         - file: notebooks/workflow/inspect_source_data_fgora.md
+        - file: notebooks/workflow/inspect_source_data_jastrebac.md
+        - file: notebooks/workflow/dem_beamblockage.md
 
 site:
   options:
