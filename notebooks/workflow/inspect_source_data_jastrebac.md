@@ -11,12 +11,40 @@ kernelspec:
   name: python3
 ---
 
+::::{grid} 4
+
+:::{grid-item}
+```{image} ../../images/logos/radar_datatree.png
+:width: 150px
+:alt: radar datatree Logo
+```
+:::
+
+:::{grid-item}
+```{image} ../../images/logos/xradar_logo.svg
+:width: 150px
+:alt: xradar Logo
+```
+:::
+
+:::{grid-item}
+```{image} ../../images/logos/Xarray_Icon_Final.svg
+:width: 150px
+:alt: xarray Logo
+```
+:::
+
+:::{grid-item}
 ```{image} ../../images/logos/wradlib_logo.svg.png
 :width: 125px
 :alt: wradlib Logo
 ```
+:::
 
-# Inspect Source Data - Jastrebac
+::::
+
+
+# Inspect Dual Pol Data - Jastrebac
 
 Jastrebac radar is located on top of the mountain range of the same name [](wiki:Jastrebac) west of Niŝ.
 
@@ -82,7 +110,12 @@ display(dtree)
 
 ### Get lowest elevation sweep
 
-First we get the lowest sweep and do some georeferencing using [](xref:wradlib#generated/wradlib.georef.polar.georeference) and [](xref:wradlib#generated/wradlib.georef.projection.get_earth_projection).
+First we get the lowest sweep and do some georeferencing.
+
+```{seealso}
+- [](xref:wradlib#generated/wradlib.georef.polar.georeference)
+- [](xref:wradlib#generated/wradlib.georef.projection.get_earth_projection)
+```
 
 ```{code-cell} ipython3
 swp = (
@@ -150,7 +183,11 @@ domain = ring.hvplot(
 
 ## Scan pattern
 
-To visualize the scan pattern, we use select a single volume and use [](xref:wradlib#generated/wradlib.vis.plot_scan_strategy).
+TTo visualize the scan pattern we just select a single volume. 
+
+```{seealso}
+[](xref:wradlib#generated/wradlib.vis.plot_scan_strategy).
+```
 
 ```{code-cell} ipython3
 svol = dtree.JSTB_250_Dp_leto.isel(vcp_time=0)
@@ -293,7 +330,6 @@ kdp_opts = dict(
     aspect=1
 )
 
-
 zdr = (
     swpx.hvplot.quadmesh(groupby="vcp_time", x="x", y="y", z="ZDR", frame_width=250, rasterize=True)   
 ).opts(axiswise=False, xaxis=None, **zdr_opts)
@@ -309,8 +345,6 @@ phidp = (
 kdp = (
     swpx.hvplot.quadmesh(groupby="vcp_time", x="x", y="y", z="KDP", frame_width=250, rasterize=True)   
 ).opts(axiswise=False, yaxis=None, **kdp_opts)
-
-
 
 layout = (zdr + rhohv + phidp + kdp).cols(2)
 layout

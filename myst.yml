@@ -44,7 +44,10 @@ project:
   settings:
     output_matplotlib_strings: remove
   references:
+    gdal: https://gdal.org/en/stable/
+    pyproj: https://pyproj4.github.io/pyproj/stable/
     wradlib: https://docs.wradlib.org/en/latest/
+    scipy: https://docs.scipy.org/doc/scipy/
   toc:
     - file: README.md
     - file: notebooks/how_to_cite.md
@@ -72,11 +75,14 @@ project:
             - file: notebooks/pyart/pyart-corrections.md
             - file: notebooks/pyart/pyart-gridding.md
     - title: Radar Processing Workflow
+    - file: notebooks/workflow/workflow_overview.md
+      title: Radar Processing Workflow
       children:
         - file: notebooks/workflow/inspect_source_data_fgora.md
         - file: notebooks/workflow/inspect_source_data_jastrebac.md
         - file: notebooks/workflow/dem_beamblockage.md
-
+        - file: notebooks/workflow/gridding_data.md
+        - file: notebooks/workflow/composite_togrid.md
 site:
   options:
      folders: true

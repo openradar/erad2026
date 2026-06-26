@@ -11,12 +11,40 @@ kernelspec:
   name: python3
 ---
 
+::::{grid} 4
+
+:::{grid-item}
+```{image} ../../images/logos/radar_datatree.png
+:width: 150px
+:alt: radar datatree Logo
+```
+:::
+
+:::{grid-item}
+```{image} ../../images/logos/xradar_logo.svg
+:width: 150px
+:alt: xradar Logo
+```
+:::
+
+:::{grid-item}
+```{image} ../../images/logos/Xarray_Icon_Final.svg
+:width: 150px
+:alt: xarray Logo
+```
+:::
+
+:::{grid-item}
 ```{image} ../../images/logos/wradlib_logo.svg.png
 :width: 125px
 :alt: wradlib Logo
 ```
+:::
 
-# Inspect Source Data - Fruŝka Gora
+::::
+
+
+# Inspect Single Pol Data - Fruŝka Gora
 
 Fruŝka Gora radar is located in a small low mountain range of the same name [Fruška_Gora](wiki:Fruška_Gora) on the right bank of the Danube, south of Novi Sad.
 
@@ -80,7 +108,12 @@ display(dtree)
 
 ### Get lowest elevation sweep
 
-First we get the lowest sweep and do some georeferencing using [](xref:wradlib#generated/wradlib.georef.polar.georeference) and [](xref:wradlib#generated/wradlib.georef.projection.get_earth_projection).
+First we get the lowest sweep and do some georeferencing.
+
+```{seealso}
+- [](xref:wradlib#generated/wradlib.georef.polar.georeference)
+- [](xref:wradlib#generated/wradlib.georef.projection.get_earth_projection)
+```
 
 ```{code-cell} ipython3
 swp = (
@@ -148,7 +181,12 @@ domain = ring.hvplot(
 
 ## Scan pattern
 
-To visualize the scan pattern, we use select a single volume and use [](xref:wradlib#generated/wradlib.vis.plot_scan_strategy).
+To visualize the scan pattern we just select a single volume. 
+
+```{seealso}
+[](xref:wradlib#generated/wradlib.vis.plot_scan_strategy).
+```
+
 
 ```{code-cell} ipython3
 svol = dtree.DEJSTVO.isel(vcp_time=0)
@@ -162,7 +200,6 @@ for c in sorted(svol.children, key=lambda x: int(x.split("_")[-1])):
 ```{code-cell} ipython3
 ax = svol.wrl.vis.plot_scan_strategy()
 ```
-
 
 ## Overview Plot
 
@@ -184,6 +221,9 @@ swp_sel.WRADH.wrl.vis.plot(ax=ax4, vmin=0, vmax=6)
 ax4.set_title("WRADH")
 
 fig.tight_layout()
+```
+
+```{note} Time slider only working in running notebook
 ```
 
 ```{code-cell} ipython3
@@ -227,12 +267,6 @@ wradh = (
     swpx.hvplot.quadmesh(groupby="vcp_time", x="x", y="y", z="WRADH", frame_width=250, rasterize=True)   
 ).opts(axiswise=False, yaxis=None, **vrad_opts)
 
-
-
 layout = (dbth + dbzh + vradh + wradh).cols(2)
 layout
-```
-
-```{code-cell} ipython3
-
 ```

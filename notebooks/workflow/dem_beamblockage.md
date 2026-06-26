@@ -11,12 +11,46 @@ kernelspec:
   name: python3
 ---
 
+::::{grid} 5
+
+:::{grid-item}
+```{image} ../../images/logos/radar_datatree.png
+:width: 150px
+:alt: radar datatree Logo
+```
+:::
+
+:::{grid-item}
+```{image} ../../images/logos/xradar_logo.svg
+:width: 150px
+:alt: xradar Logo
+```
+:::
+
+:::{grid-item}
+```{image} ../../images/logos/Xarray_Icon_Final.svg
+:width: 150px
+:alt: xarray Logo
+```
+:::
+
+:::{grid-item}
+```{image} ../../images/logos/GDALLogoColor.svg
+:width: 150px
+:alt: GDAL Logo
+```
+:::
+
+:::{grid-item}
 ```{image} ../../images/logos/wradlib_logo.svg.png
 :width: 125px
 :alt: wradlib Logo
 ```
+:::
 
-# DEM and beam blockage
+::::
+
+# Terrain and Beam Blockage
  
 ---
 
@@ -47,12 +81,13 @@ import xarray as xr
 import xradar as xd
 import fsspec
 import icechunk
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning)
 ```
 
-## Retrieve data from s3 bucket
+## Claim Data
 
 The examples in this notebook can be run with different radar datasets. Select the desired dataset by setting the `prefix` variable below. The available options include a single-polarization volume from Fruška Gora (`fgora_vol`) and dual-polarization volumes from Jastrebac at different range resolutions (`jastrebac_250m` and `jastrebac_500m`). All subsequent processing steps will automatically use the selected dataset.
-
 
 ```{code-cell} ipython3
 OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
@@ -122,6 +157,11 @@ The individual DEM tiles are merged into a single seamless raster using GDAL. Th
 
 The merged DEM is opened using Rasterio and exposed as an Xarray dataset. This provides labeled coordinates and enables convenient analysis and integration with downstream geospatial workflows.
 
+```{seealso}
+- [](xref:wradlib#generated/wradlib.io.dem.srtm_merge)
+- [](xref:gdal#api/python/utilities)
+```
+
 ```{code-cell} ipython3
 from botocore import UNSIGNED
 from botocore.config import Config
@@ -176,6 +216,11 @@ display(dem)
 
 We interpolate the raster DEM onto the polar radar grid so that each radar gate is assigned a corresponding elevation value. The resulting DEM layer is then added to the radar sweep dataset, enabling joint analysis of radar measurements and terrain information.
 
+```{seealso}
+- [](xref:wradlib#generated/wradlib.ipol.IpolMethods.interpolate)
+- [scipy.ndimage.map_coordinates](xref:scipy#reference/generated/scipy.ndimage.map_coordinates)
+```
+
 ```{code-cell} ipython3
 dem_polar = dem.DEM.chunk(x=-1, y=-1).wrl.ipol.interpolate(swp.isel(vcp_time=0, range=slice(0, 1000)), method="map_coordinates", order=1)
 display(dem_polar)
@@ -193,6 +238,11 @@ swp.DEM.wrl.vis.plot(vmin=0, cmap="terrain")
 
 We compute partial beam blockage (PBB) and cumulative beam blockage (CBB) using the interpolated DEM in radar sweep coordinates. Following [](http://dx.doi.org/10.1175/1520-0426%282003%29020%3C0845:TSOSPW%3E2.0.CO;2), the terrain influence on the radar beam is quantified by estimating how much of the beam is obstructed along each radial path, first as a local (partial) blockage fraction and then accumulated along the beam path.
 
+```{seealso}
+- [](xref:wradlib#generated/wradlib.qual.beam_block_frac)
+- [](xref:wradlib#generated/wradlib.qual.cum_beam_block_frac)
+```
+
 ```{code-cell} ipython3
 bw = 0.9
 PBB = swp.DEM.wrl.qual.beam_block_frac(bw)
@@ -207,10 +257,17 @@ swp = swp.assign(
 fig = swp.wrl.vis.plot_beamblockage(angle=255., ylim=(0, 10000))
 ```
 
-## Write single sweep to file
+## Write DEM and Beamblockage
 
-To avoid repeatedly downloading and processing the radar volume, we store the selected sweep as a NetCDF file. This allows subsequent analyses to be performed directly from the local file while preserving the full dataset structure and metadata.
+To avoid repeatedly downloading and processing the radar volume and raster data, we store the selected output as a NetCDF file. This allows subsequent analyses to be performed directly from the local file while preserving the full dataset structure and metadata.
 
 ```{code-cell} ipython3
-swp.to_netcdf(f"{prefix}.nc")
+outname = f"{prefix}.nc"
+swp[["DEM", "PBB", "CBB"]].to_netcdf(outname)
+```
+
+```{code-cell} ipython3
+dem_bb = xr.open_dataset(outname)
+print(outname)
+display(dem_bb)
 ```
