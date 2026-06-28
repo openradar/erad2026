@@ -14,7 +14,7 @@ kernelspec:
 ::::{grid} 4
 
 :::{grid-item}
-```{image} ../../images/logos/radar_datatree.png
+```{image} ../../images/logos/radar_datatree_logo.png
 :width: 150px
 :alt: radar datatree Logo
 ```
@@ -43,7 +43,7 @@ kernelspec:
 
 ::::
 
-
+(inspect-single-pol)=
 # Inspect Single Pol Data - Fruŝka Gora
 
 Fruŝka Gora radar is located in a small low mountain range of the same name [Fruška_Gora](wiki:Fruška_Gora) on the right bank of the Danube, south of Novi Sad.
@@ -102,6 +102,7 @@ dtree = xr.open_datatree(
     chunks={},
 )
 display(dtree)
+root = next(iter(dtree.keys())).split("/")[0] 
 ```
 
 ## Radar domain
@@ -117,9 +118,9 @@ First we get the lowest sweep and do some georeferencing.
 
 ```{code-cell} ipython3
 swp = (
-    dtree["DEJSTVO/sweep_0"]
+    dtree[f"{root}/sweep_0"]
     .to_dataset()
-    .assign_coords(dtree["DEJSTVO"].coords)
+    .assign_coords(dtree[root].coords)
     .assign_coords(sweep_mode="azimuth_surveillance")
     .wrl.georef.georeference(crs=wrl.georef.get_earth_projection())
 )
@@ -189,7 +190,7 @@ To visualize the scan pattern we just select a single volume.
 
 
 ```{code-cell} ipython3
-svol = dtree.DEJSTVO.isel(vcp_time=0)
+svol = dtree[root].isel(vcp_time=0)
 display(svol)
 for c, v in svol.coords.items():
     print(c, v.values)

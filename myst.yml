@@ -83,6 +83,24 @@ project:
         - file: notebooks/workflow/dem_beamblockage.md
         - file: notebooks/workflow/gridding_data.md
         - file: notebooks/workflow/composite_togrid.md
+    - title: Radar Processing Workflow
+      children:
+        - file: notebooks/workflow/workflow_overview.md
+        - title: Pre Course
+          children:
+            - file: notebooks/workflow/inspect_source_data_fgora.md
+            - file: notebooks/workflow/inspect_source_data_jastrebac.md
+            - file: notebooks/workflow/dem_beamblockage.md
+            - file: notebooks/workflow/gridding_data.md
+            - file: notebooks/workflow/composite_togrid.md
+        - title: Main Course
+          children:
+            - file: notebooks/workflow/stratiform_case_2014.md
+            - file: notebooks/workflow/convective_case_2017.md
+            - file: notebooks/workflow/clear_air_case_2026.md
+        - title: Post Course
+          children:
+            - file: notebooks/workflow/post_course.md
 site:
   options:
      folders: true

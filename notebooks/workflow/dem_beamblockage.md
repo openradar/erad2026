@@ -14,7 +14,7 @@ kernelspec:
 ::::{grid} 5
 
 :::{grid-item}
-```{image} ../../images/logos/radar_datatree.png
+```{image} ../../images/logos/radar_datatree_logo.png
 :width: 150px
 :alt: radar datatree Logo
 ```
@@ -50,6 +50,7 @@ kernelspec:
 
 ::::
 
+(terrain-beamblockage)=
 # Terrain and Beam Blockage
  
 ---
@@ -109,8 +110,8 @@ for site, prefix in [("FGora", "fgora_vol"), ("Jastrebac", "jastrebac_vol")]:
 
 ```{code-cell} ipython3
 #prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
-prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
-#prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
+# prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
+prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
 
 storage = icechunk.s3_storage(
     bucket=BUCKET,
@@ -127,16 +128,17 @@ dtree = xr.open_datatree(
     consolidated=False,
     chunks={},
 )
-dtree
+display(dtree)
+root = next(iter(dtree.keys())).split("/")[0] 
 ```
 
 ## Get sweep
 
 ```{code-cell} ipython3
 swp = (
-    dtree["JSTB_250_Dp_leto/sweep_0"]
+    dtree[f"{root}/sweep_0"]
     .to_dataset()
-    .assign_coords(dtree["JSTB_250_Dp_leto"].coords)
+    .assign_coords(dtree[root].coords)
     .assign_coords(sweep_mode="azimuth_surveillance")
     .wrl.georef.georeference(crs=wrl.georef.get_earth_projection())
 )

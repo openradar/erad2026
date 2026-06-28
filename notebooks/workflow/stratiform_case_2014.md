@@ -50,8 +50,8 @@ kernelspec:
 
 ::::
 
-(gridding-polar-data)=
-# Gridding Polar Data
+(stratiform-case)=
+# Stratiform Case 2014
 
 ```{code-cell} ipython3
 import cmweather
@@ -96,8 +96,8 @@ for site, prefix in [("FGora", "fgora_vol"), ("Jastrebac", "jastrebac_vol")]:
 
 ```{code-cell} ipython3
 # prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
-# prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
-prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
+prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
+# prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
 
 storage = icechunk.s3_storage(
     bucket=BUCKET,
@@ -113,7 +113,7 @@ dtree = xr.open_datatree(
     engine="zarr",
     consolidated=False,
     chunks={},
-)
+).sel(vcp_time="2014")
 display(dtree)
 root = next(iter(dtree.keys())).split("/")[0] 
 ```
@@ -156,7 +156,15 @@ swp = swp.rename(crs_wkt="spatial_ref")
 display(swp)
 ```
 
-## Create cartesian dataset
+## Quality Assurance and Quality Control
+
+## Radar Corrections
+
+## Quantitative Precipitation Estimation (QPE) 
+
+## Gridding
+
+### Create cartesian dataset
 
 The x,y-dimension sizes are, as the projection above, taken from the EuCom XL product of The Deutscher Wetterdienst.
 
@@ -187,7 +195,7 @@ cart = cart.sel(
 display(cart)
 ```
 
-## Get KDTree mapping
+### Get KDTree mapping
 
 First, we build the KDTree mapping swp vs cart.
 
@@ -200,7 +208,7 @@ mapping = swp.wrl.ipol.get_mapping(cart, k=4)
 display(mapping)
 ```
 
-## Run Interpolator
+### Run Interpolator
 
 The interpolator can now be called with the pre-computed mapping. We take ``nearest`` and ``inverse_distance`` interpolation schemes.
 
@@ -215,11 +223,11 @@ display(swp_nearest)
 display(swp_idw)
 ```
 
-## Plot Gridded Data
+### Plot Gridded Data
 
 Now, let's have a look at the created cartesian datasets.
 
-### Matplotlib
+#### Matplotlib
 
 ```{code-cell} ipython3
 fig = plt.figure(figsize=(12, 10))
@@ -234,7 +242,7 @@ swp_idw.DBTH.isel(vcp_time=0).wrl.vis.plot(ax=224, **kwargs, **kw_lim)
 fig.tight_layout()
 ```
 
-### HVPlot
+#### HVPlot
 
 ```{note} Time slider only working in running notebook
 ```
@@ -301,7 +309,7 @@ moment = swp_nearest["DBTH"].hvplot(x="x", y="y",
 moment
 ```
 
-## Write Gridded Data
+### Write Gridded Data
 
 Finally, we write out the data to disk (NetCDF4) for later compositing.
 
@@ -324,3 +332,5 @@ display(swp1)
 swp2 = xr.open_dataset(outname_idw)
 display(swp2)
 ```
+
+## Composite

@@ -50,8 +50,8 @@ kernelspec:
 
 ::::
 
-(gridding-polar-data)=
-# Gridding Polar Data
+(convective-case)=
+# Convective Case 2017
 
 ```{code-cell} ipython3
 import cmweather
@@ -113,7 +113,7 @@ dtree = xr.open_datatree(
     engine="zarr",
     consolidated=False,
     chunks={},
-)
+).sel(vcp_time="2017")
 display(dtree)
 root = next(iter(dtree.keys())).split("/")[0] 
 ```
@@ -156,7 +156,15 @@ swp = swp.rename(crs_wkt="spatial_ref")
 display(swp)
 ```
 
-## Create cartesian dataset
+## Quality Assurance and Quality Control
+
+## Radar Corrections
+
+## Quantitative Precipitation Estimation (QPE) 
+
+## Gridding
+
+### Create cartesian dataset
 
 The x,y-dimension sizes are, as the projection above, taken from the EuCom XL product of The Deutscher Wetterdienst.
 
@@ -187,7 +195,7 @@ cart = cart.sel(
 display(cart)
 ```
 
-## Get KDTree mapping
+### Get KDTree mapping
 
 First, we build the KDTree mapping swp vs cart.
 
@@ -200,7 +208,7 @@ mapping = swp.wrl.ipol.get_mapping(cart, k=4)
 display(mapping)
 ```
 
-## Run Interpolator
+### Run Interpolator
 
 The interpolator can now be called with the pre-computed mapping. We take ``nearest`` and ``inverse_distance`` interpolation schemes.
 
@@ -215,11 +223,11 @@ display(swp_nearest)
 display(swp_idw)
 ```
 
-## Plot Gridded Data
+### Plot Gridded Data
 
 Now, let's have a look at the created cartesian datasets.
 
-### Matplotlib
+#### Matplotlib
 
 ```{code-cell} ipython3
 fig = plt.figure(figsize=(12, 10))
@@ -234,7 +242,7 @@ swp_idw.DBTH.isel(vcp_time=0).wrl.vis.plot(ax=224, **kwargs, **kw_lim)
 fig.tight_layout()
 ```
 
-### HVPlot
+#### HVPlot
 
 ```{note} Time slider only working in running notebook
 ```
@@ -301,7 +309,7 @@ moment = swp_nearest["DBTH"].hvplot(x="x", y="y",
 moment
 ```
 
-## Write Gridded Data
+### Write Gridded Data
 
 Finally, we write out the data to disk (NetCDF4) for later compositing.
 
@@ -324,3 +332,5 @@ display(swp1)
 swp2 = xr.open_dataset(outname_idw)
 display(swp2)
 ```
+
+## Composite 
