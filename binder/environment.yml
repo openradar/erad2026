@@ -22,7 +22,7 @@ dependencies:
   - icechunk
   - matplotlib
   - numpy
-  - wradlib
+  - wradlib>=2.9.2
   # - pydda
   - zarr
   - xarray
