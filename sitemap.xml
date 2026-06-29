@@ -55,4 +55,10 @@
   <url>
     <loc>http://localhost:3000/notebooks/pyart/pyart-basics</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/pyart/pyart-corrections</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/pyart/pyart-gridding</loc>
+  </url>
 </urlset>
