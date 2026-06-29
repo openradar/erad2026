@@ -95,6 +95,7 @@ import os
 prefix = os.environ.get("ERAD2026_PREFIX", prefix)
 ```
 
+```{code-cell} ipython3
 storage = icechunk.s3_storage(
     bucket=BUCKET,
     prefix=prefix,
@@ -314,12 +315,12 @@ moment
 Finally, we write out the data to disk (NetCDF4) for later compositing.
 
 ```{code-cell} ipython3
-outname_nearest = f"{prefix}_{sweep}_nearest.nc"
+outname_nearest = f"{prefix}_{sweep}_grid_nearest.nc"
 swp_nearest.to_netcdf(outname_nearest)
 ```
 
 ```{code-cell} ipython3
-outname_idw = f"{prefix}_{sweep}_idw.nc"
+outname_idw = f"{prefix}_{sweep}_grid_idw.nc"
 swp_idw.to_netcdf(outname_idw)
 ```
 

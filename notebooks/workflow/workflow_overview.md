@@ -108,6 +108,6 @@ By working through these complementary cases, participants will gain practical e
 
 ## Post-Course Material
 
-This section provides additional resources, references, and suggestions for further exploration beyond the main course exercises. Rather than introducing new mandatory material, it serves as a collection of pointers and comments intended to support continued learning and experimentation.
+The [](workflow-post-course) section provides additional resources, references, and suggestions for further exploration beyond the main course exercises. Rather than introducing new mandatory material, it serves as a collection of pointers and comments intended to support continued learning and experimentation.
 
 Participants are encouraged to revisit the course datasets, explore alternative processing approaches, and consult the referenced documentation and literature for further study of radar data processing and evaluation techniques.

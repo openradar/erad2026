@@ -84,8 +84,8 @@ We use the preprocess data from [](gridding_data.md).
 
 ```{code-cell} ipython3
 # prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
-prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
-# prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
+# prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
+prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
 ```
 
 ```{code-cell} ipython3
@@ -109,13 +109,28 @@ import os
 sweep = os.environ.get("ERAD2026_SWEEP", sweep)
 ```
 
+## Get Case
+
+(compositing-select-case)=
 ```{code-cell} ipython3
-jastrebac = f"{prefix}_{sweep}_nearest.nc"
-fgora = f"Fgora_{sweep}_nearest.nc"
+case = "2017"
+ipol = "nearest"
+```
+
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+import os
+case = os.environ.get("ERAD2026_CASE", case)
+```
+
+```{code-cell} ipython3
+jastrebac = f"{prefix}_{sweep}_grid_{ipol}.nc"
+fgora = f"Fgora_{sweep}_grid_{ipol}.nc"
 filenames = {"jastrebac": jastrebac, "fgora": fgora}
 ctree = xr.DataTree()
 for radar, filename in filenames.items():
-    ds = xr.open_dataset(filename, chunks={}).sel(vcp_time="2017")
+    ds = xr.open_dataset(filename, chunks={}).sel(vcp_time=case)
     ds = ds.assign_coords(vcp_time=ds.vcp_time.dt.floor("5min")).sortby("vcp_time")
     ctree[radar] = ds
 display(ctree)
@@ -170,6 +185,19 @@ csel.where(csel>0.1).plot(cmap="HomeyerRainbow", vmin=0, vmax=60)
 ## Write Composite
 
 ```{code-cell} ipython3
-outname_composite = f"composite1.nc"
-composite.to_netcdf(outname_composite)
+outname_composit = f"{prefix}_{sweep}_{case}_comp_{ipol}.nc"
+composite.to_netcdf(outname_composit)
+```
+
+```{code-cell} ipython3
+grd = xr.open_dataset(outname_composit)
+display(grd)
+```
+
+# Next Steps
+
+You've completed the compositing workflow for the selected dataset. Return to [``case`` selection step](#compositing-select-case), change accordingly, and rerun the notebook.
+
+```{tip}
+You would need to change ``prefix``, ``sweep``, ``case`` and ``ipol`` to select the specific pre-created gridded source data. See [](#gridding-polar-data).  
 ```

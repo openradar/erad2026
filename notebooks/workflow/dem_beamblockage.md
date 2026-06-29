@@ -290,7 +290,7 @@ To avoid repeatedly downloading and processing the radar volume and raster data,
 
 ```{code-cell} ipython3
 outdir = Path.cwd()
-outname = f"{prefix}_{sweep}.nc"
+outname = f"{prefix}_{sweep}_dem.nc"
 swp[["DEM", "PBB", "CBB"]].to_netcdf(outdir / outname)
 ```
 

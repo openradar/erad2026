@@ -11,7 +11,7 @@ kernelspec:
   language: python
 ---
 
-<img src="../images/logos/arm_logo.png" width=500 alt="ARM Logo"></img>
+<img src="../../images/logos/arm_logo.png" width=500 alt="ARM Logo"></img>
 
 +++
 

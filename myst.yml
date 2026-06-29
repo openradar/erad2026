@@ -75,15 +75,6 @@ project:
             - file: notebooks/pyart/pyart-corrections.md
             - file: notebooks/pyart/pyart-gridding.md
     - title: Radar Processing Workflow
-    - file: notebooks/workflow/workflow_overview.md
-      title: Radar Processing Workflow
-      children:
-        - file: notebooks/workflow/inspect_source_data_fgora.md
-        - file: notebooks/workflow/inspect_source_data_jastrebac.md
-        - file: notebooks/workflow/dem_beamblockage.md
-        - file: notebooks/workflow/gridding_data.md
-        - file: notebooks/workflow/composite_togrid.md
-    - title: Radar Processing Workflow
       children:
         - file: notebooks/workflow/workflow_overview.md
         - title: Pre Course
