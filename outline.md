@@ -1,4 +1,4 @@
-(erad2026-course-outline)=
+
 # Short Course Outline
 
 _Open Radar – Open Source Software Tools for Radar Data Processing 
@@ -19,7 +19,7 @@ Short Course (Full Day)
 Saturday (full day, approximately 7–8 hours including coffee and lunch breaks)
 
 ## Conveners / Instructors
-See [](README#list-of-instructors).
+See [README](README#list-of-instructors).
 
 ## Motivation and Background
 
@@ -36,8 +36,8 @@ The course is primarily intended for early-career researchers, including doctora
 
 ## Course Format
 
-The course will follow a strongly practice-oriented format in which short introductory lectures are combined with guided hands-on sessions. All exercises will be carried out in an interactive computing environment such as Jupyter Notebook. The full-day programme is structured to balance instruction and practical work, with regular breaks to maintain engagement. The A typical schedule has foresees a morning block focused on data access and quality control, followed by an afternoon block covering corrections, gridding, and product
-generation, interspersed with coffee breaks and a longer lunch break.
+The course follows a strongly practice-oriented format in which short introductory lectures are combined with guided hands-on sessions. All exercises are carried out in an interactive computing environment such as Jupyter Notebook. The full-day programme is structured to balance instruction and practical work, with regular breaks to maintain engagement. The schedule has a morning block focused on data access, quality control, corrections, and gridding followed by an afternoon block covering product
+generation.  The schedule is interspersed with coffee breaks and a longer lunch break.
 
 ## Course Content
 
@@ -61,7 +61,7 @@ All exercises will be based on open-source software within the Python ecosystem,
 
 ## Data and Case Studies
 
-The course will be based on one or two carefully selected radar cases representing different precipitation regimes, for example convective and stratiform events. These datasets will be used consistently throughout the course and will also serve as input for the subsequent nowcasting course.
+The course is based on one to two carefully selected radar cases representing different precipitation regimes, for example convective and stratiform events. These datasets are used consistently throughout the course and serve as input for the subsequent nowcasting course.
 
 ## Expected Outcomes
 
@@ -69,12 +69,14 @@ At the end of the course, participants will have a practical understanding of th
 
 ## Course Materials
 
-All teaching materials will be made openly available. This includes interactive notebooks, example datasets or instructions for data access, and supporting documentation. Where appropriate, additional material for further exploration will also be provided. This may contain background material and pre-course reading material and exercises. If time permits we'll conduct a pre-course survey. Stay tuned.
+All teaching materials are made openly available. This includes interactive notebooks, example datasets, instructions for data access, and supporting documentation. Where appropriate, additional material for further exploration will also be provided. Background material and pre-course reading material and exercises include:
+1. [Background material]()
+2. [Data Access](notebooks/xradar/xradar-basics.md)
 
 ## Requirements
 
 Participants are expected to bring a laptop with a modern web browser. 
-Instructions for installing the required software environment can be found in [](getting_started). For the course we will work via a cloud-based solution. Information will be provided soon.
+Instructions for installing the required software environment can be found in [getting started](getting_started). For the course we will work via a cloud-based solution. Information will be provided soon.
 
 ## Relation to Other ERAD Activities
 
