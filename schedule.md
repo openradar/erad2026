@@ -1,8 +1,8 @@
-# 2026 ERAD Proposed Schedule
+# Preliminary Schedule
 
 ## 1. Welcome/Introduction 
 
-- Homework / precourse work  
+- Homework / pre-course work  
 - Post-lecture notebooks for each package
 
 ## 2. Overview Open Radar Community
@@ -28,11 +28,7 @@ Show how individual packages integrate into a complete workflow.
 
 > Output of this workflow will be used in the Sunday PySteps workshop.
 
-### 4.1  Level I radar processing? 
-- Bobby? Lidar data example (optional)
-- Ingestion of raw radar files
-- Standardization step (likely via Xradar)
-- tbc
+### 4.1 Workflow Overview
 
 ### 4.2 Quality Control (QA / QC)
 - Noise filtering

@@ -46,6 +46,7 @@ project:
   toc:
     - file: README.md
     - file: notebooks/how_to_cite.md
+    - file: outline.md
     - file: schedule.md
     - title: Getting started
       children:
