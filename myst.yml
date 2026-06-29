@@ -67,6 +67,8 @@ project:
         - title: ARM Py-ART
           children:
             - file: notebooks/pyart/pyart-basics.md
+            - file: notebooks/pyart/pyart-corrections.md
+            - file: notebooks/pyart/pyart-gridding.md
 
 site:
   options:
