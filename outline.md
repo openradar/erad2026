@@ -72,7 +72,7 @@ At the end of the course, participants will have a practical understanding of th
 All teaching materials are made openly available. This includes interactive notebooks, example datasets, instructions for data access, and supporting documentation. Where appropriate, additional material for further exploration will also be provided. Background material and pre-course reading material and exercises include:
 1. [Background material]()
 2. [Data Access](notebooks/xradar/xradar-basics.md)
-3. [Specific Data Access)[notebooks/data-access/intro-data-access.md]
+3. [Specific Data Access](notebooks/data-access/intro-data-access.md)
 
 ## Requirements
 
