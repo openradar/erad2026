@@ -34,9 +34,12 @@ dependencies:
   - ximage>=0.0.5
   - shapely>=2.0.0
   - geopandas
+  - geoviews
   - xoak
   - scikit-learn
   - folium
+  # needed for s3 and filesystem
+  - boto3
   - fsspec
   - s3fs
   # this is needed for baltrad compilation
@@ -72,3 +75,4 @@ dependencies:
   # needed for LROSE / pyrad
   - metpy
   - pip
+
