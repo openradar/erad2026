@@ -19,7 +19,7 @@ Short Course (Full Day)
 Saturday (full day, approximately 7–8 hours including coffee and lunch breaks)
 
 ## Conveners / Instructors
-See [](README#list-of-instructors).
+See [README](README.md#list-of-instructors).
 
 ## Motivation and Background
 
