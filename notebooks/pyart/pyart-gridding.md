@@ -399,7 +399,7 @@ ds.reflectivity.isel(z=2).plot(x='x',
                                col='time',
                                vmin=-20,
                                vmax=70,
-                               cmap='pyart_ChaseSpectral',
+                               cmap='ChaseSpectral',
                                col_wrap=5);
 ```
 
