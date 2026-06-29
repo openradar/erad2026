@@ -77,7 +77,7 @@ All teaching materials are made openly available. This includes interactive note
 ## Requirements
 
 Participants are expected to bring a laptop with a modern web browser. 
-Instructions for installing the required software environment can be found in [getting started](getting_started). For the course we will work via a cloud-based solution. Information will be provided soon.
+Instructions for installing the required software environment can be found in [getting started](getting_started.md). For the course we will work via a cloud-based solution. Information will be provided soon.
 
 ## Relation to Other ERAD Activities
 
