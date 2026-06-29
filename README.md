@@ -1,12 +1,12 @@
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Norman_Doppler_Radar_-_NOAA.jpg" alt="thumbnail" width="300"/>
+![Norman Doppler Radar](https://upload.wikimedia.org/wikipedia/commons/5/52/Norman_Doppler_Radar_-_NOAA.jpg?raw=true)
 
 # ERAD2026 Open Radar Science Short Course
 
-This tutorial covers how to get started with the Open Radar Science stack!
+This repository contains the hands-on materials for the ERAD 2026 short course Open Radar – Open Source Software Tools for Radar Data Processing: From Raw Data to Analysis-Ready Fields. For a detailed description of the course, including its objectives, agenda, prerequisites, and expected outcomes, please refer to the accompanying [](#erad2026-course-outline).
 
 ## Motivation
 
-The course will take place on Saturday, August 22, 2026, the day before the [13th European Conference on RADar in meteorology and hydrology (ERAD2026)](https://www.erad2026.rs/).
+The course will take place on Saturday, August 22, 2026, two days before the [13th European Conference on RADar in meteorology and hydrology (ERAD2026)](https://www.erad2026.rs/).
 The course will discuss the principles of open science and provide an overview of the most mature and exciting software packages available for radar data processing
 (ex.
 [LROSE](https://github.com/NCAR/lrose-core),
@@ -30,8 +30,13 @@ data processing, using open datasets relevant to the attendees and ERAD2026.
 
 ## List of Instructors
 
-- TBC
-- 
+- Brenda Javornik, NCAR
+- Kai Mühlbauer, University Bonn
+- Robert Jackson, ANL
+- Scott Collis, ANL
+- Ting-Yu Cha, NCAR
+- tbc.
+
 ### Contributors
 
 <a href="https://github.com/openradar/erad2026/graphs/contributors">
@@ -40,7 +45,7 @@ data processing, using open datasets relevant to the attendees and ERAD2026.
 
 ## Course program
 
-Please see the [schedule](schedule.md)
+Please see the [preliminary schedule](schedule).
 
 ## Structure
 
@@ -51,4 +56,4 @@ Content relevant to each of the Open Radar packages (ex. Py-ART, wradlib, LROSE,
 Workflows utilizing the various packages and open radar data.
 
 ## Things You Need to Prepare
-Participants need to bring their own 64-bit notebook (Linux, Windows, Mac).  The exercises will take place on a cloud server. On Windows, the use of a ssh-client such as [Putty](https://www.putty.org/) or [MobaXterm](https://mobaxterm.mobatek.net/) will be necessary.
+Participants need to bring their own 64-bit notebook (Linux, Windows, Mac). The exercises will take place on a cloud server.
