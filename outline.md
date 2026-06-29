@@ -19,7 +19,7 @@ Short Course (Full Day)
 Saturday (full day, approximately 7–8 hours including coffee and lunch breaks)
 
 ## Conveners / Instructors
-See [README](README#list-of-instructors).
+See [](README#list-of-instructors).
 
 ## Motivation and Background
 
@@ -70,9 +70,9 @@ At the end of the course, participants will have a practical understanding of th
 ## Course Materials
 
 All teaching materials are made openly available. This includes interactive notebooks, example datasets, instructions for data access, and supporting documentation. Where appropriate, additional material for further exploration will also be provided. Background material and pre-course reading material and exercises include:
-1. [Background material](../presentations/intro-to-open-radar-science.md)
-2. [Data Access](../notebooks/xradar/xradar-basics.md)
-3. [Specific Data Access](../notebooks/data-access/intro-data-access.md)
+1. [Background material](presentations/intro-to-open-radar-science.md)
+2. [Data Access](notebooks/xradar/xradar-basics.md)
+3. [Specific Data Access](notebooks/data-access/intro-data-access.md)
 
 ## Requirements
 
