@@ -8,6 +8,9 @@
     <loc>http://localhost:3000/notebooks/how-to-cite</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/outline</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/schedule</loc>
   </url>
   <url>
