@@ -58,7 +58,6 @@ import xarray as xr
 import matplotlib.pyplot as plt
 
 import wradlib as wrl
-import wradlib_data
 
 warnings.filterwarnings("ignore")
 ```
