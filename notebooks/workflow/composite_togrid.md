@@ -88,11 +88,31 @@ prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
 # prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
 ```
 
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+import os
+prefix = os.environ.get("ERAD2026_PREFIX", prefix)
+```
+
 ## Get Lowest Sweep
 
+(select-sweep)=
 ```{code-cell} ipython3
-outname_nearest = f"{prefix}_nearest.nc"
-filenames = {"jastrebac": "jastrebac_500m_nearest.nc", "fgora": "Fgora_nearest.nc"}
+sweep = "sweep_0"
+```
+
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+import os
+sweep = os.environ.get("ERAD2026_SWEEP", sweep)
+```
+
+```{code-cell} ipython3
+jastrebac = f"{prefix}_{sweep}_nearest.nc"
+fgora = f"Fgora_{sweep}_nearest.nc"
+filenames = {"jastrebac": jastrebac, "fgora": fgora}
 ctree = xr.DataTree()
 for radar, filename in filenames.items():
     ds = xr.open_dataset(filename, chunks={}).sel(vcp_time="2017")

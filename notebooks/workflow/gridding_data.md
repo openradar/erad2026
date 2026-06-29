@@ -81,23 +81,19 @@ OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
 BUCKET = "nexrad-arco"
 ```
 
-```{code-cell} ipython3
-fs = fsspec.filesystem(
-    "s3", anon=True, client_kwargs={"endpoint_url": OSN_ENDPOINT},
-)
-
-for site, prefix in [("FGora", "fgora_vol"), ("Jastrebac", "jastrebac_vol")]:
-    files = sorted(fs.glob(f"{BUCKET}/{prefix}/**/*.vol"))
-    print(f"{site} raw files: {len(files)}")
-    for f in files[:4]:
-        print(f"  {f.split('/')[-1]}")
-    print()
-```
-
+(gridding-select-prefix)=
 ```{code-cell} ipython3
 # prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
 # prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
 prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
+```
+
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+import os
+prefix = os.environ.get("ERAD2026_PREFIX", prefix)
+```
 
 storage = icechunk.s3_storage(
     bucket=BUCKET,
@@ -131,6 +127,19 @@ We'll use the lowest elevation as an example.
 - [](xref:wradlib#generated/wradlib.georef.polar.georeference)
 ```
 
+(select-sweep)=
+```{code-cell} ipython3
+sweep = "sweep_0"
+```
+
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+import os
+sweep = os.environ.get("ERAD2026_SWEEP", sweep)
+```
+
+(gridding-select-sweep)=
 ```{code-cell} ipython3
 x0 = 3760756.2464729655
 y0 = -2656141.3006878751
@@ -144,9 +153,8 @@ proj_laea = pyproj.CRS.from_proj4(
 
 proj_laea = wrl.georef.ensure_crs(proj_laea)
 
-
 swp = (
-    dtree[f"{root}/sweep_0"]
+    dtree[f"{root}/{sweep}"]
     .to_dataset()
     .assign_coords(dtree[root].coords)
     .assign_coords(sweep_mode="azimuth_surveillance")
@@ -189,7 +197,7 @@ display(cart)
 
 ## Get KDTree mapping
 
-First, we build the KDTree mapping swp vs cart.
+First, we build the KDTree mapping swp vs cart. 
 
 ```{seealso}
 - [](xref:wradlib#generated/wradlib.ipol.get_mapping)
@@ -202,10 +210,10 @@ display(mapping)
 
 ## Run Interpolator
 
-The interpolator can now be called with the pre-computed mapping. We take ``nearest`` and ``inverse_distance`` interpolation schemes.
+The interpolator can now be called with the pre-computed mapping. We take ``nearest`` and ``inverse_distance`` interpolation schemes. The interpolators can be parameterized via keyword arguments, please refer to the documentation below.
 
 ```{seealso}
-- [](xref:wradlib#wradlib.ipol.IpolMethods.interpolate)
+- [wradlib.ipol.IpolMethods.interpolate](xref:wradlib#wradlib.ipol.IpolMethods.interpolate)
 ```
 
 ```{code-cell} ipython3
@@ -306,12 +314,12 @@ moment
 Finally, we write out the data to disk (NetCDF4) for later compositing.
 
 ```{code-cell} ipython3
-outname_nearest = f"{prefix}_nearest.nc"
+outname_nearest = f"{prefix}_{sweep}_nearest.nc"
 swp_nearest.to_netcdf(outname_nearest)
 ```
 
 ```{code-cell} ipython3
-outname_idw = f"{prefix}_idw.nc"
+outname_idw = f"{prefix}_{sweep}_idw.nc"
 swp_idw.to_netcdf(outname_idw)
 ```
 
@@ -323,4 +331,12 @@ display(swp1)
 ```{code-cell} ipython3
 swp2 = xr.open_dataset(outname_idw)
 display(swp2)
+```
+
+# Next Steps
+
+You've completed the gridding workflow for the selected dataset. Return to [``prefix`` selection step](#gridding-select-prefix), choose one of the remaining datasets, and rerun the notebook. Repeat this until all three datasets have been processed.
+
+```{tip}
+You might also want to have a look at other elevations. Please choose the wanted sweep at the [``sweep`` selection step](#gridding-select-sweep).
 ```

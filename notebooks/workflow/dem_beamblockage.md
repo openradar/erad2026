@@ -82,37 +82,45 @@ import xarray as xr
 import xradar as xd
 import fsspec
 import icechunk
+from pathlib import Path
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 ```
 
 ## Claim Data
 
-The examples in this notebook can be run with different radar datasets. Select the desired dataset by setting the `prefix` variable below. The available options include a single-polarization volume from Fruška Gora (`fgora_vol`) and dual-polarization volumes from Jastrebac at different range resolutions (`jastrebac_250m` and `jastrebac_500m`). All subsequent processing steps will automatically use the selected dataset.
+The examples in this notebook can be run with different radar datasets. Select the desired dataset by setting the ``prefix`` variable below. The available options include a single-polarization volume from Fruška Gora (``fgora_vol``) and dual-polarization volumes from Jastrebac at different range resolutions (``jastrebac_250m`` and ``jastrebac_500m``). All subsequent processing steps will automatically use the selected dataset.
+
+```{note} Case studies
+``fgora_vol`` contains three cases (stratiform - 2014, convective - 2017 and clear air - 2026).
+
+``jastrebac_250m`` contains the stratiform case (2014). ``jastrebac_500m`` provides convective (2017) and clear air (2026). 
+```
 
 ```{code-cell} ipython3
 OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
 BUCKET = "nexrad-arco"
 ```
 
+(select-prefix)=
 ```{code-cell} ipython3
-fs = fsspec.filesystem(
-    "s3", anon=True, client_kwargs={"endpoint_url": OSN_ENDPOINT},
-)
-
-for site, prefix in [("FGora", "fgora_vol"), ("Jastrebac", "jastrebac_vol")]:
-    files = sorted(fs.glob(f"{BUCKET}/{prefix}/**/*.vol"))
-    print(f"{site} raw files: {len(files)}")
-    for f in files[:4]:
-        print(f"  {f.split('/')[-1]}")
-    print()
+# prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
+prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
+# prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
 ```
 
 ```{code-cell} ipython3
-#prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
-# prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
-prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
+:tags: [remove-cell]
 
+import os
+prefix = os.environ.get("ERAD2026_PREFIX", prefix)
+```
+
+```{code-cell} ipython3
+print(f"Using prefix {prefix}")
+```
+
+```{code-cell} ipython3
 storage = icechunk.s3_storage(
     bucket=BUCKET,
     prefix=prefix,
@@ -134,9 +142,21 @@ root = next(iter(dtree.keys())).split("/")[0]
 
 ## Get sweep
 
+(select-sweep)=
+```{code-cell} ipython3
+sweep = "sweep_0"
+```
+
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+import os
+sweep = os.environ.get("ERAD2026_SWEEP", sweep)
+```
+
 ```{code-cell} ipython3
 swp = (
-    dtree[f"{root}/sweep_0"]
+    dtree[f"{root}/{sweep}"]
     .to_dataset()
     .assign_coords(dtree[root].coords)
     .assign_coords(sweep_mode="azimuth_surveillance")
@@ -160,7 +180,8 @@ The individual DEM tiles are merged into a single seamless raster using GDAL. Th
 The merged DEM is opened using Rasterio and exposed as an Xarray dataset. This provides labeled coordinates and enables convenient analysis and integration with downstream geospatial workflows.
 
 ```{seealso}
-- [](xref:wradlib#generated/wradlib.io.dem.srtm_merge)
+- [](xref:wradlib#generated/wradlib.io.dem.get_srtm_tile_names)
+- [](xref:wradlib#generated/wradlib.io.dem.merge_srtm)
 - [](xref:gdal#api/python/utilities)
 ```
 
@@ -177,10 +198,14 @@ s3 = boto3.client(
 def download_skadi_tile(tile, destination=None):
     if destination is None:
         destination = f"{tile}.hgt.gz"
-        return destination
-
+    
+    destination = Path(destination)
+    
+    if destination.exists():
+        return str(destination)
+    
     key = f"skadi/{tile[:3]}/{tile}.hgt.gz"
-    print(key)
+    print(f"Downloading {key}")
 
     obj = s3.get_object(
         Bucket="elevation-tiles-prod",
@@ -261,15 +286,24 @@ fig = swp.wrl.vis.plot_beamblockage(angle=255., ylim=(0, 10000))
 
 ## Write DEM and Beamblockage
 
-To avoid repeatedly downloading and processing the radar volume and raster data, we store the selected output as a NetCDF file. This allows subsequent analyses to be performed directly from the local file while preserving the full dataset structure and metadata.
+To avoid repeatedly downloading and processing the radar volume and raster data, we store the selected output as a NetCDF file. This allows subsequent analyses to be performed directly from the local file while preserving the full dataset structure and metadata. ``prefix`` and ``sweep`` are encoded in the file name.
 
 ```{code-cell} ipython3
-outname = f"{prefix}.nc"
-swp[["DEM", "PBB", "CBB"]].to_netcdf(outname)
+outdir = Path.cwd()
+outname = f"{prefix}_{sweep}.nc"
+swp[["DEM", "PBB", "CBB"]].to_netcdf(outdir / outname)
 ```
 
 ```{code-cell} ipython3
 dem_bb = xr.open_dataset(outname)
 print(outname)
 display(dem_bb)
+```
+
+## Next Steps
+
+You've finished processing the selected dataset. Return to [``prefix`` selection step](#select-prefix), choose one of the remaining datasets, and rerun the notebook. Repeat this until all three datasets have been processed.
+
+```{tip}
+You might also want to have a look at other elevations. Please choose the wanted sweep at the [``sweep`` selection step](#select-sweep).
 ```
