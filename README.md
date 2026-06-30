@@ -1,4 +1,4 @@
-![Norman Doppler Radar](https://upload.wikimedia.org/wikipedia/commons/5/52/Norman_Doppler_Radar_-_NOAA.jpg)
+![Norman Doppler Radar](images/960px-Norman_Doppler_Radar_-_NOAA.jpg))
 
 # ERAD2026 Open Radar Science Short Course
 

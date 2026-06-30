@@ -273,7 +273,7 @@ swp.DEM.wrl.vis.plot(vmin=0, cmap="terrain")
 
 ## BeamBlockage Calculation
 
-We compute partial beam blockage (PBB) and cumulative beam blockage (CBB) using the interpolated DEM in radar sweep coordinates. Following [](http://dx.doi.org/10.1175/1520-0426%282003%29020%3C0845:TSOSPW%3E2.0.CO;2), the terrain influence on the radar beam is quantified by estimating how much of the beam is obstructed along each radial path, first as a local (partial) blockage fraction and then accumulated along the beam path.
+We compute partial beam blockage (PBB) and cumulative beam blockage (CBB) using the interpolated DEM in radar sweep coordinates. Following [](https://doi.org/10.1175/1520-0426(2003)020<0845:TSOSPW>2.0.CO;2), the terrain influence on the radar beam is quantified by estimating how much of the beam is obstructed along each radial path, first as a local (partial) blockage fraction and then accumulated along the beam path.
 
 ```{seealso}
 - [](xref:wradlib#generated/wradlib.qual.beam_block_frac)
