@@ -94,8 +94,9 @@ project:
             - file: notebooks/workflow/post_course.md
 site:
   options:
-     folders: true
-     url: https://github.com/openradar/erad2026
+    logo: images/logos/openradar_logo.svg
+    folders: true
+    url: https://github.com/openradar/erad2026
   nav:
     - title: Conference Home
       url: https://www.erad2026.rs

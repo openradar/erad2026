@@ -1,0 +1,81 @@
+cff-version: 1.2.0
+message: "Please cite it as below."
+authors:
+  # add additional entries for each author -- see https://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md
+  - family-names: Ladino
+    given-names: Alfonso
+    orcid: https://orcid.org/0000-0001-8081-7827 # optional
+    website: https://github.com/aladinor # optional
+    affiliation: University of Illinois at Urbana Champaign (UIUC) # optional
+  - family-names: del Moral Méndez
+    given-names: Anna
+    orcid: https://orcid.org/0000-0002-5015-840X
+    affiliation: National Center for Atmospheric Research (NCAR)
+  - family-names: Javornik
+    given-names: Brenda
+    orcid: https://orcid.org/0009-0004-9266-9293
+    website: https://github.com/leavesntwigs
+    affiliation: National Center for Atmospheric Research (NCAR)
+  - family-names: Michelson
+    given-names: Daniel
+    orcid: https://orcid.org/0000-0003-3222-9881
+    website: https://github.com/DanielMichelson
+    affiliation: Environment and Climate Change Canada (ECCC)
+  - family-names: DeHart
+    given-names: Jen
+    orcid: https://orcid.org/0000-0001-8536-4927
+    website: https://github.com/jcdehart
+    affiliation: Colorado State University (CSU)
+  - family-names: Mühlbauer
+    given-names: Kai
+    orcid: https://orcid.org/0000-0001-6599-1034
+    website: https://github.com/kmuehlbauer
+    affiliation: University of Bonn
+  - family-names: Grover
+    given-names: Maxwell
+    orcid: https://orcid.org/0000-0002-0370-8974
+    website: https://github.com/mgrover1
+    affiliation: Argonne National Laboratory
+  - family-names: Dixon
+    given-names: Mike
+    orcid: https://orcid.org/0000-0002-9597-9113
+    website: https://github.com/mike-dixon
+    affiliation: National Center for Atmospheric Research (NCAR)
+  - family-names: Jackson
+    given-names: Robert
+    orcid: https://orcid.org/0000-0003-2518-1234
+    website: https://github.com/rcjackson
+    affiliation: Argonne National Laboratory
+  - family-names: Collis
+    given-names: Scott
+    orcid: https://orcid.org/0000-0002-2303-687X
+    website: https://github.com/scollis
+    affiliation: Argonne National Laboratory
+  - family-names: Cha
+    given-names: Ting-Yu
+    orcid: https://orcid.org/0000-0002-0370-8974
+    website: https://github.com/tingyucha
+    affiliation: National Center for Atmospheric Research (NCAR)
+  - family-names: Sherman
+    given-names: Zachary Sherman
+    orcid: 0000-0002-6455-8324
+    github: zssherman
+    affiliation: Argonne National Laboratory
+  - name: "ERAD2026 Open Radar Science Shortcourse contributors" # use the 'name' field to acknowledge organizations
+    website: "https://github.com/openradar/erad2026/graphs/contributors"
+title: "ERAD 2026 Open Radar Science Shortcourse"
+abstract: "This short course provides a hands-on introduction to open-source weather
+radar processing, guiding participants through the complete workflow from raw radar
+data to analysis-ready precipitation products. Building on recent developments in
+the open radar science ecosystem, the course emphasises interoperable and
+reproducible workflows based on tools such as xradar, Py-ART, and wradlib.
+Participants will work with real-world datasets to perform quality control,
+apply essential corrections, and generate gridded radar products within a modern,
+xarray-based framework. In addition, the course highlights how established systems
+such as BALTRAD and LROSE can be integrated into these workflows, bridging
+research and operational environments. Particular emphasis is placed on
+transparency and adaptability of processing methods, enabling participants not
+only to apply existing tools but also to understand and modify key algorithmic
+components. The course forms the first part of a two-day training sequence and
+provides the processed datasets required for subsequent precipitation nowcasting
+applications."
