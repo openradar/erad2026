@@ -29,30 +29,6 @@
     <loc>http://localhost:3000/presentations/intro-to-open-radar-science</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-io</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-qc</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-drqc</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-parallel-processing</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/notebooks/baltrad/baltrad-short-course/baltrad-compositing</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/notebooks/baltrad/pyart2baltrad/baltrad-pyart-rain-rate-example</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/notebooks/baltrad/pyart2baltrad/pyart-baltrad-dealias-example</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/notebooks/baltrad/baltrad2wradlib/baltrad2wradlib</loc>
-  </url>
-  <url>
     <loc>http://localhost:3000/notebooks/pyart/pyart-basics</loc>
   </url>
   <url>
@@ -60,5 +36,35 @@
   </url>
   <url>
     <loc>http://localhost:3000/notebooks/pyart/pyart-gridding</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/workflow-overview</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/inspect-source-data-fgora</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/inspect-source-data-jastrebac</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/dem-beamblockage</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/gridding-data</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/composite-togrid</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/stratiform-case-2014</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/convective-case-2017</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/clear-air-case-2026</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/post-course</loc>
   </url>
 </urlset>
