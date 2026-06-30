@@ -1,4 +1,4 @@
-(erad2026-course-outline)=
+
 # Short Course Outline
 
 _Open Radar – Open Source Software Tools for Radar Data Processing 
@@ -19,7 +19,7 @@ Short Course (Full Day)
 Saturday (full day, approximately 7–8 hours including coffee and lunch breaks)
 
 ## Conveners / Instructors
-See [](README#list-of-instructors).
+See [README](README.md#list-of-instructors).
 
 ## Motivation and Background
 
@@ -36,8 +36,8 @@ The course is primarily intended for early-career researchers, including doctora
 
 ## Course Format
 
-The course will follow a strongly practice-oriented format in which short introductory lectures are combined with guided hands-on sessions. All exercises will be carried out in an interactive computing environment such as Jupyter Notebook. The full-day programme is structured to balance instruction and practical work, with regular breaks to maintain engagement. The A typical schedule has foresees a morning block focused on data access and quality control, followed by an afternoon block covering corrections, gridding, and product
-generation, interspersed with coffee breaks and a longer lunch break.
+The course follows a strongly practice-oriented format in which short introductory lectures are combined with guided hands-on sessions. All exercises are carried out in an interactive computing environment such as Jupyter Notebook. The full-day programme is structured to balance instruction and practical work, with regular breaks to maintain engagement. The schedule has a morning block focused on data access, quality control, corrections, and gridding followed by an afternoon block covering product
+generation.  The schedule is interspersed with coffee breaks and a longer lunch break.
 
 ## Course Content
 
@@ -46,12 +46,16 @@ The course begins with an overview of the Open Radar Science framework, introduc
 Following the overview, participants receive a concise introduction to weather radar measurements and the full processing chain, including common sources of uncertainty and error. Morning sessions focus on data ingestion and exploration, emphasizing modern access patterns using xradar to handle multiple radar formats consistently within an xarray-based workflow. Practical exercises are conducted in Jupyter notebooks,
 allowing participants to explore and adapt processing steps in real time.
 
-A central component of the morning is dedicated to quality control. Participants will identify and mitigate non-meteorological signals, including ground clutter and noise, and apply standard filtering and masking techniques. Selected steps are explored in depth to provide insight into the underlying algorithms and enable participants to modify or extend them as needed.
-After a lunch break, afternoon sessions cover essential corrections and transformations. Participants apply attenuation correction, consider calibration issues, and examine reflectivity–rainfall relationships. The course then guides participants through transforming polar radar data into Cartesian grids and generating key gridded products, such as constant-altitude plan position indicators and composite fields, illustrating the interactions between xradar, Py-ART, and wradlib.
+A central component of the morning is dedicated to the full processing chain of quality control, essential corrections, and transformations. 
+Participants will identify and mitigate non-meteorological signals, including ground clutter and noise, and apply standard filtering and masking techniques.  Participants apply attenuation correction, consider calibration issues, and examine reflectivity–rainfall relationships. The course then guides participants through transforming polar radar data into Cartesian grids and generating key gridded products, such as constant-altitude plan position indicators and composite fields, illustrating the interactions between xradar, Py-ART, and wradlib.  In the final practical session, participants derive precipitation products, including instantaneous rain rates and accumulated fields, and export these in standard formats such as NetCDF, Zarr or others.
 
-A dedicated session focuses on the integration of established radar processing frameworks into modern workflows. Systems such as BALTRAD and LROSE are introduced, demonstrating how their capabilities can complement Python-based tools and be incorporated into xarray-based pipelines. This session bridges research-oriented workflows with operational processing environments, providing participants with a broader perspective on the radar ecosystem.
 
-In the final practical session, participants derive precipitation products, including instantaneous rain rates and accumulated fields, and export these in standard formats such as NetCDF, Zarr or others. Exercises emphasize transparency and reproducibility, enabling participants to not only generate analysis-ready datasets but also to understand and adapt the processing workflows. The course concludes with a discussion of how these outputs can be used in precipitation nowcasting, providing a direct link to the second day of the training sequence.
+After a lunch break, afternoon sessions offer individual projects:
+* In depth exploration of selected steps from the morning session, to provide insight into the underlying algorithms and enable participants to modify or extend them as needed.
+* A dedicated session focuses on the integration of established radar processing frameworks into modern workflows. Systems such as BALTRAD and LROSE (TITAN / SAMURAI)  are introduced, demonstrating how their capabilities can complement Python-based tools and be incorporated into xarray-based pipelines. This session bridges research-oriented workflows with operational processing environments, providing participants with a broader perspective on the radar ecosystem.
+* A special session on Echo Top Height Analysis to identify storm structure, vertical extents, and derived products.
+
+Exercises emphasize transparency and reproducibility, enabling participants to not only generate analysis-ready datasets but also to understand and adapt the processing workflows. The course concludes with a discussion of how these outputs can be used in precipitation nowcasting, providing a direct link to the second day of the training sequence.
 
 By the end of the day, participants will have completed a full radar processing workflow, gained hands-on experience with interoperable open-source tools, and acquired the skills needed to design, modify, and apply radar processing pipelines for both research and operational purposes.
 
@@ -61,7 +65,7 @@ All exercises will be based on open-source software within the Python ecosystem,
 
 ## Data and Case Studies
 
-The course will be based on one or two carefully selected radar cases representing different precipitation regimes, for example convective and stratiform events. These datasets will be used consistently throughout the course and will also serve as input for the subsequent nowcasting course.
+The course is based on one to two carefully selected radar cases representing different precipitation regimes, for example convective and stratiform events. These datasets are used consistently throughout the course and serve as input for the subsequent nowcasting course.
 
 ## Expected Outcomes
 
@@ -69,12 +73,16 @@ At the end of the course, participants will have a practical understanding of th
 
 ## Course Materials
 
-All teaching materials will be made openly available. This includes interactive notebooks, example datasets or instructions for data access, and supporting documentation. Where appropriate, additional material for further exploration will also be provided. This may contain background material and pre-course reading material and exercises. If time permits we'll conduct a pre-course survey. Stay tuned.
+All teaching materials are made openly available. This includes interactive notebooks, example datasets, instructions for data access, and supporting documentation. Where appropriate, additional material for further exploration is provided. Background material and pre-course reading material and exercises include:
+1. [Background Material](presentations/intro-to-open-radar-science.md)
+2. [Getting Started](getting_started.md)
+3. [Data Access](notebooks/xradar/xradar-basics.md)
+4. [Specific Data Access](notebooks/data-access/intro-data-access.md)
 
 ## Requirements
 
 Participants are expected to bring a laptop with a modern web browser. 
-Instructions for installing the required software environment can be found in [](getting_started). For the course we will work via a cloud-based solution. Information will be provided soon.
+Instructions for installing the required software environment can be found in [getting started](getting_started.md). For the course we will work via a cloud-based solution. Information will be provided soon.
 
 ## Relation to Other ERAD Activities
 

@@ -61,11 +61,15 @@ Show how individual packages integrate into a complete workflow.
 
 ### 5.1 Project Options
 
-#### a. TITAN / SAMURAI (LROSE)
+#### a. In Depth Review of 4.* Workflow
+- Algorithm analysis, modification, and extension
+- Incorporation of interoperable open-source tools
+
+#### b. TITAN / SAMURAI (LROSE)
 - Storm tracking and analysis workflows
 - Radar-to-dynamics applications
 
-#### b. Echo Top Height Analysis (Bobby?)
+#### c. Echo Top Height Analysis (Bobby?)
 - Identification of storm structure
 - Vertical extent diagnostics
 - Derived product generation
