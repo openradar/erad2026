@@ -62,9 +62,11 @@ jobs:
         run: |
           # execute several notebooks prior myst build to create needed output 
           ERAD2026_PREFIX=Fgora ERAD2026_SWEEP=sweep_0 jupytext --to notebook --execute notebooks/workflow/dem_beamblockage.md
+          ERAD2026_PREFIX=jastrebac_250m ERAD2026_SWEEP=sweep_0 jupytext --to notebook --execute notebooks/workflow/dem_beamblockage.md
           ERAD2026_PREFIX=jastrebac_500m ERAD2026_SWEEP=sweep_0 jupytext --to notebook --execute notebooks/workflow/dem_beamblockage.md
           ERAD2026_PREFIX=Fgora ERAD2026_SWEEP=sweep_0 jupytext --to notebook --execute notebooks/workflow/gridding_data.md
           ERAD2026_PREFIX=jastrebac_250m ERAD2026_SWEEP=sweep_0 jupytext --to notebook --execute notebooks/workflow/gridding_data.md
+          ERAD2026_PREFIX=jastrebac_500m ERAD2026_SWEEP=sweep_0 jupytext --to notebook --execute notebooks/workflow/gridding_data.md
           myst build --execute --ci --html --execute-parallel 1
 
       - name: Zip the book
