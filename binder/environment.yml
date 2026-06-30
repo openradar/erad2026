@@ -39,7 +39,6 @@ dependencies:
   - scikit-learn
   - folium
   # needed for s3 and filesystem
-  - boto3
   - fsspec
   - s3fs
   # this is needed for baltrad compilation
