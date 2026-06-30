@@ -48,6 +48,8 @@ kernelspec:
 In this notebook we show the production of a maximum reflectivity composite from [Fruška_Gora](wiki:Fruška_Gora) Radar and [](wiki:Jastrebac) Radar to a common cartesian grid.
 
 ```{code-cell} ipython3
+:tags: [remove-cell]
+
 import tempfile
 import warnings
 
@@ -60,20 +62,6 @@ import matplotlib.pyplot as plt
 import wradlib as wrl
 
 warnings.filterwarnings("ignore")
-```
-
-```{code-cell} ipython3
-import cmweather
-import numpy as np
-import wradlib as wrl
-import matplotlib.pyplot as plt
-import xarray as xr
-import xradar as xd
-import fsspec
-import icechunk
-import holoviews as hv
-import hvplot
-import hvplot.xarray
 ```
 
 ## Claim Data
@@ -96,7 +84,7 @@ prefix = os.environ.get("ERAD2026_PREFIX", prefix)
 
 ## Get Lowest Sweep
 
-(select-sweep)=
+(compsite-select-sweep)=
 ```{code-cell} ipython3
 sweep = "sweep_0"
 ```
@@ -110,7 +98,7 @@ sweep = os.environ.get("ERAD2026_SWEEP", sweep)
 
 ## Get Case
 
-(compositing-select-case)=
+(composite-select-case)=
 ```{code-cell} ipython3
 case = "2017"
 ipol = "nearest"
@@ -195,7 +183,7 @@ display(grd)
 
 # Next Steps
 
-You've completed the compositing workflow for the selected dataset. Return to [``case`` selection step](#compositing-select-case), change accordingly, and rerun the notebook.
+You've completed the compositing workflow for the selected dataset. Return to [``case`` selection step](#composite-select-case), change accordingly, and rerun the notebook.
 
 ```{tip}
 You would need to change ``prefix``, ``sweep``, ``case`` and ``ipol`` to select the specific pre-created gridded source data. See [](#gridding-polar-data).  

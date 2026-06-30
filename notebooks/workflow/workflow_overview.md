@@ -57,12 +57,13 @@ This collection of notebooks demonstrates a complete radar processing workflow, 
 
 The material is divided into three sections:
 
-- @pre-course-material - introduction to datasets, tools, and core functionality
-- @main-course - hands-on radar processing exercises using representative case studies
-- @post-course-material - resources for further exploration after the course
+- [](#pre-course-material) - introduction to datasets, tools, and core functionality
+- [](#main-course) - hands-on radar processing exercises using representative case studies
+- [](#post-course-material) - resources for further exploration after the course
 
 The notebooks assume basic familiarity with Python and scientific Python libraries such as NumPy, Xarray, and Matplotlib.
 
+(pre-course-material)=
 ## Pre-Course Material
 
 The pre-course material introduces datasets, tools, and core processing concepts used throughout the course. These notebooks are intended to familiarize participants with the radar observations, data structures, visualization methods, and supporting geospatial information before moving on to the main processing exercises.
@@ -97,6 +98,7 @@ Interpolation of polar radar observations onto a common Cartesian analysis grid.
 
 Common analysis grid generation and Polar-to-Cartesian interpolation is highlighted in [](#gridding-polar-data), Multi-radar compositing is shown in [](#composite-to-grid).
 
+(main-course)=
 ## Main Course
 
 The main course introduces the weather radar processing workflow using two representative precipitation events: [](#stratiform-case) and [](#convective-case). These datasets highlight the different characteristics and challenges associated with widespread layered precipitation and localized intense convection.
@@ -105,9 +107,9 @@ Throughout the exercises, participants will apply and evaluate the correction an
 
 By working through these complementary cases, participants will gain practical experience with typical radar data issues and develop an understanding of how processing strategies may differ depending on meteorological conditions.
 
-
+(post-course-material)=
 ## Post-Course Material
 
-The [](workflow-post-course) section provides additional resources, references, and suggestions for further exploration beyond the main course exercises. Rather than introducing new mandatory material, it serves as a collection of pointers and comments intended to support continued learning and experimentation.
+The [](#workflow-post-course) section provides additional resources, references, and suggestions for further exploration beyond the main course exercises. Rather than introducing new mandatory material, it serves as a collection of pointers and comments intended to support continued learning and experimentation.
 
 Participants are encouraged to revisit the course datasets, explore alternative processing approaches, and consult the referenced documentation and literature for further study of radar data processing and evaluation techniques.

@@ -49,6 +49,8 @@ kernelspec:
 Fruŝka Gora radar is located in a small low mountain range of the same name [Fruška_Gora](wiki:Fruška_Gora) on the right bank of the Danube, south of Novi Sad.
 
 ```{code-cell} ipython3
+:tags: [remove-cell]
+
 import numpy as np
 import wradlib as wrl
 import matplotlib.pyplot as plt
@@ -68,19 +70,6 @@ We use the ARCO data provided in [](#intro-data-access). Please refer to this no
 ```{code-cell} ipython3
 OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
 BUCKET = "nexrad-arco"
-```
-
-```{code-cell} ipython3
-fs = fsspec.filesystem(
-    "s3", anon=True, client_kwargs={"endpoint_url": OSN_ENDPOINT},
-)
-
-for site, prefix in [("FGora", "fgora_vol"), ("Jastrebac", "jastrebac_vol")]:
-    files = sorted(fs.glob(f"{BUCKET}/{prefix}/**/*.vol"))
-    print(f"{site} raw files: {len(files)}")
-    for f in files[:4]:
-        print(f"  {f.split('/')[-1]}")
-    print()
 ```
 
 ```{code-cell} ipython3

@@ -30,7 +30,7 @@ $ docker run -ti --name erad2026 -p 8888:8888 -v /host/path/to/your/folder:/home
 
 ### Slideshows not working
 
-Slideshows do not work when @pyviz/jupyterlab_pyviz is enabled. A temporary fix is to disable it in the running jupyterlab instance (eg in a terminal):
+Slideshows do not work when ``@pyviz/jupyterlab_pyviz`` is enabled. A temporary fix is to disable it in the running jupyterlab instance (eg in a terminal):
 
 ```bash
 $ jupyter labextension disable @pyviz/jupyterlab_pyviz

@@ -17,13 +17,13 @@ This notebook gives a short overview of the installed packages and the environme
 
 ## Linux environment
 
-```{code-cell}
+```{code-cell} ipython3
 !env
 ```
 
 ## Conda environment
 
-```{code-cell}
+```{code-cell} ipython3
 !mamba list
 ```
 

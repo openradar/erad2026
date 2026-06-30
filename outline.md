@@ -1,4 +1,4 @@
-
+(erad2026-course-outline)=
 # Short Course Outline
 
 _Open Radar – Open Source Software Tools for Radar Data Processing 

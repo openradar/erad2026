@@ -54,6 +54,8 @@ kernelspec:
 # Gridding Polar Data
 
 ```{code-cell} ipython3
+:tags: [remove-cell]
+
 import cmweather
 import numpy as np
 import wradlib as wrl
@@ -128,7 +130,7 @@ We'll use the lowest elevation as an example.
 - [](xref:wradlib#generated/wradlib.georef.polar.georeference)
 ```
 
-(select-sweep)=
+(gridding-select-sweep)=
 ```{code-cell} ipython3
 sweep = "sweep_0"
 ```
@@ -140,7 +142,6 @@ import os
 sweep = os.environ.get("ERAD2026_SWEEP", sweep)
 ```
 
-(gridding-select-sweep)=
 ```{code-cell} ipython3
 x0 = 3760756.2464729655
 y0 = -2656141.3006878751

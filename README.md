@@ -45,7 +45,7 @@ data processing, using open datasets relevant to the attendees and ERAD2026.
 
 ## Course program
 
-Please see the [preliminary schedule](schedule).
+Please see the [preliminary schedule](schedule.md).
 
 ## Structure
 

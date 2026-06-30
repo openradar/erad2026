@@ -75,6 +75,8 @@ In this notebook, we demonstrate a terrain-aware radar processing workflow using
 ## Imports
 
 ```{code-cell} ipython3
+:tags: [remove-cell]
+
 import numpy as np
 import wradlib as wrl
 import matplotlib.pyplot as plt
@@ -102,7 +104,7 @@ OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
 BUCKET = "nexrad-arco"
 ```
 
-(select-prefix)=
+(dem-select-prefix)=
 ```{code-cell} ipython3
 # prefix = "Fgora"  # single-pol, 12 sweeps × 360 az × 250 range, 2014 + 2017 + 2026
 prefix = "jastrebac_250m"  # dual-pol, 12 × 360 × 1000, 2014 only
@@ -142,7 +144,7 @@ root = next(iter(dtree.keys())).split("/")[0]
 
 ## Get sweep
 
-(select-sweep)=
+(dem-select-sweep)=
 ```{code-cell} ipython3
 sweep = "sweep_0"
 ```
@@ -186,35 +188,43 @@ The merged DEM is opened using Rasterio and exposed as an Xarray dataset. This p
 ```
 
 ```{code-cell} ipython3
-from botocore import UNSIGNED
-from botocore.config import Config
-import boto3
+from pathlib import Path
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
-s3 = boto3.client(
-    "s3",
-    config=Config(signature_version=UNSIGNED),
+BASE = "https://elevation-tiles-prod.s3.amazonaws.com"
+
+session = requests.Session()
+
+retry = Retry(
+    total=6,
+    backoff_factor=1.5,
+    status_forcelist=[500, 502, 503, 504],
+    allowed_methods=["GET"],
+    raise_on_status=False,
 )
 
+session.mount("https://", HTTPAdapter(max_retries=retry))
+
 def download_skadi_tile(tile, destination=None):
-    if destination is None:
-        destination = f"{tile}.hgt.gz"
-    
-    destination = Path(destination)
-    
+    destination = Path(destination or f"{tile}.hgt.gz")
+
     if destination.exists():
-        return str(destination)
-    
+        return destination
+
     key = f"skadi/{tile[:3]}/{tile}.hgt.gz"
-    print(f"Downloading {key}")
+    url = f"{BASE}/{key}"
 
-    obj = s3.get_object(
-        Bucket="elevation-tiles-prod",
-        Key=key,
-    )
+    print(f"Downloading {url}")
 
-    with open(destination, "wb") as f:
-        for chunk in obj["Body"].iter_chunks(1024 * 1024):
-            f.write(chunk)
+    with session.get(url, stream=True, timeout=60) as r:
+        r.raise_for_status()
+        with destination.open("wb") as f:
+            for chunk in r.iter_content(1024 * 1024):
+                if chunk:
+                    f.write(chunk)
+
     return destination
 ```
 
@@ -302,8 +312,8 @@ display(dem_bb)
 
 ## Next Steps
 
-You've finished processing the selected dataset. Return to [``prefix`` selection step](#select-prefix), choose one of the remaining datasets, and rerun the notebook. Repeat this until all three datasets have been processed.
+You've finished processing the selected dataset. Return to [``prefix`` selection step](#dem-select-prefix), choose one of the remaining datasets, and rerun the notebook. Repeat this until all three datasets have been processed.
 
 ```{tip}
-You might also want to have a look at other elevations. Please choose the wanted sweep at the [``sweep`` selection step](#select-sweep).
+You might also want to have a look at other elevations. Please choose the wanted sweep at the [``sweep`` selection step](#dem-select-sweep).
 ```
