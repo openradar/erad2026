@@ -84,9 +84,11 @@ Digital elevation models (DEMs) are used to assess terrain-induced beam blockage
 
 These notebooks will cover procedures to improve data quality prior to quantitative applications.
 
+The [](#system_phidp), [](#delta-phidp) and [](#differential-phase) notebooks demonstrate the differential phase processing workflow, from estimating system differential phase and total differential phase shift to correcting biases, filtering and smoothing differential phase, and deriving specific differential phase..
+
 ### Radar Corrections *(under development)*
 
-Processing steps that compensate for known measurement and observation effects.
+Processing steps that compensate for known measurement and observation effects. The [](#attenuation-correction-single-pol) notebook shows how to apply single-polarization attenuation correction using the Hitschfeld–Bordan and Krämer method's. The [](#attenuation-correction-dual-pol) notebook facilitates the ZPHI method to derive specific attenuation and correct reflectivity.
 
 ### Quantitative Precipitation Estimation (QPE) *(under development)*
 

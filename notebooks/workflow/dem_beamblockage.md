@@ -261,14 +261,12 @@ We interpolate the raster DEM onto the polar radar grid so that each radar gate 
 ```{code-cell} ipython3
 dem_polar = dem.DEM.chunk(x=-1, y=-1).wrl.ipol.interpolate(swp.isel(vcp_time=0, range=slice(0, 1000)), method="map_coordinates", order=1)
 display(dem_polar)
-```
-
-```{code-cell} ipython3
 swp = swp.assign(DEM=dem_polar)
 ```
 
 ```{code-cell} ipython3
 swp.DEM.wrl.vis.plot(vmin=0, cmap="terrain")
+plt.gca().set_title("DEM - Polar Radar Grid")
 ```
 
 ## BeamBlockage Calculation

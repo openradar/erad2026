@@ -159,14 +159,20 @@ display(composite)
 
 ## Plot Result
 
+Always check your source data! In our case the first timestep is only available for [Fruška_Gora](wiki:Fruška_Gora) Radar, [](wiki:Jastrebac) Radar is missing.
+
 ```{code-cell} ipython3
 csel = composite.isel(vcp_time=0)
 csel.where(csel>0.1).plot(cmap="HomeyerRainbow", vmin=0, vmax=60)
+plt.gca().set_title(f"{csel.vcp_time.values.astype('M8[s]')} - Radar Fruŝka Gora only")
 ```
+
+In the second timestep, [](wiki:Jastrebac) is contained in the composite. 
 
 ```{code-cell} ipython3
 csel = composite.isel(vcp_time=1)
 csel.where(csel>0.1).plot(cmap="HomeyerRainbow", vmin=0, vmax=60)
+plt.gca().set_title(f"{csel.vcp_time.values.astype('M8[s]')} - Composite")
 ```
 
 ## Write Composite

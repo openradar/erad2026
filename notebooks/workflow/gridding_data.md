@@ -236,11 +236,16 @@ fig = plt.figure(figsize=(12, 10))
 
 kwargs = dict(vmin=0, vmax=60)
 kw_lim = dict(xlim=(4.7e6, 4.75e6), ylim=(-3.6e6, -3.65e6))
+vcp_dt = swp_nearest.isel(vcp_time=0).vcp_time.values.astype("datetime64[s]")
 swp_nearest.DBTH.isel(vcp_time=0).wrl.vis.plot(ax=221, **kwargs)
+plt.gca().set_title(f"{vcp_dt}, DBTH - nearest")
 swp_idw.DBTH.isel(vcp_time=0).wrl.vis.plot(ax=222, **kwargs)
+plt.gca().set_title(f"{vcp_dt}, DBTH - inverse distance")
 
 swp_nearest.DBTH.isel(vcp_time=0).wrl.vis.plot(ax=223, **kwargs, **kw_lim)
+plt.gca().set_title(f"{vcp_dt}, DBTH - nearest")
 swp_idw.DBTH.isel(vcp_time=0).wrl.vis.plot(ax=224, **kwargs, **kw_lim)
+plt.gca().set_title(f"{vcp_dt}, DBTH - inverse distance")
 fig.tight_layout()
 ```
 
