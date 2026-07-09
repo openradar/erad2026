@@ -1,6 +1,7 @@
 name: erad2026-dev
 channels:
   - conda-forge
+  - nodefaults
 dependencies:
   - python=3.13
   - jupyterlab
