@@ -6,7 +6,7 @@ There are three options to work with this course: via Binder, a dedicated Cloud 
 
 The whole course runs in your browser on the [Project Pythia Binder](https://binder.projectpythia.org/) — no installation needed. Click the badge to launch JupyterLab with the full course environment (Py-ART, wradlib, xradar, BALTRAD, LROSE):
 
-[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/openradar/erad2026/main?labpath=notebooks)
+[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/erad2026/main?labpath=notebooks)
 
 The first launch can take a few minutes while the course image is fetched. Note that Binder sessions are temporary: download anything you want to keep before closing the tab.
 

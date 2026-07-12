@@ -94,7 +94,7 @@ project:
             - file: notebooks/workflow/post_course.md
   jupyter:
     binder:
-      repo: openradar/erad2026
+      repo: ProjectPythia/erad2026
       url: https://binder.projectpythia.org/
 site:
   options:
@@ -110,4 +110,4 @@ site:
       url: https://openradar.discourse.group/
   actions:
     - title: Launch Environment
-      url: https://binder.projectpythia.org/v2/gh/openradar/erad2026/main?labpath=notebooks
+      url: https://binder.projectpythia.org/v2/gh/ProjectPythia/erad2026/main?labpath=notebooks

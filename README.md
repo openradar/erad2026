@@ -2,7 +2,7 @@
 
 # ERAD2026 Open Radar Science Short Course
 
-[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/openradar/erad2026/main?labpath=notebooks)
+[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/erad2026/main?labpath=notebooks)
 
 This repository contains the hands-on materials for the ERAD 2026 short course Open Radar – Open Source Software Tools for Radar Data Processing: From Raw Data to Analysis-Ready Fields. For a detailed description of the course, including its objectives, agenda, prerequisites, and expected outcomes, please refer to the accompanying [](#erad2026-course-outline).
 
