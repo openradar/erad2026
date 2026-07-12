@@ -34,6 +34,13 @@ jobs:
           remove_dotnet: true
           remove_haskell: true
 
+      # binder/Dockerfile exists only for BinderHub (it pulls the prebuilt
+      # image). If repo2docker sees it, it would skip the environment.yml +
+      # appendix build entirely — remove it so images are always rebuilt
+      # from the environment definition.
+      - name: Remove binder/Dockerfile so repo2docker builds the environment
+        run: rm -f binder/Dockerfile
+
       # Pull Requests:
       # Build only (no push to GHCR)
       - name: Build image for PR validation
