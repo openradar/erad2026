@@ -52,7 +52,7 @@ Participants will identify and mitigate non-meteorological signals, including gr
 
 After a lunch break, afternoon sessions offer individual projects:
 * In depth exploration of selected steps from the morning session, to provide insight into the underlying algorithms and enable participants to modify or extend them as needed.
-* A dedicated session focuses on the integration of established radar processing frameworks into modern workflows. Systems such as BALTRAD and LROSE (TITAN / SAMURAI)  are introduced, demonstrating how their capabilities can complement Python-based tools and be incorporated into xarray-based pipelines. This session bridges research-oriented workflows with operational processing environments, providing participants with a broader perspective on the radar ecosystem.
+* A dedicated session focuses on the integration of established radar processing frameworks into modern workflows. Systems such as BALTRAD and LROSE (TITAN)  are introduced, demonstrating how their capabilities can complement Python-based tools and be incorporated into xarray-based pipelines. This session bridges research-oriented workflows with operational processing environments, providing participants with a broader perspective on the radar ecosystem.
 * A special session on Echo Top Height Analysis to identify storm structure, vertical extents, and derived products.
 
 Exercises emphasize transparency and reproducibility, enabling participants to not only generate analysis-ready datasets but also to understand and adapt the processing workflows. The course concludes with a discussion of how these outputs can be used in precipitation nowcasting, providing a direct link to the second day of the training sequence.

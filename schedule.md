@@ -65,7 +65,7 @@ Show how individual packages integrate into a complete workflow.
 - Algorithm analysis, modification, and extension
 - Incorporation of interoperable open-source tools
 
-#### b. TITAN / SAMURAI (LROSE)
+#### b. TITAN (LROSE)
 - Storm tracking and analysis workflows
 - Radar-to-dynamics applications
 
