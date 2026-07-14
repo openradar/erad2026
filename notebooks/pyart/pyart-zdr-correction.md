@@ -335,3 +335,10 @@ On $Z_{DR}$ calibration:
 
 * Bringi, V. N., & Chandrasekar, V. (2001). *Polarimetric Doppler Weather Radar.* Cambridge University Press.
 * Ryzhkov, A. V., et al. (2005). Calibration issues of dual-polarization radar measurements. *J. Atmos. Oceanic Technol.*, 22, 1138–1155.
+
++++
+
+```{admonition} Acknowledgment
+:class: note
+This notebook was developed with **Claude** (Anthropic).
+```
