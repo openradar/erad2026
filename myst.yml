@@ -60,6 +60,7 @@ project:
     - title: Data Access
       children:
         - file: notebooks/data-access/intro-data-access.md
+        - file: notebooks/data-access/station-data-access.md
         - file: notebooks/xradar/xradar-basics.md
     - title: Radar Software Foundations
       children:
