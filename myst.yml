@@ -75,6 +75,7 @@ project:
             - file: notebooks/pyart/pyart-basics.md
             - file: notebooks/pyart/pyart-corrections.md
             - file: notebooks/pyart/pyart-gridding.md
+            - file: notebooks/pyart/pyart-zdr-correction.md
     - title: Radar Processing Workflow
       children:
         - file: notebooks/workflow/workflow_overview.md
