@@ -23,6 +23,9 @@
     <loc>http://localhost:3000/notebooks/data-access/intro-data-access</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/notebooks/data-access/station-data-access</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/notebooks/xradar/xradar-basics</loc>
   </url>
   <url>
@@ -60,6 +63,9 @@
   </url>
   <url>
     <loc>http://localhost:3000/notebooks/pyart/pyart-gridding</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/pyart/pyart-zdr-correction</loc>
   </url>
   <url>
     <loc>http://localhost:3000/notebooks/workflow/workflow-overview</loc>
