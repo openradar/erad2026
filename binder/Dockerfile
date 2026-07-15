@@ -6,4 +6,4 @@
 # workflow has pushed the new image. The workflow itself ignores this file
 # (it removes it before running repo2docker), so images are always rebuilt
 # from environment.yml + appendix.txt.
-FROM ghcr.io/openradar/erad2026:8a0d84172ef2
+FROM ghcr.io/openradar/erad2026:d3da0545aef0
