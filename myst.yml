@@ -110,6 +110,7 @@ site:
   options:
     logo: images/logos/openradar_logo.svg
     folders: true
+    folders_level: 10
     url: https://openradarscience.org/erad2026
   nav:
     - title: Conference Home
