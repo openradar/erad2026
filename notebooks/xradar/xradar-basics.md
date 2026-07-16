@@ -221,7 +221,7 @@ dtree_filt = dtree.xradar.map_over_sweeps(filter_data)
 ```
 
 ```{code-cell} ipython3
-dtree_filt["sweep_0"].xradar.georeference()["DBZH"].plot(
+dtree_filt["sweep_0"].ds.xradar.georeference()["DBZH"].plot(
     x="x",
     y="y",
     cmap="ChaseSpectral",
