@@ -46,9 +46,9 @@ jobs:
           REPO="${{ github.event.repository.name }}"
 
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "BASE_URL=/$REPO/_preview/${{ github.event.pull_request.number }}/" >> $GITHUB_ENV
+            echo "BASE_URL=/$REPO/_preview/${{ github.event.pull_request.number }}" >> $GITHUB_ENV
           else
-            echo "BASE_URL=/$REPO/" >> $GITHUB_ENV
+            echo "BASE_URL=/$REPO" >> $GITHUB_ENV
           fi
 
       - name: Debug environment
