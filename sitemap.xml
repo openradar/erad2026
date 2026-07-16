@@ -80,6 +80,21 @@
     <loc>http://localhost:3000/notebooks/workflow/dem-beamblockage</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/notebooks/workflow/system-phidp</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/delta-phidp</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/phidp</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/attenuation-single-pol</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/attenuation-dual-pol</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/notebooks/workflow/gridding-data</loc>
   </url>
   <url>
