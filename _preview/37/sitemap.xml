@@ -65,6 +65,9 @@
     <loc>http://localhost:3000/notebooks/pyart/pyart-gridding</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/notebooks/pyart/pyart-zdr-correction</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/notebooks/workflow/workflow-overview</loc>
   </url>
   <url>
