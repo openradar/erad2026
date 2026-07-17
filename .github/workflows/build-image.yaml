@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "binder/**"
+      - "!binder/Dockerfile"
       - "install/**"
       - ".github/workflows/build-image.yaml"
   pull_request:
@@ -14,9 +15,6 @@ on:
       - "install/**"
       - ".github/workflows/build-image.yaml"
   workflow_dispatch:
-
-env:
-  DOCKER_TAG: base
 
 jobs:
   build-container:
@@ -33,6 +31,11 @@ jobs:
           remove_android: true
           remove_dotnet: true
           remove_haskell: true
+
+      # read the tag from the Dockerfile, eg. pr-101
+      - name: Extract Docker tag
+        run: |
+          echo "DOCKER_TAG=$(awk '/^FROM / {print $2}' binder/Dockerfile | sed 's/.*://')" >> "$GITHUB_ENV"
 
       # binder/Dockerfile exists only for BinderHub (it pulls the prebuilt
       # image). If repo2docker sees it, it would skip the environment.yml +
