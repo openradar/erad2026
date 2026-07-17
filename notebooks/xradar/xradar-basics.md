@@ -120,7 +120,7 @@ local_path = fsspec.open_local(
     f"simplecache::s3://{sample_file}",
     s3={"anon": True, "client_kwargs": {"endpoint_url": OSN_ENDPOINT}},
 )
-dtree = xd.io.open_rainbow_datatree(local_path)
+dtree = xd.io.open_rainbow_datatree(local_path, optional_groups=True)
 dtree
 ```
 
@@ -208,6 +208,28 @@ ds_sw0 = ds_sw0.pipe(xd.util.remove_duplicate_rays)
 ds_sw0.sel(azimuth=143, method="nearest").DBZH.plot()
 ```
 
+## DataTree operations
+
+```{code-cell} ipython3
+def filter_data(ds):
+    ds = ds.where(ds.DBZH > 0)
+    return ds
+```
+
+```{code-cell} ipython3
+dtree_filt = dtree.xradar.map_over_sweeps(filter_data)
+```
+
+```{code-cell} ipython3
+dtree_filt["sweep_0"].ds.xradar.georeference()["DBZH"].plot(
+    x="x",
+    y="y",
+    cmap="ChaseSpectral",
+    vmax=60,
+    vmin=-10,
+)
+```
+
 ## Xradar integration
 
 ### Py-Art
@@ -245,6 +267,25 @@ dtree["sweep_0"].ds
 swp = dtree["sweep_0"].ds.set_coords("sweep_mode")
 swp.DBZH.wrl.vis.plot(vmax=60, vmin=-10)
 plt.gca().set_title(f"Fruška Gora - {swp.time.min().values.astype("<M8[s]")} - {swp.sweep_fixed_angle.values:.1f} deg");
+```
+
+## Xradar Transform
+
+```{code-cell} ipython3
+ds_cf1 = dtree.xradar.to_cf1()
+```
+
+```{code-cell} ipython3
+ds_cf1["DBZH"].where(ds_cf1["DBZH"] > 0).plot()
+```
+
+```{code-cell} ipython3
+# ds_cf1.to_netcdf("cf1.nc")
+```
+
+```{code-cell} ipython3
+dtree_cf2 = ds_cf1.xradar.to_cf2()
+# dtree_cf2.to_netcdf("cf2.nc")
 ```
 
 ## Xradar exporters
