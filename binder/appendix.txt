@@ -25,11 +25,9 @@ RUN CONDA_DIR=/srv/conda && \
 USER root
 
 # Jupyter Server configuration
-RUN mkdir -p /srv/conda/envs/notebook/etc/jupyter
-COPY binder/jupyter_server_config.py /srv/conda/envs/notebook/etc/jupyter/jupyter_server_config.py
-
-# JupyterLab settings
-RUN mkdir -p /srv/conda/envs/notebook/share/jupyter/lab/settings
-COPY binder/overrides.json /srv/conda/envs/notebook/share/jupyter/lab/settings/overrides.json
+RUN mkdir -p /srv/conda/envs/notebook/etc/jupyter && \
+    cp binder/jupyter_server_config.py /srv/conda/envs/notebook/etc/jupyter/. && \
+    mkdir -p /srv/conda/envs/notebook/share/jupyter/lab/settings && \
+    cp binder/overrides.json /srv/conda/envs/notebook/share/jupyter/lab/settings/.
 
 USER ${NB_USER}
