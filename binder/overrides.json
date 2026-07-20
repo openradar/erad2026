@@ -1,0 +1,16 @@
+{
+  "@jupyterlab/docmanager-extension:plugin": {
+    "autosave": true,
+    "autosaveInterval": 120,
+    "confirmClosingDocument": false,
+    "lastModifiedCheckMargin": 500,
+    "defaultViewers": {
+      "markdown": "Jupytext Notebook",
+      "myst": "Jupytext Notebook",
+      "md": "Jupytext Notebook",
+      "md:myst-jupytext-notebook": "Jupytext Notebook"
+    },
+    "renameUntitledFileOnSave": true,
+    "maxNumberRecents": 10
+  }
+}
