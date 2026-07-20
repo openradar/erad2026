@@ -1,0 +1,52 @@
+name: Sync Pythia Fork
+
+# Keeps the ProjectPythia/erad2026 fork in sync with openradar/erad2026.
+# binder.projectpythia.org only launches ProjectPythia/* repos, so the course
+# binder badge points at the fork and its main must track upstream (#44).
+#
+# This file lives in the upstream repo because the fork's main is a
+# fast-forward mirror — a commit existing only on the fork would make it
+# diverge and break the sync. The job below is a no-op on openradar/erad2026
+# and only runs once synced to the fork.
+#
+# NOTE: scheduled workflows are disabled by default in forks — a ProjectPythia
+# admin must enable this workflow once in the fork's Actions tab (and GitHub
+# auto-disables schedules after 60 days without repo activity, so re-check
+# before the course).
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.repository == 'ProjectPythia/erad2026'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fast-forward main from openradar/erad2026
+        id: sync
+        run: |
+          git remote add upstream https://github.com/openradar/erad2026.git
+          git fetch upstream main
+          BEFORE=$(git rev-parse HEAD)
+          git merge --ff-only upstream/main
+          AFTER=$(git rev-parse HEAD)
+          git push origin main
+          echo "changed=$([ "$BEFORE" != "$AFTER" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Pre-warm binder build cache
+        if: steps.sync.outputs.changed == 'true'
+        run: |
+          # One successful binder build per commit is cached permanently in the
+          # binder registry. Triggering it here means the first visitor after a
+          # sync gets an instant launch instead of waiting out the image build.
+          timeout 1500 curl -sN "https://binder.projectpythia.org/build/gh/ProjectPythia/erad2026/main" \
+            | grep -m1 -E '"phase": "(ready|failed)"' || true
