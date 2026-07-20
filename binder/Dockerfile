@@ -4,4 +4,4 @@
 # The PR author must update the pinned tag after changing the environment.
 # The Build Image workflow reads this tag and publishes the corresponding image.
 #
-FROM ghcr.io/openradar/erad2026:pr-37
+FROM ghcr.io/openradar/erad2026:pr-48
