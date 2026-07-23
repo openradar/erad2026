@@ -21,6 +21,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync:
@@ -41,6 +42,18 @@ jobs:
           AFTER=$(git rev-parse HEAD)
           git push origin main
           echo "changed=$([ "$BEFORE" != "$AFTER" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Keep inherited CI workflows disabled on the fork
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The fork inherits upstream's CI, which either fails (Build Image
+          # cannot push to openradar's registry) or wastes runner time (book
+          # build/deploy nobody serves from the fork). Disabling is idempotent
+          # and re-asserts the state in case a workflow was ever re-enabled.
+          for wf in build-image.yaml build-docs.yaml deploy-build.yaml delete-preview.yaml; do
+            gh api -X PUT "repos/${{ github.repository }}/actions/workflows/$wf/disable" || true
+          done
 
       - name: Pre-warm binder build cache
         if: steps.sync.outputs.changed == 'true'
