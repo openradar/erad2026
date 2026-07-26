@@ -137,7 +137,7 @@ for sweep in dtree.children:
 Let's explore the `0.5` degrees elevation ('sweep_0')
 
 ```{code-cell} ipython3
-ds_sw0 = dtree["sweep_0"].ds.assign_coords(dtree["/"].coords)
+ds_sw0 = dtree["sweep_0"].to_dataset(inherit="all_coords")
 display(ds_sw0)
 ```
 
@@ -254,9 +254,11 @@ del pyart_display
 ```{code-cell} ipython3
 for key in list(dtree.children):
     if "sweep" in key:
-        dtree[key].ds = dtree[key].ds.assign_coords(dtree["/"].coords).wrl.georef.georeference(
+        ds = dtree[key].to_dataset(inherit="all_coords").wrl.georef.georeference(
             crs=wrl.georef.get_default_projection()
         ).drop_vars(["altitude", "latitude", "longitude"])
+        ds.z.attrs = xd.model.get_altitude_attrs()
+        dtree[key].ds = ds
 ```
 
 ```{code-cell} ipython3

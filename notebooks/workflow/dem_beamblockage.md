@@ -159,13 +159,9 @@ sweep = os.environ.get("ERAD2026_SWEEP", sweep)
 ```{code-cell} ipython3
 swp = (
     dtree[f"{root}/{sweep}"]
-    .to_dataset()
-    .assign_coords(dtree[root].coords)
-    .assign_coords(sweep_mode="azimuth_surveillance")
+    .to_dataset(inherit="all_coords")
     .wrl.georef.georeference(crs=wrl.georef.get_earth_projection())
 )
-swp.x.attrs = xd.model.get_longitude_attrs()
-swp.y.attrs = xd.model.get_latitude_attrs()
 swp.z.attrs = xd.model.get_altitude_attrs()
 ```
 

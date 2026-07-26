@@ -112,13 +112,9 @@ First we get the lowest sweep and do some georeferencing.
 ```{code-cell} ipython3
 swp = (
     dtree[f"{root}/sweep_0"]
-    .to_dataset()
-    .assign_coords(dtree[root].coords)
-    .assign_coords(sweep_mode="azimuth_surveillance")
+    .to_dataset(inherit="all_coords")
     .wrl.georef.georeference(crs=wrl.georef.get_earth_projection())
 ).sel(vcp_time="2014")
-swp.x.attrs = xd.model.get_longitude_attrs()
-swp.y.attrs = xd.model.get_latitude_attrs()
 swp.z.attrs = xd.model.get_altitude_attrs()
 display(swp)
 ```

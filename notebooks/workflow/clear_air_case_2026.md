@@ -136,12 +136,11 @@ proj_laea = wrl.georef.ensure_crs(proj_laea)
 
 swp = (
     dtree[f"{root}/sweep_0"]
-    .to_dataset()
-    .assign_coords(dtree[root].coords)
-    .assign_coords(sweep_mode="azimuth_surveillance")
+    .to_dataset(inherit="all_coords")
     .wrl.georef.georeference(crs=proj_laea)
 )
 swp = swp.rename(crs_wkt="spatial_ref")
+swp.z.attrs = xd.model.get_altitude_attrs()
 display(swp)
 ```
 
