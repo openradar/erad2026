@@ -115,7 +115,7 @@ QVPs are computed from the steepest routinely available elevation angle: a steep
 sweeps = sorted(dtree[root].children, key=lambda s: int(s.split("_")[-1]))
 sweep = sweeps[-1]
 
-swp = dtree[f"{root}/{sweep}"].to_dataset().assign_coords(dtree[root].coords)
+swp = dtree[f"{root}/{sweep}"].to_dataset(inherit="all_coords")
 elevation_deg = float(swp.sweep_fixed_angle.isel(vcp_time=0))
 print(f"Using {sweep} at {elevation_deg:.1f}\N{DEGREE SIGN} elevation")
 display(swp)
