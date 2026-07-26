@@ -46,7 +46,7 @@ kernelspec:
 (qpe-estimation)=
 # Quantitative Precipitation Estimation (QPE)
 
-Quantitative Precipitation Estimation converts radar reflectivity into rain rate and, by integrating over time, rainfall accumulation. The Marshall-Palmer power-law Z-R relationship is the simplest and most widely used approach, and performs best in widespread, layered (stratiform) precipitation where drop-size distributions are relatively uniform — the case used here.
+Quantitative Precipitation Estimation converts radar reflectivity into rain rate and, by integrating over time, rainfall accumulation. The Marshall & Palmer [](https://doi.org/10.1175/1520-0469(1948)005%3C0165:TDORWS%3E2.0.CO;2) power-law Z-R relationship is the simplest and most widely used approach, and performs best in widespread, layered (stratiform) precipitation where drop-size distributions are relatively uniform — the case used here.
 
 ```{code-cell} ipython3
 :tags: [remove-cell]
@@ -74,12 +74,21 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 ## Overview
 
+Marshall & Palmer [](https://doi.org/10.1175/1520-0469(1948)005%3C0165:TDORWS%3E2.0.CO;2) measured raindrop size distributions in stratiform rain at McGill University and found they closely follow an exponential form,
+
+```{math}
+:label: eq:dsd
+N(D) = N_0\,e^{-\Lambda D}
+```
+
+with {math}`N_0 \approx 8000\ \mathrm{m}^{-3}\,\mathrm{mm}^{-1}` roughly constant and {math}`\Lambda` decreasing as rain rate {math}`R` increases. Integrating this drop-size distribution to get the radar reflectivity factor {math}`Z` (the sixth moment of {math}`D`) and the rain rate {math}`R` (related to the third moment and fall speed) separately, then eliminating {math}`\Lambda`, yields a power-law relationship between the two:
+
 ```{math}
 :label: eq:zr
 Z = a R^b \quad\Longleftrightarrow\quad R = \left(\frac{Z}{a}\right)^{1/b}
 ```
 
-with the classic [Marshall & Palmer (1948)](https://doi.org/10.1175/1520-0469(1948)005%3C0165:TDORWS%3E2.0.CO;2) coefficients {math}`a=200`, {math}`b=1.6` for stratiform rain ({math}`Z` in {math}`\mathrm{mm}^6\,\mathrm{m}^{-3}`, {math}`R` in {math}`\mathrm{mm\,h}^{-1}`). Other {math}`a`, {math}`b` pairs exist for different precipitation regimes (e.g. convective, snow), and dual-polarization estimators such as R(KDP) are more robust in heavy rain since they are insensitive to attenuation and less sensitive to drop-size assumptions — see [](#attenuation-correction-dual-pol).
+with their now-classic coefficients {math}`a=200`, {math}`b=1.6` ({math}`Z` in {math}`\mathrm{mm}^6\,\mathrm{m}^{-3}`, {math}`R` in {math}`\mathrm{mm\,h}^{-1}`). Because these coefficients were fit to a stratiform-rain drop-size distribution, they shouldn't be assumed to hold in convective rain or snow, where the particle-size distribution differs substantially — other {math}`a`, {math}`b` pairs exist for those regimes, and dual-polarization estimators such as R(KDP) are more robust in heavy rain since they are insensitive to attenuation and less sensitive to drop-size assumptions — see [](#attenuation-correction-dual-pol).
 
 We use the single-polarization Fruška Gora data here (rather than the dual-polarization Jastrebac data used for the convective [QVP](#qvp-workflow)) paired with the stratiform case ([](#stratiform-case)): a single Z-R relationship is best justified over a widespread, more uniform rain event than a convective one.
 

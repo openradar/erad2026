@@ -39,7 +39,7 @@ kernelspec:
 (qvp-workflow)=
 # Quasi-Vertical Profiles (QVP)
 
-Quasi-Vertical Profiles ([Ryzhkov et al., 2016](https://doi.org/10.1175/JTECH-D-15-0020.1)) turn routine PPI volumes into a time-height view of the atmosphere above the radar, without needing dedicated RHI scans. At a single, sufficiently high and fixed elevation angle, all gates around one azimuthal sweep are averaged together into one vertical profile; stacking these profiles in time reveals how reflectivity and polarimetric signatures evolve, e.g. the melting-layer bright band or a storm's ice/mixed-phase structure aloft.
+Quasi-Vertical Profiles (QVPs) turn the PPI volumes a radar already collects into a time-height view of the atmosphere above it, without needing dedicated RHI scans. The technique was introduced by Ryzhkov et al. [](https://doi.org/10.1175/JTECH-D-15-0020.1): at a single, sufficiently high and fixed elevation angle, reflectivity and the polarimetric moments are averaged around the full azimuthal sweep into one vertical profile, and stacking these profiles in time reveals how the vertical structure evolves as precipitation passes over the radar.
 
 ```{code-cell} ipython3
 :tags: [remove-cell]
@@ -71,6 +71,8 @@ A QVP is the azimuthal mean of a polarimetric moment {math}`X` at a fixed elevat
 :label: eq:qvp
 \mathrm{QVP}(r, t) = \frac{1}{N_\theta} \sum_{\theta=1}^{N_\theta} X(r, \theta, t)
 ```
+
+Ryzhkov et al. [](https://doi.org/10.1175/JTECH-D-15-0020.1) used this technique to track the melting layer and dendritic growth zone (roughly -10 to -15 degrees Celsius) as precipitation evolves. In that layer, ice crystals grow into dendrites and begin to aggregate as they fall and partially melt; in a QVP this shows up as a ZDR increase (up to 1.5-2 dB), a RHOHV decrease, and a strong vertical gradient in Z, sometimes accompanied by a nonzero KDP as the vertical phase gradient responds to the changing hydrometeor population. Because a QVP only needs the routine PPI volumes a radar already collects, it lets researchers examine the time evolution of these microphysical processes continuously, and compare polarimetric radar observations directly against vertically pointing remote sensors.
 
 QVPs assume precipitation is approximately uniform in a ring around the radar, so they are most reliable in widespread, layered precipitation. For an isolated convective cell the azimuthal average mixes in-storm and clear-air rays, but the technique remains a useful way to track how a storm's vertical structure evolves as it approaches, passes over, and recedes from the radar — which is why we apply it here to the Jastrebac dual-polarization convective case ([](#convective-case)) rather than the single-polarization data used for [QPE](#qpe-estimation).
 
@@ -139,7 +141,7 @@ kdp = swp.KDP.where(qc_mask & (swp.KDP > -9))
 Reflectivity must be averaged in linear units and converted back to dB afterwards — averaging directly in dB would bias the mean low, since dB compresses the dynamic range of the underlying (linear) received power. Height above the radar follows from simple trigonometry on the fixed elevation angle and range: {math}`h = r \sin\theta_e`.
 
 ```{seealso}
-- [Ryzhkov et al. (2016)](https://doi.org/10.1175/JTECH-D-15-0020.1) — the original QVP formulation
+- [](https://doi.org/10.1175/JTECH-D-15-0020.1) — the original QVP formulation
 ```
 
 ```{code-cell} ipython3
@@ -166,7 +168,7 @@ display(qvp)
 ## Visualize the Vertical Structure
 
 ```{note}
-This archive's raw ``ZDR`` and ``KDP`` are not yet bias-corrected — see [](#system_phidp), [](#delta-phidp) and [](#attenuation-correction-dual-pol) for the phase-calibration steps used elsewhere in this course. The panels below are still worth reading for their time-height *structure* (e.g. the correlation-coefficient dip as the storm's ice/mixed-phase region evolves), even though their absolute levels reflect this radar's uncorrected system biases.
+This archive's raw ``ZDR`` and ``KDP`` are not yet bias-corrected — see [](#system_phidp), [](#delta-phidp) and [](#attenuation-correction-dual-pol) for the phase-calibration steps used elsewhere in this course. The panels below are still worth reading for their time-height *structure* — in particular the ``RHOHV`` dip and enhanced ``DBZH``/``ZDR`` as the storm's melting layer and dendritic growth zone evolve — even though their absolute levels reflect this radar's uncorrected system biases.
 ```
 
 ```{code-cell} ipython3
