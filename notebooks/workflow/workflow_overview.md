@@ -76,6 +76,10 @@ The pre-course notebooks are grouped into the following thematic areas:
 
 These notebooks provide an overview of the available radar datasets and their characteristics. They include examples of stratiform and convective precipitation cases, inspection of scan strategies, radar coverage, and basic visualization of the observations. The notebooks [](#inspect-single-pol) and [](#inspect-dual-pol) present data from two different radar sites and illustrate both stratiform and convective precipitation observations.
 
+### Quasi-Vertical Profiles (QVP)
+
+Azimuthally averaging a fixed, high elevation angle over time turns routine PPI volumes into a time-height view of the atmosphere above the radar, without requiring dedicated RHI scans. The [](#qvp-workflow) notebook demonstrates this technique on the dual-polarization convective case, tracking reflectivity and polarimetric signatures as a storm evolves near the radar.
+
 ### Terrain and Beam Blockage
 
 Digital elevation models (DEMs) are used to assess terrain-induced beam blockage. The [](#terrain-beamblockage) notebook demonstrates the generation of a DEM for the radar domain and the derivation of beam blockage fractions from radar beam geometry and terrain elevation.
@@ -90,9 +94,9 @@ The [](#system_phidp), [](#delta-phidp) and [](#differential-phase) notebooks de
 
 Processing steps that compensate for known measurement and observation effects. The [](#attenuation-correction-single-pol) notebook shows how to apply single-polarization attenuation correction using the Hitschfeld–Bordan and Krämer method's. The [](#attenuation-correction-dual-pol) notebook facilitates the ZPHI method to derive specific attenuation and correct reflectivity.
 
-### Quantitative Precipitation Estimation (QPE) *(under development)*
+### Quantitative Precipitation Estimation (QPE)
 
-Generation and evaluation of quantitative precipitation products derived from radar observations.
+Generation and evaluation of quantitative precipitation products derived from radar observations. The [](#qpe-estimation) notebook derives rainfall rate and accumulation from reflectivity using the Marshall-Palmer Z-R relationship on the single-polarization stratiform case.
 
 ### Polar-to-Cartesian Gridding
 

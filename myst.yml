@@ -86,6 +86,7 @@ project:
               children:
                 - file: notebooks/workflow/inspect_source_data_fgora.md
                 - file: notebooks/workflow/inspect_source_data_jastrebac.md
+            - file: notebooks/workflow/qvp_workflow.md
             - file: notebooks/workflow/dem_beamblockage.md
             - title: Phase Processing
               children:
@@ -96,6 +97,7 @@ project:
               children:
                 - file: notebooks/workflow/attenuation_single_pol.md
                 - file: notebooks/workflow/attenuation_dual_pol.md
+            - file: notebooks/workflow/qpe_estimation.md
             - title: Gridding & Compositing
               children:
                 - file: notebooks/workflow/gridding_data.md
