@@ -15,6 +15,7 @@ The course will discuss the principles of open science and provide an overview o
 [Py-ART](https://arm-doe.github.io/pyart/),
 [BALTRAD](https://baltrad.github.io/),
 [wradlib](https://docs.wradlib.org/en/latest/)
+[GPM-API](https://gpm-api.readthedocs.io/)
 ) and how they connect with the scientific software stack.
 
 The course will be built with myst Jupyter Notebooks as hands-on approach for interactive user experience. The main course programming language is Python, but also Command Line Tools are used.
@@ -33,6 +34,7 @@ data processing, using open datasets relevant to the attendees and ERAD2026.
 ## List of Instructors
 
 - Brenda Javornik, NCAR
+- Gionata Ghiggi, EPFL
 - Kai Mühlbauer, University Bonn
 - Robert Jackson, ANL
 - Scott Collis, ANL
