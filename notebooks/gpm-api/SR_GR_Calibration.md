@@ -211,7 +211,7 @@ ds_gpm["flagHydroClass"] = ds_gpm.gpm.retrieve("flagHydroClass").sel(radar_frequ
 
 ### 3.2 GPM-API visualization tools
 
-We know display the estimated near surface precipitation rate and precipitation type:
+We now display the estimated near surface precipitation rate and precipitation type:
 
 
 ```python
