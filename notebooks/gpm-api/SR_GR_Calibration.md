@@ -51,7 +51,6 @@ warnings.filterwarnings("ignore")
 
 from functools import reduce
 
-import fsspec
 import s3fs
 import icechunk 
 import numpy as np
@@ -122,7 +121,7 @@ Here below, we add the radar-site coordinates provided in the DataTree root (`lo
 for sweep in dt[root].xradar_dev.sweeps:
     node = dt[root][sweep]
     ds = node.to_dataset(inherit=False)
-    ds = ds.assign_coords(dt[root].coords) # add l
+    ds = ds.assign_coords(dt[root].coords) # add latitude/longitude/altitude
     ds = ds.assign_coords(
         sweep_mode="azimuth_surveillance"
     )
@@ -177,7 +176,7 @@ extent = ds_gr.xradar_dev.extent(max_distance=150_000)
 ds_gr["DBZH"].xradar_dev.plot_map(extent=extent)
 ```
 
-Now let's display the GPM DPR Ku-band measured reflectivitity near the surface just above the surface clutter:
+Now let's display the GPM DPR Ku-band measured reflectivity near the surface just above the surface clutter:
 
 
 ```python
@@ -443,7 +442,7 @@ fig.tight_layout()
 
 ## 6. Explore SR/GR database filtering criteria 
 
-When comparing SR and GR data or trying to determine an accurate GR calibration bias, it's necessary to define a set of filtering criteria. In the figures below, we perform exploratory data analysis to investigate the relationships between the SR/GR reflectivity deviations and sets of variables characterizing radar measurements and SR/GR volume properties. The patterns and deviations observed in the scatterplots will be used to define a set of filtering critera in the next section of the tutorial.
+When comparing SR and GR data or trying to determine an accurate GR calibration bias, it's necessary to define a set of filtering criteria. In the figures below, we perform exploratory data analysis to investigate the relationships between the SR/GR reflectivity deviations and sets of variables characterizing radar measurements and SR/GR volume properties. The patterns and deviations observed in the scatterplots will be used to define a set of filtering criteria in the next section of the tutorial.
 
 
 ```python
@@ -569,7 +568,7 @@ for identifier, ds_gr in dict_ds_gr.items():
         # Append matching database
         if gdf_match is not None:
             gdf_match["identifier"] = identifier
-            gdf_match["sweep_group"] = sweep_group
+            gdf_match["sweep_group"] = identifier.split("_", 1)[1]
             list_gdf.append(gdf_match)
 
 
@@ -704,7 +703,7 @@ def filter_matched_volumes(gdf_match,
     mask_final = reduce(np.logical_and, masks)
     gdf_match["filtering_mask"] = mask_final
 
-    # Dsplay final filtering mask
+    # Display final filtering mask
     if display_mask:
         reflectivity_scatterplots(
             df=gdf_match,
@@ -762,8 +761,8 @@ The GR calibration bias can be obtained by averaging the difference between the 
 z_offset = np.nanmean(gdf_filtered[sr_z_column] - gdf_filtered[gr_z_column]).round(2)
 z_offset_robust = np.nanmedian(gdf_filtered[sr_z_column] - gdf_filtered[gr_z_column]).round(2)
 
-print(f"Th ZH Calibration offset is (mean): {z_offset} dBZ")
-print(f"Th ZH Calibration offset is (median): {z_offset_robust} dBZ")
+print(f"The ZH Calibration offset is (mean): {z_offset} dBZ")
+print(f"The ZH Calibration offset is (median): {z_offset_robust} dBZ")
 ```
 
 ## Next steps
@@ -786,7 +785,5 @@ We hope you enjoyed the tutorial! 😊
 
 This notebook is part of the [GPM-API  documentation](https://gpm-api.readthedocs.io/).
 
-Large portions of this tutorials were adapted and derived from an old $\omega radlib$  tutorial.
-
-Copyright: $\omega radlib$  and GPM-API developers.
+Copyright: GPM-API developers.
 Distributed under the MIT License. See [GPM-API license](https://github.com/ghiggi/gpm_api/blob/main/LICENSE) for more info.

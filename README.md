@@ -14,7 +14,7 @@ The course will discuss the principles of open science and provide an overview o
 [LROSE](https://github.com/NCAR/lrose-core),
 [Py-ART](https://arm-doe.github.io/pyart/),
 [BALTRAD](https://baltrad.github.io/),
-[wradlib](https://docs.wradlib.org/en/latest/)
+[wradlib](https://docs.wradlib.org/en/latest/),
 [GPM-API](https://gpm-api.readthedocs.io/)
 ) and how they connect with the scientific software stack.
 
