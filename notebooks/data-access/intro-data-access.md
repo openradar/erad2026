@@ -148,7 +148,7 @@ dt
 
 ```{code-cell} ipython3
 task = next(iter(dt.children))  # "DEJSTVO" or "JSTB_250_Dp_leto"
-ds = dt[f"/{task}/sweep_0"].to_dataset()
+ds = dt[f"/{task}/sweep_0"].to_dataset(inherit="all_coords")
 rng = ds["range"]
 moms = sorted(
     v for v in ds.data_vars

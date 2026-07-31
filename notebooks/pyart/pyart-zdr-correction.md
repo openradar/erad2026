@@ -135,7 +135,7 @@ The spherical-drop method needs a scan with plenty of stratiform echo. We score 
 volume by the fraction of low-level gates exceeding 10 dBZ and take the best one.
 
 ```{code-cell} ipython3
-dbzh0 = dtree[f"{root}/sweep_0"].to_dataset()["DBZH"]  # (vcp_time, azimuth, range)
+dbzh0 = dtree[f"{root}/sweep_0"].to_dataset(inherit="all_coords")["DBZH"]  # (vcp_time, azimuth, range)
 coverage = (dbzh0 > 10).mean(dim=["azimuth", "range"]).values
 k = int(np.nanargmax(coverage))
 sel_time = pd.Timestamp(vcp_time[k])
