@@ -77,6 +77,9 @@
     <loc>http://localhost:3000/notebooks/workflow/inspect-source-data-jastrebac</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/notebooks/workflow/qvp-workflow</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/notebooks/workflow/dem-beamblockage</loc>
   </url>
   <url>
@@ -93,6 +96,9 @@
   </url>
   <url>
     <loc>http://localhost:3000/notebooks/workflow/attenuation-dual-pol</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/workflow/qpe-estimation</loc>
   </url>
   <url>
     <loc>http://localhost:3000/notebooks/workflow/gridding-data</loc>
