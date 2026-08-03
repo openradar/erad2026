@@ -21,7 +21,7 @@ dependencies:
   - arm_pyart
   - cartopy
   - icechunk
-  - matplotlib
+  - matplotlib>=3.10.0,<3.11.0
   - numpy
   - wradlib>=2.9.5
   - xhistogram
