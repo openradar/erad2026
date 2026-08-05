@@ -33,6 +33,7 @@ data processing, using open datasets relevant to the attendees and ERAD2026.
 
 ## List of Instructors
 
+- Alfonso Ladino, University of Illinois - AtmoScale
 - Brenda Javornik, NCAR
 - Gionata Ghiggi, EPFL
 - Kai Mühlbauer, University Bonn
