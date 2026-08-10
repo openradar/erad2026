@@ -107,6 +107,9 @@
     <loc>http://localhost:3000/notebooks/workflow/composite-togrid</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/notebooks/gpm-api/sr-gr-calibration</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/notebooks/workflow/stratiform-case-2014</loc>
   </url>
   <url>
