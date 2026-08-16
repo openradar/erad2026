@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.19.1
+kernelspec:
+  name: python3
+  display_name: Python 3
+---
+
 # Spaceborne-Ground Radar Calibration 
 
 In this tutorial, we demonstrate how to exploit GPM-API along with other radar software such
@@ -44,7 +56,7 @@ https://gpm-api.readthedocs.io/en/latest/tutorials/tutorial_03_SR_GR_Matching.ht
 Now let's start the tutorial by importing the required packages:
 
 
-```python
+```{code-cell} ipython3
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -78,7 +90,7 @@ np.set_printoptions(suppress=True)
 Now let's open the preprocessed GPM DPR dataset composed of the L1B-Ku and 2A-DPR products:
 
 
-```python
+```{code-cell} ipython3
 # Open spaceborne radar (SR) GPM DPR dataset (2017-08-12 17:17:00) 
 ENDPOINT = "https://umn1.osn.mghpcc.org"
 STORE = "nexrad-arco/GPM-Data.zarr"
@@ -90,7 +102,7 @@ ds_gpm = ds_gpm.compute()
 Now let's open the Jastrebac GR data archive
 
 
-```python
+```{code-cell} ipython3
 OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
 BUCKET = "nexrad-arco"
 prefix = "jastrebac_500m"  # dual-pol, 12 × 360 × 500,  2017 + 2026
@@ -117,7 +129,7 @@ dt
 Here below, we add the radar-site coordinates provided in the DataTree root (`longitude`, `latitude`, and `altitude`) to each sweep dataset to preserve the geolocation information when the sweeps are processed individually later.
 
 
-```python
+```{code-cell} ipython3
 for sweep in dt[root].xradar_dev.sweeps:
     node = dt[root][sweep]
     ds = node.to_dataset(inherit=False)
@@ -131,7 +143,7 @@ for sweep in dt[root].xradar_dev.sweeps:
 Now, let's retrieve the time period of the coincident GPM overpass
 
 
-```python
+```{code-cell} ipython3
 # Define GPM start_time and end_time 
 start_time = ds_gpm.gpm.start_time
 end_time = ds_gpm.gpm.end_time
@@ -144,7 +156,7 @@ print(end_time)
 and let's select the ground radar scan volume and lowest-sweep coincident with the GPM overpass:
 
 
-```python
+```{code-cell} ipython3
 # Extract a scan volume coincident with the GPM overpass
 dt_gr = dt[root].sel(vcp_time=start_time, method="nearest")
 
@@ -155,7 +167,7 @@ ds_gr = dt_gr["sweep_0"].to_dataset().compute()
 Now we quickly explore the ground radar fields using the `xradar_dev.plot_map` method: 
 
 
-```python
+```{code-cell} ipython3
 # Mask non precipitating area
 ds_gr = ds_gr.where(ds_gr["DBZH"] > -10).where(ds_gr["RHOHV"] > 0.4)
 
@@ -168,7 +180,7 @@ ds_gr["RHOHV"].xradar_dev.plot_map(vmin=0.8, vmax=1)
 Now let's restrict the area to 150 km around the ground radar and plot the lowest-sweep S-band measured reflectivity:
 
 
-```python
+```{code-cell} ipython3
 # Define extent around radar 
 extent = ds_gr.xradar_dev.extent(max_distance=150_000)
 
@@ -179,7 +191,7 @@ ds_gr["DBZH"].xradar_dev.plot_map(extent=extent)
 Now let's display the GPM DPR Ku-band measured reflectivity near the surface just above the surface clutter:
 
 
-```python
+```{code-cell} ipython3
 # Display GPM radar reflectivity near the surface
 da_gpm_z = ds_gpm["zFactorFinalNearSurface"].sel(radar_frequency="Ku")
 p = da_gpm_z.gpm.plot_map()
@@ -195,14 +207,14 @@ In this subsection we quickly investigate the GPM DPR data using various GPM-API
 GPM-API allows to automatically retrieve various products/quantities through the `gpm.retrieve` method. 
 
 
-```python
+```{code-cell} ipython3
 ds_gpm.gpm.available_retrievals() # List of available products/quantities for GPM DPR 2A products
 ```
 
 We now retrieve the precipitation type and hydrometeor class:
 
 
-```python
+```{code-cell} ipython3
 # Retrieve precipitation type and hydrometeor class
 ds_gpm["flagPrecipitationType"] = ds_gpm.gpm.retrieve("flagPrecipitationType", method="major_rain_type")
 ds_gpm["flagHydroClass"] = ds_gpm.gpm.retrieve("flagHydroClass").sel(radar_frequency="Ku")
@@ -213,7 +225,7 @@ ds_gpm["flagHydroClass"] = ds_gpm.gpm.retrieve("flagHydroClass").sel(radar_frequ
 We now display the estimated near surface precipitation rate and precipitation type:
 
 
-```python
+```{code-cell} ipython3
 # Display GPM near surface precipitation rate
 p = ds_gpm["precipRateNearSurface"].gpm.plot_map()
 p.axes.set_extent(extent)
@@ -226,7 +238,7 @@ p.axes.set_extent(extent)
 It is always useful to inspect several additional variables. While developing this tutorial, we noticed that, for this particular overpass, the GPM DPR algorithm did not provide values for the attenuation-reliability flag across all scan footprints. Values were missing in the outer portions of the DPR swath. If this issue had gone unnoticed, the subsequent standard calibration routine would have filtered out all footprints in those outer regions.
 
 
-```python
+```{code-cell} ipython3
 p = ds_gpm["reliabFlag"].gpm.plot_map()
 p.axes.set_extent(extent)
 ```
@@ -236,33 +248,33 @@ p.axes.set_extent(extent)
 GPM-API provide a large set of manipulations tools. You can list the available methods with:
 
 
-```python
+```{code-cell} ipython3
 display(dir(ds_gpm.gpm))
 ```
 
 We now analyze the hydrometeor class at various heights:
 
 
-```python
+```{code-cell} ipython3
 ds_gpm.gpm.slice_range_at_bin(bins="binClutterFreeBottom")["flagHydroClass"].gpm.plot_map()
 ```
 
 
-```python
+```{code-cell} ipython3
 ds_gpm.gpm.slice_range_at_height(2000)["flagHydroClass"].gpm.plot_map()
 ds_gpm.gpm.slice_range_at_height(3000)["flagHydroClass"].gpm.plot_map()
 ds_gpm.gpm.slice_range_at_height(4000)["flagHydroClass"].gpm.plot_map()
 ```
 
 
-```python
+```{code-cell} ipython3
 ds_gpm.gpm.slice_range_at_temperature(temperature=275.15)["flagHydroClass"].gpm.plot_map()
 ds_gpm.gpm.slice_range_at_temperature(temperature=275.15-5)["flagHydroClass"].gpm.plot_map()
 ds_gpm.gpm.slice_range_at_temperature(temperature=275.15+5)["flagHydroClass"].gpm.plot_map()
 ```
 
 
-```python
+```{code-cell} ipython3
 ds_gpm["flagHydroClass"].sel(range=[165, 160, 155, 150]).gpm.plot_map(col="range", col_wrap=2)
 ```
 
@@ -270,14 +282,14 @@ The first clutter free gate is located at such heights:
     
 
 
-```python
+```{code-cell} ipython3
 ds_gpm.gpm.get_height_at_bin("binClutterFreeBottom").gpm.plot_map()
 ```
 
 The approximate surface elevation can be illustrated using the `binRealSurface` variable:
 
 
-```python
+```{code-cell} ipython3
 ds_gpm.sel(radar_frequency="Ku").gpm.get_height_at_bin("binRealSurface").gpm.plot_map()
 ```
 
@@ -286,7 +298,7 @@ ds_gpm.sel(radar_frequency="Ku").gpm.get_height_at_bin("binRealSurface").gpm.plo
 Here below, we provide the code to plot cross sections of the measured reflectivity along all or selected GPM DPR scans. The dashed line marks the gates located above the surface-clutter zone, while the shaded region below represents the actual surface.
 
 
-```python
+```{code-cell} ipython3
 indices = range(ds_gpm.sizes["along_track"])
 indices = [0, 27, 38, 56] # comment this to loop over all scans
 for i in indices:
@@ -319,7 +331,7 @@ Here we start defining the required settings for the SR/GR volume matching proce
 gates belows such thresholds.
 
 
-```python
+```{code-cell} ipython3
 # Define GR-GPM volume matching settings
 radar_band = "S"
 beamwidth_gr = 1
@@ -330,7 +342,7 @@ z_min_threshold_sr = 10
 The SR/GR volume matching routine typically takes a few seconds to complete. It returns a `geopandas.DataFrame` with the matched aggregated reflectivities and the associated statistics.
 
 
-```python
+```{code-cell} ipython3
 # Match GR sweep to GPM footprints 
 gdf_match = volume_matching(
     ds_gr=ds_gr,
@@ -350,14 +362,14 @@ gdf_match = volume_matching(
 ```
 
 
-```python
+```{code-cell} ipython3
 display(gdf_match)
 ```
 
 The variables included in the SR/GR database are listed here below:
 
 
-```python
+```{code-cell} ipython3
 # List variables
 display(list(gdf_match))
 ```
@@ -367,7 +379,7 @@ display(list(gdf_match))
 Now let's analyse the SR/GR reflectivities of a single sweep:
 
 
-```python
+```{code-cell} ipython3
 sr_z_column = f"SR_zFactorFinal_{radar_band}_mean"
 gr_z_column = "GR_Z_mean"
 ```
@@ -375,7 +387,7 @@ gr_z_column = "GR_Z_mean"
 We start by comparing the spatial reflectivity fields without applying restrictive filtering criteria:
 
 
-```python
+```{code-cell} ipython3
 fig = compare_maps(
     gdf_match,
     sr_column=sr_z_column,
@@ -393,7 +405,7 @@ fig.tight_layout()
 If you wish to create a cartopy map, specify the `'projection'` in the `subplot_kwargs` argument:
 
 
-```python
+```{code-cell} ipython3
 ccrs_gr_aeqd = ccrs.AzimuthalEquidistant(
     central_longitude=ds_gr["longitude"].item(),
     central_latitude=ds_gr["latitude"].item(),
@@ -418,14 +430,14 @@ fig.tight_layout()
 Here we show how to explore interactively the reflectivity fields using [Folium](https://python-visualization.github.io/folium/latest/):
 
 
-```python
+```{code-cell} ipython3
 gdf_match.explore(column="GR_Z_mean", legend=True, cmap="Spectral_r", vmin=0, vmax=40)
 ```
 
 We now create a figure comparing SR/GR aggregated reflectivities volume-by-volume and displaying the overall distributions.
 
 
-```python
+```{code-cell} ipython3
 fig = calibration_summary(
     df=gdf_match,
     gr_z_column=gr_z_column,
@@ -445,7 +457,7 @@ fig.tight_layout()
 When comparing SR and GR data or trying to determine an accurate GR calibration bias, it's necessary to define a set of filtering criteria. In the figures below, we perform exploratory data analysis to investigate the relationships between the SR/GR reflectivity deviations and sets of variables characterizing radar measurements and SR/GR volume properties. The patterns and deviations observed in the scatterplots will be used to define a set of filtering criteria in the next section of the tutorial.
 
 
-```python
+```{code-cell} ipython3
 hue_columns = [
     "SR_fraction_clutter",
     "SR_fraction_rain",
@@ -472,7 +484,7 @@ fig.tight_layout()
 We will now run the SR/GR volume matching routine to each sweep acquired by the ground radar within 3 minutes from the GPM overpass, and collect the results into a single database
 
 
-```python
+```{code-cell} ipython3
 # Select ground radars VCPs within 10 minutes from overpass
 search_start = pd.Timestamp(start_time) - pd.Timedelta(10, unit="minutes")
 search_end = pd.Timestamp(end_time) + pd.Timedelta(10, unit="minutes")
@@ -523,7 +535,7 @@ print(f"{n_sweeps} sweeps selected for matching with GPM DPR")
 ```
 
 
-```python
+```{code-cell} ipython3
 # Define GR/SR volume matching setting
 radar_band = "S"
 beamwidth_gr = 1
@@ -539,7 +551,7 @@ sr_sensitivity_thresholds=None
 ```
 
 
-```python
+```{code-cell} ipython3
 # Perform volume matching for each GR sweep 
 # - This typically takes few seconds per sweep to complete    
 list_gdf = []
@@ -598,7 +610,7 @@ Convective SR footprints are typically excluded to avoid dealing with:
 5. **Volume matching**: Exclude SR/GR samples where there are excessive differences in the total gate volume.
 
 
-```python
+```{code-cell} ipython3
 def filter_matched_volumes(gdf_match, 
                            radar_band,
                            sr_z_range=(18, 36),
@@ -721,7 +733,7 @@ def filter_matched_volumes(gdf_match,
 ```
 
 
-```python
+```{code-cell} ipython3
 gdf_filtered = filter_matched_volumes(
     gdf_match,
     radar_band=radar_band,
@@ -732,7 +744,7 @@ gdf_filtered = filter_matched_volumes(
 You can quickly generate a calibration summary with `calibration_summary`. Please be aware that the results are quite sensitive to the filtering criteria !
 
 
-```python
+```{code-cell} ipython3
 fig = calibration_summary(
     df=gdf_filtered,
     gr_z_column=gr_z_column,
@@ -756,7 +768,7 @@ fig.tight_layout()
 The GR calibration bias can be obtained by averaging the difference between the matched SR/GR reflectivity measurements:
 
 
-```python
+```{code-cell} ipython3
 # Compute average offset
 z_offset = np.nanmean(gdf_filtered[sr_z_column] - gdf_filtered[gr_z_column]).round(2)
 z_offset_robust = np.nanmedian(gdf_filtered[sr_z_column] - gdf_filtered[gr_z_column]).round(2)
