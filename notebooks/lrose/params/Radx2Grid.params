@@ -70,7 +70,7 @@ debug = DEBUG_OFF;
 //
 // Type: string
 
-input_dir = "./data/radar/cfradial/20170812";
+input_dir = "./data/radar/cfrad/";
 
 ///////////// input_file_search_ext ///////////////////
 //
