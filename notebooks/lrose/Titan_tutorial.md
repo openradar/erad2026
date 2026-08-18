@@ -45,10 +45,10 @@ Files required to run this notebook:
 
 Jastrebac is a 10 cm (S-band) Gematronik dual polarization radar. This hourlong period contains areas of convection.
 
-The QC'd data can be found here:
+The QC'd data is hosted on the [NSF Open Storage Network (OSN)](https://www.openstoragenetwork.org/) (see [](#intro-data-access) for the general access pattern):
 
 ```
-  ./data/radar/cfrad/data.tar.gz
+  s3://nexrad-arco/lrose/cfrad/20170812/
 ```
 
 ### 2. Output data
@@ -86,8 +86,19 @@ First, we import the required python packages to run this notebook. The LROSE pr
 ```{code-cell} ipython3
 import os
 import warnings
+from pathlib import Path
+
+import fsspec
 
 warnings.filterwarnings("ignore")
+```
+
+We use the same OSN access pattern shown in [](#intro-data-access):
+
+```{code-cell} ipython3
+OSN_ENDPOINT = "https://umn1.osn.mghpcc.org"
+BUCKET = "nexrad-arco"
+prefix = "lrose/cfrad/20170812"
 ```
 
 ### 1.1 Set up directories
@@ -100,6 +111,9 @@ We need to set up the required data directories. The raw radar data will be grab
 
 # make directory for output ascii files from Titan
 !mkdir -p ./data/titan/ascii
+
+# make directory for the raw CfRadial data pulled from OSN
+!mkdir -p ./data/radar/cfrad/20170812
 ```
 
 ### 1.2 Set up the environment
@@ -122,9 +136,22 @@ If your quality controlled data are in *polar coordinates*, use Radx2Grid to reg
 <code lang="bash">!$LROSE_DIR/Radx2Grid -params ./params/Radx2Grid.params</code>
 
 ```{code-cell} ipython3
-# unzip tar file, hoping to change
-!tar -xvf ./data/radar/cfrad/data.tar.gz -C ./data/radar/cfrad/ && rm ./data/radar/cfrad/data.tar.gz
+# download the QC'd CfRadial files from OSN (anonymous read access)
+fs = fsspec.filesystem(
+    "s3", anon=True, client_kwargs={"endpoint_url": OSN_ENDPOINT},
+)
 
+download_dir = Path("./data/radar/cfrad/20170812")
+remote_files = sorted(fs.glob(f"{BUCKET}/{prefix}/*.nc"))
+
+for remote in remote_files:
+    local = download_dir / Path(remote).name
+    if not local.exists():
+        fs.get(remote, str(local))
+    print(f"  {local.name}")
+```
+
+```{code-cell} ipython3
 # space for commands to find data, if needed
 !$LROSE_DIR/Radx2Grid -params ./params/Radx2Grid.params
 ```
