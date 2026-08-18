@@ -409,7 +409,7 @@ Now let's plot the cartesian radar data at 16:13 UTC and overlap the polygons of
 ```{code-cell} ipython3
 TIME_IDX = 0
 
-FILEPATH = "./data/cart/20170812/ncf_20170812_161332.nc"   # <-- set your file path here
+FILEPATH = "./data/radar/cart/20170812/ncf_20170812_161332.nc"   # <-- set your file path here
 FIELD_NAME = "DBZ"            
 
 # --- Open, extract everything needed, then close automatically ---
