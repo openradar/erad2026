@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.19.1
+kernelspec:
+  name: python3
+  display_name: Python 3
+---
+
 # **Titan Tutorial**
 
 ---
@@ -72,7 +84,6 @@ These text blocks instruct the users to run a command *in* a cell within the Jup
 First, we import the required python packages to run this notebook. The LROSE processing can be done with the os package and shell commands.
 
 
-```python
 import os
 import warnings
 
@@ -84,7 +95,6 @@ warnings.filterwarnings("ignore")
 We need to set up the required data directories. The raw radar data will be grabbed from the S3 bucket. We delete any existing files and directories specific to this tutorial to ensure we're starting with clean directories and files.
 
 
-```python
 # make overall titan directory and application output directory
 !mkdir -p ./data/titan
 
@@ -97,7 +107,6 @@ We need to set up the required data directories. The raw radar data will be grab
 First, we'll set some key variables we'll need throughout the workflow.
 
 
-```python
 # Set directory variable to call LROSE
 os.environ["LROSE_DIR"] = "/usr/local/lrose/bin"
 ```
@@ -113,7 +122,6 @@ If your quality controlled data are in *polar coordinates*, use Radx2Grid to reg
 <code lang="bash">!$LROSE_DIR/Radx2Grid -params ./params/Radx2Grid.params</code>
 
 
-```python
 # unzip tar file, hoping to change
 !tar -xvf ./data/radar/cfrad/data.tar.gz -C ./data/radar/cfrad/ && rm ./data/radar/cfrad/data.tar.gz
 
@@ -139,7 +147,6 @@ Titan runs on the Cartesian gridded data, using the DBZ field and optionally the
 </div>
 
 
-```python
 # run Titan
 !$LROSE_DIR/Titan -params ./params/Titan.params -start "2017 08 12 16 00 00" -end "2017 08 12 17 00 00" -debug
 ```
@@ -158,7 +165,6 @@ The Titan output is in a binary format. In order to read the data, we first conv
 </div>
 
 
-```python
 !$LROSE_DIR/Tracks2Ascii -params ./params/Tracks2Ascii.params -f ./data/titan/storms/20170812.th5 > ./data/titan/ascii/Tracks2Ascii20170812.txt -debug
 ```
 
@@ -167,7 +173,6 @@ The Titan output is in a binary format. In order to read the data, we first conv
 We'll load the necessary Python packages and plot some of the Titan output now.
 
 
-```python
 # Import Python packages
 import pandas as pd
 import numpy as np
@@ -182,7 +187,6 @@ import netCDF4 as nc
 ```
 
 
-```python
 file = "./data/titan/ascii/Tracks2Ascii20170812.txt"
 ```
 
@@ -192,7 +196,6 @@ Open text file and adjust columns names in order to import to a pandas dataframe
 Since the text file has irregular delimiters, we need to add some extra steps.
 
 
-```python
 ##open file and extract column names
 f = open(file)
 lines = f.readlines()
@@ -208,7 +211,6 @@ labels = lines[label_line_index].split(":", 1)[1].strip().split(",")
 ```
 
 
-```python
 #the data lines are the ones that do not start with #
 data_lines = [line.strip() for line in lines if not line.startswith("#")]
 ```
@@ -220,7 +222,6 @@ Parents and children columns refer to identifiers based on merging and splitting
 With that information and the "envelope_centroid" column, we can retrieve the cells envelopes at each timestep.
 
 
-```python
 rows = []
 for line in data_lines:
     parts = line.split()
@@ -251,7 +252,6 @@ for line in data_lines:
 ```
 
 
-```python
 # Final columns: fixed + 3 custom ones
 final_labels = labels[:len(rows[0]) - 3] + ['parents', 'children', 'nPolySidesPolygonRays']
 
@@ -284,7 +284,6 @@ Titan outputs cell fetures at each tracking timestep, and identifies cells withi
 Let's inspect our case now! How many Complexes we can identify? Which one contains more tracks (e.g., single cell tracks, and split/merge processes)?
 
 
-```python
 # Count number of unique SimpleNum per ComplexNum
 simple_counts = df.groupby('ComplexNum')['SimpleNum'].nunique().reset_index(name='NumSimple')
 
@@ -314,13 +313,11 @@ In our case, we will plot the Maximum Reflectivity (```'MaxDBZ(dBZ)'```) for the
 You can play and choose another attribute (e.g., Echo Top, Vil) from the table resulting from Tracks2Ascii, and see how the attributes vary.
 
 
-```python
 # feel free to modify this variable to see what other complex tracks look like
 complexnum = "17"
 ```
 
 
-```python
 #  Filter dataframe for ComplexNum == 0 and sort by time
 df0 = df[df['ComplexNum'] == complexnum].copy()
 df0 = df0.sort_values('date_utc')
@@ -352,7 +349,6 @@ plt.show()
 Now we can also plot the centroids of each tracked cell, in a Cartopy map, and add circles around the centroid based on how big the cell volume is in each timestep. We will also show the different cells ('SimpleNum') in different colors.
 
 
-```python
 df0 = df0.sort_values(['SimpleNum', 'date_utc'])
 
 # Convert lat/lon columns to numeric, coercing errors to NaN
@@ -411,7 +407,6 @@ plt.show()
 Now let's plot the cartesian radar data at 16:13 UTC and overlap the polygons of the storms that we have identified with Titan.
 
 
-```python
 TIME_IDX = 0
 
 FILEPATH = "./data/cart/20170812/ncf_20170812_161332.nc"   # <-- set your file path here
@@ -566,7 +561,6 @@ A reminder to update the output directory for the Titan binary files and the ASC
 
 When you copy the plotting code from above, you'll need to update the file paths. Based on the complex numbers, you'll also need to pick a different complexnum.
 
-```python
 # file = "./data/titan/ascii_30/Tracks2Ascii20170812.txt"
 # complexnum = "17" # change to the appropriate number
 ```
@@ -590,7 +584,6 @@ A reminder to update the output directory for the Titan binary files and the ASC
 
 When you copy the plotting code from above, you'll need to update the file paths. Based on the complex numbers, you'll also need to pick a different complexnum.
 
-```python
 # file = "./data/titan/ascii_suffix/Tracks2Ascii20170812.txt"
 # complexnum = "17" # change to the appropriate number
 ```

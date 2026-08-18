@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.19.1
+kernelspec:
+  name: python3
+  display_name: Python 3
+---
+
 # **Titan Pre-Processing Example**
 
 ---
@@ -76,7 +88,6 @@ These text blocks instruct the users to run a command *in* a cell within the Jup
 First, we import the required python packages to run this notebook. Most of the LROSE processing can be done with the os package and shell commands.
 
 
-```python
 import os
 import warnings
 
@@ -88,7 +99,6 @@ warnings.filterwarnings("ignore")
 We need to set up the required data directories. The raw radar data will be grabbed from the S3 bucket. 
 
 
-```python
 # make overall titan directory and application output directory
 !mkdir -p ../data/titan/titan
 
@@ -101,7 +111,6 @@ We need to set up the required data directories. The raw radar data will be grab
 First, we'll set some key variables we'll need throughout the workflow.
 
 
-```python
 # Set directory variable to call LROSE
 os.environ["LROSE_DIR"] = "/usr/local/lrose/bin"
 os.environ["DATA_DIR"] = "../data/titan"
@@ -112,7 +121,6 @@ os.environ["DATA_DIR"] = "../data/titan"
 Because some of the preprocessing requires ancillary data, we need to grab and untar that data.
 
 
-```python
 import fsspec
 import shutil
 
@@ -180,7 +188,6 @@ Finally, the raw HDF5 files are converted to CfRadial format using `RadxConvert`
 </div>
 
 
-```python
 # Run QC on derecho case data
 !$LROSE_DIR/RadxConvert -sort_rays_by_time -const_ngates -params ../params/titan/RadxConvert.qc.derecho -f ../data/titan/raw/derecho/OntarioDerecho2022/202205211*CASKR.h5
 
@@ -220,12 +227,10 @@ Next, we will use the ERA5 reanalysis to extract model-based soundings:
 </div>
 
 
-```python
 
 ```
 
 
-```python
 
 ```
 
@@ -241,7 +246,6 @@ And we can then run RadxPid:
 </div>
 
 
-```python
 
 ```
 
@@ -270,7 +274,6 @@ Titan requires input data on a Cartesian grid, instead of the native polar grid.
 </div>
 
 
-```python
 
 ```
 
