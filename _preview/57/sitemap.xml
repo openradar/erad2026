@@ -110,9 +110,6 @@
     <loc>http://localhost:3000/notebooks/workflow/composite-qpe</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/notebooks/gpm-api/sr-gr-calibration</loc>
-  </url>
-  <url>
     <loc>http://localhost:3000/notebooks/workflow/stratiform-case-2014</loc>
   </url>
   <url>
@@ -123,5 +120,14 @@
   </url>
   <url>
     <loc>http://localhost:3000/notebooks/workflow/post-course</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/lrose/titan-preprocessing</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/lrose/titan-tutorial</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/notebooks/gpm-api/sr-gr-calibration</loc>
   </url>
 </urlset>
