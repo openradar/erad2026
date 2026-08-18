@@ -16,6 +16,9 @@ project:
     - name: Daniel Michelson
       orcid: 0000-0003-3222-9881
       github: DanielMichelson
+    - name: Gionata Ghiggi
+      orcid: 0000-0002-0818-0865
+      github: ghiggi
     - name: Jen DeHart
       orcid: 0000-0001-8536-4927
       github: jcdehart
@@ -102,6 +105,7 @@ project:
               children:
                 - file: notebooks/workflow/gridding_data.md
                 - file: notebooks/workflow/composite_togrid.md
+                - file: notebooks/workflow/composite_qpe.md
         - title: Main Course
           children:
             - file: notebooks/workflow/stratiform_case_2014.md
@@ -110,6 +114,15 @@ project:
         - title: Post Course
           children:
             - file: notebooks/workflow/post_course.md
+    - title: Project Workflows
+      children:
+        - title: LROSE
+          children:
+            - file: notebooks/lrose/Titan_preprocessing.md
+            - file: notebooks/lrose/Titan_tutorial.md
+        - title: Reflectivity calibration with GPM
+          children:
+            - file: notebooks/gpm-api/SR_GR_Calibration.md
   jupyter:
     binder:
       repo: ProjectPythia/erad2026

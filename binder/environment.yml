@@ -21,7 +21,7 @@ dependencies:
   - arm_pyart
   - cartopy
   - icechunk
-  - matplotlib
+  - matplotlib>=3.10.0,<3.11.0
   - numpy
   - wradlib>=2.9.5
   - xhistogram
@@ -31,9 +31,9 @@ dependencies:
   - xradar>=0.12.0
   - numpy
   # this is needed for gpm-api
-  - gpm-api>=0.3.1
-  - pycolorbar>=0.1.0
-  - ximage>=0.0.5
+  - gpm-api>=0.4.1
+  - pycolorbar>=0.1.4
+  - ximage>=0.0.6
   - shapely>=2.0.0
   - geopandas
   - geoviews
@@ -80,4 +80,4 @@ dependencies:
   - metpy
   - pip
   - plotly
-
+  - seaborn

@@ -147,3 +147,11 @@ CLAUDE.md
 
 # Local one-time scripts
 /scripts/
+
+# Generated QPE composite (regenerate with notebooks/workflow/composite_qpe.md)
+composite.zarr/
+.virtual_documents/
+composite_volume.zarr/
+
+# LROSE tutorial radar data (pulled from OSN nexrad-arco/lrose/cfrad/)
+notebooks/lrose/data/

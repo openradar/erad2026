@@ -34,8 +34,10 @@ This notebook shows how to access the ERAD 2026 Serbian radar dataset hosted on 
 ## Setup
 
 ```{code-cell} ipython3
+import cmweather  # noqa: F401 -- registers the HomeyerRainbow colormap
 import fsspec
 import icechunk
+import rioxarray  # noqa: F401 -- registers the .rio accessor used for the composite CRS
 import xarray as xr
 import xradar
 
@@ -165,16 +167,79 @@ print(f"Moments : {moms}")
 
 ***
 
+## Part 3: Gridded QPE composite
+
+The two stores above are **polar** data, one radar each. The course workflow turns them into a
+single **Cartesian composite** — quality-controlled, attenuation-corrected, converted to rain
+rate and merged across both radars onto a 1 km grid. See [](#composite-to-grid-qc) for how it
+is produced.
+
+Unlike the ARCO stores, this product is a **plain Zarr v3 store**, so no `icechunk` session is
+needed — `xr.open_zarr` opens it directly.
+
+```{code-cell} ipython3
+composite_url = f"s3://{BUCKET}/composite.zarr"
+```
+
+```{important}
+Two arguments matter here:
+
+* `consolidated=False` — this is a **Zarr v3** store, and consolidated metadata is not part of
+  the v3 specification. Requesting it raises `ValueError: Consolidated metadata requested ...
+  but not found`. Zarr v3 discovers metadata efficiently without it.
+* `decode_coords="all"` — this tells `xarray` to honour the CF `grid_mapping` attribute and
+  restore `spatial_ref` as a coordinate. Without it the projection is still in the store but
+  arrives as a plain data variable, and `.rio.crs` returns `None`.
+```
+
+```{code-cell} ipython3
+comp = xr.open_zarr(
+    composite_url,
+    storage_options={"anon": True, "client_kwargs": {"endpoint_url": OSN_ENDPOINT}},
+    consolidated=False,
+    decode_coords="all",
+)
+comp
+```
+
+The store is self-describing — CF standard names, units and the projection travel with it:
+
+```{code-cell} ipython3
+print(f"Conventions : {comp.attrs['Conventions']}")
+print(f"CRS         : {comp.rio.crs.to_string() if comp.rio.crs else 'not decoded'}")
+print(f"Grid        : {comp.sizes['y']} × {comp.sizes['x']} @ 1 km")
+print(f"Times       : {comp.sizes['vcp_time']} steps, "
+      f"{str(comp.vcp_time.values[0])[:16]} → {str(comp.vcp_time.values[-1])[:16]}")
+for v in comp.data_vars:
+    a = comp[v].attrs
+    print(f"  {v:10} [{a.get('units', '-'):7}] {a.get('long_name', '')}")
+```
+
+| Variable | Units | Meaning |
+|---|---|---|
+| `DBZH` | dBZ | Attenuation-corrected reflectivity composite |
+| `rain_rate` | mm h⁻¹ | Rain rate from Marshall-Palmer Z-R |
+| `n_radars` | 1 | How many radars saw each cell (0, 1 or 2) |
+
+```{code-cell} ipython3
+rr = comp.rain_rate.isel(vcp_time=comp.sizes["vcp_time"] // 2)
+rr.where(rr > 0.1).plot(cmap="HomeyerRainbow", vmin=0, vmax=30, figsize=(8, 7),
+                        cbar_kwargs=dict(label="rain rate (mm h$^{-1}$)"))
+```
+
+***
+
 ## Summary
 
-| | Raw `.vol` files | ARCO Zarr (icechunk) |
-|---|---|---|
-| **Location** | `s3://nexrad-arco/{site}_vol/{date}/*.vol` | `s3://nexrad-arco/{Fgora, jastrebac_250m, jastrebac_500m}/` |
-| **Format** | Rainbow binary (one moment per file) | Zarr v3, chunked, CF-compliant |
-| **Access** | `fsspec.open_local` + `xradar` | `icechunk` + `xr.open_datatree` |
-| **Time indexing** | Manual (parse filenames) | Built-in `vcp_time` dimension |
-| **Best for** | Re-processing, format-specific QC | Analysis, visualization, ML |
-| **Coverage** | 3 dates × 2 sites (1188 files) | FGora 3 dates + Jastrebac 2014 (250 m grid) + Jastrebac 2017/2026 (500 m grid) — 3 stores, 196 volumes total |
+| | Raw `.vol` files | ARCO Zarr (icechunk) | QPE composite (Zarr) |
+|---|---|---|---|
+| **Location** | `s3://nexrad-arco/{site}_vol/{date}/*.vol` | `s3://nexrad-arco/{Fgora, jastrebac_250m, jastrebac_500m}/` | `s3://nexrad-arco/composite.zarr` |
+| **Format** | Rainbow binary (one moment per file) | Zarr v3, chunked, CF-compliant | Zarr v3, CF-1.10, self-describing |
+| **Geometry** | Polar, per radar | Polar, per radar | Cartesian 1 km LAEA, both radars merged |
+| **Access** | `fsspec.open_local` + `xradar` | `icechunk` + `xr.open_datatree` | `xr.open_zarr(..., decode_coords="all")` |
+| **Time indexing** | Manual (parse filenames) | Built-in `vcp_time` dimension | Regular 5-minute `vcp_time` |
+| **Best for** | Re-processing, format-specific QC | Analysis, visualization, ML | Nowcasting, hydrology, verification |
+| **Coverage** | 3 dates × 2 sites (1188 files) | FGora 3 dates + Jastrebac 2014 (250 m grid) + Jastrebac 2017/2026 (500 m grid) — 3 stores, 196 volumes total | Lowest sweep (0.5°), one case per store |
 
 ### References
 
