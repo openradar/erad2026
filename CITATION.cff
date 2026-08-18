@@ -21,6 +21,15 @@ authors:
     orcid: https://orcid.org/0000-0003-3222-9881
     website: https://github.com/DanielMichelson
     affiliation: Environment and Climate Change Canada (ECCC)
+  - family-names: Ghiggi
+    given-names: Gionata
+    orcid: https://orcid.org/0000-0002-0818-0865
+    website: https://github.com/ghiggi
+    affiliation: Ecole polytechnique fédérale de Lausanne (EPFL)
+  - given-names: Hamid Ali
+    family-names: Syed
+    affiliation: INDIAN INSTITUTE OF TROPICAL METEOROLOGY, PUNE, INDIA
+    orcid: https://orcid.org/0000-0002-7188-2544
   - family-names: DeHart
     given-names: Jen
     orcid: https://orcid.org/0000-0001-8536-4927
@@ -35,7 +44,7 @@ authors:
     given-names: Maxwell
     orcid: https://orcid.org/0000-0002-0370-8974
     website: https://github.com/mgrover1
-    affiliation: Argonne National Laboratory
+    affiliation: Spire Global, USA
   - family-names: Dixon
     given-names: Mike
     orcid: https://orcid.org/0000-0002-9597-9113
