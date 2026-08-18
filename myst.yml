@@ -106,9 +106,6 @@ project:
                 - file: notebooks/workflow/gridding_data.md
                 - file: notebooks/workflow/composite_togrid.md
                 - file: notebooks/workflow/composite_qpe.md
-            - title: Reflectivity calibration with GPM
-              children:
-                - file: notebooks/gpm-api/SR_GR_Calibration.md
         - title: Main Course
           children:
             - file: notebooks/workflow/stratiform_case_2014.md
@@ -117,6 +114,15 @@ project:
         - title: Post Course
           children:
             - file: notebooks/workflow/post_course.md
+    - title: Project Workflows
+      children:
+        - title: LROSE
+          children:
+            - file: notebooks/lrose/Titan_preprocessing.md
+            - file: notebooks/lrose/Titan_tutorial.md
+        - title: Reflectivity calibration with GPM
+          children:
+            - file: notebooks/gpm-api/SR_GR_Calibration.md
   jupyter:
     binder:
       repo: ProjectPythia/erad2026
