@@ -19,6 +19,9 @@ project:
     - name: Gionata Ghiggi
       orcid: 0000-0002-0818-0865
       github: ghiggi
+    - name: Hamid Ali Syed
+      orcid: https://orcid.org/0000-0002-7188-2544
+      github: syedhamidali
     - name: Jen DeHart
       orcid: 0000-0001-8536-4927
       github: jcdehart
