@@ -7,7 +7,7 @@
 ## Location
 
 > [!IMPORTANT]
-> KThe course will take place at the Republic Hydrometeorological Service of Serbia (RHMZ) located at Kneza Višeslava 66, Beograd 11000. See [preliminary schedule](schedule.md) for more information.  
+> The course will take place at the Republic Hydrometeorological Service of Serbia (RHMZ) located at Kneza Višeslava 66, Beograd 11000. See [preliminary schedule](schedule.md) for more information.  
 
 This repository contains the hands-on materials for the ERAD 2026 short course Open Radar – Open Source Software Tools for Radar Data Processing: From Raw Data to Analysis-Ready Fields. For a detailed description of the course, including its objectives, agenda, prerequisites, and expected outcomes, please refer to the accompanying [short course outline](outline.md).
 
