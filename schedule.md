@@ -1,5 +1,15 @@
 # Preliminary Schedule
 
+## 0. Location
+
+```{attention}
+The course will take place at the Republic Hydrometeorological Service of Serbia (RHMZ) located at Kneza Višeslava 66, Beograd 11000.
+
+The organizers are recommending to walk from [Metropol Palace to Glavna pošta](https://www.openstreetmap.org/directions?engine=fossgis_osrm_foot&route=44.8067879%2C20.4737746%3B44.8111123%2C20.4671963#map=16/44.80965/20.47126). Take Bus 23 from there direction Vidikovac. Please check with [Google Maps](https://maps.app.goo.gl/tVDDtgeJxoB5cKYT9) or by any other suited means for schedule. Google Maps suggests to alight at [Žarkovačka and walk to Kneza Višeslava 66](https://www.openstreetmap.org/directions?engine=fossgis_valhalla_foot&route=44.768097%2C20.419722%3B44.771576%2C20.42536#map=17/44.770339/20.422527). 
+
+Please make sure to be there well before 9 o'clock to find your way and have enough time to settle and prepare.
+```
+
 ## 1. Welcome/Introduction 
 
 - Homework / pre-course work  
