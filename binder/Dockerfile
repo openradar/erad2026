@@ -9,4 +9,4 @@
 # binder/**, install/** and its own workflow file, so a notebook-only PR never
 # refreshes it -- bump this pin and re-run Build Image to pick those up.
 #
-FROM ghcr.io/openradar/erad2026:pr-60
+FROM ghcr.io/openradar/erad2026:pr-62
