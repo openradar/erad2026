@@ -22,6 +22,11 @@ on:
 permissions:
   contents: write
   actions: write
+  # GitHub rejects any push -- even a fast-forward -- that touches
+  # .github/workflows/* unless the token has this scope explicitly. Without
+  # it, the sync silently fails every time upstream's own workflow files
+  # change, and the fork falls behind until someone notices.
+  workflows: write
 
 jobs:
   sync:
