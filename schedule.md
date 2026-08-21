@@ -23,64 +23,45 @@ Please make sure to be there well before 9 o'clock to find your way and have eno
 
 ## 3. Introduction to Radar Packages
  
-> Each package will be presented in ~2 slides:
-> - Slide 1: Overview
-> - Slide 2: Functional focus (inputs → workflow → outputs)
-
 - Xradar (IO layer)
 - PyArt
-- LRose
-- Baltrad
+- wradlib
+- LROSE
+- BALTRAD
 
-## 4. Workflow as a Notebook
+## 4. Radar Processing Workflow
 
-Show how individual packages integrate into a complete workflow.
+Show how individual packages integrate into a complete workflow. Output of this workflow will be used in the Sunday [PySteps workshop](https://github.com/pySTEPS/ERAD-nowcasting-course-2026).
 
-> Output of this workflow will be used in the Sunday PySteps workshop.
-
-### 4.1 Workflow Overview
+### 4.1 Overview
 
 ### 4.2 Quality Control (QA / QC)
 - Noise filtering
 - Artifact removal
 - Consistency checks across scans
-- tbc
 
-### 4.3 Corrections
+### 4.3 Radar Corrections
 - Clutter correction
 - Calibration adjustments
 - Attenuation correction
-- tbc
   
 ### 4.4 QPE retrievals 
 - Precipitation estimation methods
-- Integration with local rain gauge data
-- Bias correction strategies 
-- tbc
 
 ### 4.5 Gridding
 - Conversion to Cartesian grids
 - Interpolation methods
 - Output formats for analysis and visualization
 
-## 5. Afternoon: Individual Projects
+## 5. Afternoon: Hands-On Tutorial
 
-### Structure Options
-- Parallel breakout groups **or**
-- Sequential guided work session
-
-### 5.1 Project Options
-
-#### a. In Depth Review of 4.* Workflow
-- Algorithm analysis, modification, and extension
-- Incorporation of interoperable open-source tools
-
-#### b. TITAN (LROSE)
+#### 1. TITAN (LROSE)
 - Storm tracking and analysis workflows
 - Radar-to-dynamics applications
 
-#### c. Echo Top Height Analysis (Bobby?)
-- Identification of storm structure
-- Vertical extent diagnostics
-- Derived product generation
+#### 2. Reflectivity Calibration with Spaceborne Radar
+- GPM-API Introduction
+- Ground-Spaceborne Radar Volume Matching
+- Ground Radar Reflectivity Calibration
 
+## 6. General Discussion 
